@@ -1,4 +1,4 @@
-﻿import { Component, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, Injector, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { MenuItem } from '@shared/layout/menu-item';
 
@@ -15,6 +15,7 @@ export class SideBarNavComponent extends AppComponentBase {
         new MenuItem(this.l("Tenants"), "Pages.Tenants", "business", "/app/tenants"),
         new MenuItem(this.l("Users"), "Pages.Users", "people", "/app/users"),
         new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/app/roles"),
+        new MenuItem(this.l("AuditLogs"), "", "info", "/app/auditlogs"),
         new MenuItem(this.l("About"), "", "info", "/app/about"),
 
         new MenuItem(this.l("MultiLevelMenu"), "", "menu", "", [
@@ -40,6 +41,8 @@ export class SideBarNavComponent extends AppComponentBase {
     ) {
         super(injector);
     }
+
+    
 
     showMenuItem(menuItem): boolean {
         if (menuItem.permissionName) {

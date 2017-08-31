@@ -1,4 +1,4 @@
-﻿export class MenuItem {
+export class MenuItem {
     name: string = '';
     permissionName: string = '';
     icon: string = '';

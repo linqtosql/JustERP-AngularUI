@@ -1,4 +1,4 @@
-﻿import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
@@ -32,6 +32,7 @@ import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
+import { AuditLogComponent } from '@app/auditlog/auditlog.component';
 
 @NgModule({
     declarations: [
@@ -46,14 +47,14 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
 		EditUserComponent,
       	RolesComponent,        
 		CreateRoleComponent,
-		EditRoleComponent,
+        EditRoleComponent,
+        AuditLogComponent,
         TopBarComponent,
         TopBarLanguageSwitchComponent,
         SideBarUserAreaComponent,
         SideBarNavComponent,
         SideBarFooterComponent,
         RightSideBarComponent
-    
     ],
     imports: [
         CommonModule,

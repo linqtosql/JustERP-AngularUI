@@ -122,6 +122,76 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class AuditLogServiceProxy {
+    private http: Http = null; 
+    private baseUrl: string = undefined; 
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http; 
+        this.baseUrl = baseUrl ? baseUrl : ""; 
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfAuditLogDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/GetAll?";
+        if (skipCount !== undefined)
+        
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        
+        if (maxResultCount !== undefined)
+        
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+
+        const content_ = "";
+        
+        return this.http.request(url_, {
+            body: content_,
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json; charset=UTF-8", 
+				"Accept": "application/json; charset=UTF-8"
+            })
+        }).map((response) => {
+            return this.processGetAll(response);
+        }).catch((response: any, caught: any) => {
+            if (response instanceof Response) {
+                try {
+                    return Observable.of(this.processGetAll(response));
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfAuditLogDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfAuditLogDto>><any>Observable.throw(response);
+        });
+    }
+
+    protected processGetAll(response: Response): PagedResultDtoOfAuditLogDto {
+        const responseText = response.text();
+        const status = response.status; 
+
+        if (status === 200) {
+            let result200: PagedResultDtoOfAuditLogDto = null;
+            let resultData200 = responseText === "" ? null : JSON.parse(responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfAuditLogDto.fromJS(resultData200) : new PagedResultDtoOfAuditLogDto();
+            return result200;
+        } else if (status !== 200 && status !== 204) {
+            this.throwException("An unexpected server error occurred.", status, responseText);
+        }
+        return null;
+    }
+
+    protected throwException(message: string, status: number, response: string, result?: any): any {
+        if(result !== null && result !== undefined)
+            throw result;
+        else
+            throw new SwaggerException(message, status, response);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: Http = null; 
     private baseUrl: string = undefined; 
@@ -1361,6 +1431,82 @@ export class RegisterOutput {
     clone() {
         const json = this.toJSON();
         return new RegisterOutput(JSON.parse(json));
+    }
+}
+
+export class PagedResultDtoOfAuditLogDto { 
+    totalCount: number; 
+    items: AuditLogDto[];
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.totalCount = data["totalCount"] !== undefined ? data["totalCount"] : null;
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(AuditLogDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfAuditLogDto {
+        return new PagedResultDtoOfAuditLogDto(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["totalCount"] = this.totalCount !== undefined ? this.totalCount : null;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJS());
+        }
+        return data; 
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new PagedResultDtoOfAuditLogDto(JSON.parse(json));
+    }
+}
+
+export class AuditLogDto { 
+    serviceName: string; 
+    methodName: string; 
+    executionDuration: number; 
+    id: number;
+    constructor(data?: any) {
+        if (data !== undefined) {
+            this.serviceName = data["serviceName"] !== undefined ? data["serviceName"] : null;
+            this.methodName = data["methodName"] !== undefined ? data["methodName"] : null;
+            this.executionDuration = data["executionDuration"] !== undefined ? data["executionDuration"] : null;
+            this.id = data["id"] !== undefined ? data["id"] : null;
+        }
+    }
+
+    static fromJS(data: any): AuditLogDto {
+        return new AuditLogDto(data);
+    }
+
+    toJS(data?: any) {
+        data = data === undefined ? {} : data;
+        data["serviceName"] = this.serviceName !== undefined ? this.serviceName : null;
+        data["methodName"] = this.methodName !== undefined ? this.methodName : null;
+        data["executionDuration"] = this.executionDuration !== undefined ? this.executionDuration : null;
+        data["id"] = this.id !== undefined ? this.id : null;
+        return data; 
+    }
+
+    toJSON() {
+        return JSON.stringify(this.toJS());
+    }
+
+    clone() {
+        const json = this.toJSON();
+        return new AuditLogDto(JSON.parse(json));
     }
 }
 
