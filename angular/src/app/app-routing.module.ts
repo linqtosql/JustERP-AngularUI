@@ -7,7 +7,8 @@ import { AboutComponent } from './about/about.component';
 import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from "app/roles/roles.component";
-import { AuditLogComponent } from "./auditlog/auditlog.component"; 
+import { AuditLogComponent } from "./auditlog/auditlog.component";
+import { DemoComponent } from "@app/demo/demo.component";
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { AuditLogComponent } from "./auditlog/auditlog.component";
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' } },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' } },
                     { path: 'about', component: AboutComponent },
-                    { path: 'auditlogs', component: AuditLogComponent }
+                    { path: 'auditlogs', component: AuditLogComponent },
+                    { path: 'demo', component: DemoComponent }
                 ]
             }
         ])

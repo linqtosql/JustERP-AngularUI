@@ -33,6 +33,7 @@ import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
 import { AuditLogComponent } from '@app/auditlog/auditlog.component';
+import { DemoComponent } from "@app/demo/demo.component";
 
 @NgModule({
     declarations: [
@@ -40,13 +41,13 @@ import { AuditLogComponent } from '@app/auditlog/auditlog.component';
         HomeComponent,
         AboutComponent,
         TenantsComponent,
-		CreateTenantComponent,
-		EditTenantComponent,
+        CreateTenantComponent,
+        EditTenantComponent,
         UsersComponent,
-		CreateUserComponent,
-		EditUserComponent,
-      	RolesComponent,        
-		CreateRoleComponent,
+        CreateUserComponent,
+        EditUserComponent,
+        RolesComponent,
+        CreateRoleComponent,
         EditRoleComponent,
         AuditLogComponent,
         TopBarComponent,
@@ -54,7 +55,8 @@ import { AuditLogComponent } from '@app/auditlog/auditlog.component';
         SideBarUserAreaComponent,
         SideBarNavComponent,
         SideBarFooterComponent,
-        RightSideBarComponent
+        RightSideBarComponent,
+        DemoComponent
     ],
     imports: [
         CommonModule,

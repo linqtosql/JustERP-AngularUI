@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
     if (typeof jQuery === "undefined") {
         throw new Error("jQuery plugins need to be before this file");
     }
@@ -48,13 +48,13 @@
     *  
     */
     $.AdminBSB.leftSideBar = {
-        activate: function () {
+        activate: function() {
             var _this = this;
             var $body = $('body');
             var $overlay = $('.overlay');
 
             //Close sidebar
-            $(window).click(function (e) {
+            $(window).click(function(e) {
                 var $target = $(e.target);
                 if (e.target.nodeName.toLowerCase() === 'i') { $target = $(e.target).parent(); }
 
@@ -64,12 +64,12 @@
                 }
             });
 
-            $.each($('.menu-toggle.toggled'), function (i, val) {
+            $.each($('.menu-toggle.toggled'), function(i, val) {
                 $(val).next().slideToggle(0);
             });
 
             //When page load
-            $.each($('.menu .list li.active'), function (i, val) {
+            $.each($('.menu .list li.active'), function(i, val) {
                 var $activeAnchors = $(val).find('a:eq(0)');
 
                 $activeAnchors.addClass('toggled');
@@ -77,14 +77,14 @@
             });
 
             //Collapse or Expand Menu
-            $('.menu-toggle').on('click', function (e) {
+            $('.menu-toggle').on('click', function(e) {
                 var $this = $(this);
                 var $content = $this.next();
 
                 if ($($this.parents('ul')[0]).hasClass('list')) {
                     var $not = $(e.target).hasClass('menu-toggle') ? e.target : $(e.target).parents('.menu-toggle');
 
-                    $.each($('.menu-toggle.toggled').not($not).next(), function (i, val) {
+                    $.each($('.menu-toggle.toggled').not($not).next(), function(i, val) {
                         if ($(val).is(':visible')) {
                             $(val).prev().toggleClass('toggled');
                             $(val).slideUp();
@@ -99,7 +99,7 @@
             //Set menu height
             _this.setMenuHeight();
             _this.checkStatuForResize(true);
-            $(window).resize(function () {
+            $(window).resize(function() {
                 _this.setMenuHeight();
                 _this.checkStatuForResize(false);
             });
@@ -108,7 +108,7 @@
             Waves.attach('.menu .list a', ['waves-block']);
             Waves.init();
         },
-        setMenuHeight: function (isFirstTime) {
+        setMenuHeight: function(isFirstTime) {
             if (typeof $.fn.slimScroll != 'undefined') {
                 var configs = $.AdminBSB.options.leftSideBar;
                 var height = ($(window).height() - ($('.legal').outerHeight() + $('.user-info').outerHeight() + $('.navbar').innerHeight()));
@@ -133,13 +133,13 @@
                 }
             }
         },
-        checkStatuForResize: function (firstTime) {
+        checkStatuForResize: function(firstTime) {
             var $body = $('body');
             var $openCloseBar = $('.navbar .navbar-header .bars');
             var width = $body.width();
 
             if (firstTime) {
-                $body.find('.content, .sidebar').addClass('no-animate').delay(1000).queue(function () {
+                $body.find('.content, .sidebar').addClass('no-animate').delay(1000).queue(function() {
                     $(this).removeClass('no-animate').dequeue();
                 });
             }
@@ -153,7 +153,7 @@
                 $openCloseBar.fadeOut();
             }
         },
-        isOpen: function () {
+        isOpen: function() {
             return $('body').hasClass('overlay-open');
         }
     };
@@ -164,13 +164,13 @@
     *  
     */
     $.AdminBSB.rightSideBar = {
-        activate: function () {
+        activate: function() {
             var _this = this;
             var $sidebar = $('#rightsidebar');
             var $overlay = $('.overlay');
 
             //Close sidebar
-            $(window).click(function (e) {
+            $(window).click(function(e) {
                 var $target = $(e.target);
                 if (e.target.nodeName.toLowerCase() === 'i') { $target = $(e.target).parent(); }
 
@@ -180,12 +180,12 @@
                 }
             });
 
-            $('.js-right-sidebar').on('click', function () {
+            $('.js-right-sidebar').on('click', function() {
                 $sidebar.toggleClass('open');
                 if (_this.isOpen()) { $overlay.fadeIn(); } else { $overlay.fadeOut(); }
             });
         },
-        isOpen: function () {
+        isOpen: function() {
             return $('.right-sidebar').hasClass('open');
         }
     }
@@ -196,34 +196,34 @@
     *  
     */
     $.AdminBSB.search = {
-        activate: function () {
+        activate: function() {
             var _this = this;
             var $searchBar = $('.search-bar');
 
             //Search button click event
-            $('.js-search').on('click', function () {
+            $('.js-search').on('click', function() {
                 _this.showSearchBar();
             });
 
             //Close search click event
-            $searchBar.find('.close-search').on('click', function () {
+            $searchBar.find('.close-search').on('click', function() {
                 _this.hideSearchBar();
             });
 
             //ESC key on pressed
-            $searchBar.find('input[type="text"]').on('keyup', function (e) {
+            $searchBar.find('input[type="text"]').on('keyup', function(e) {
                 if (e.keyCode == 27) {
                     _this.hideSearchBar();
                 }
             });
         },
-        showSearchBar: function () {
+        showSearchBar: function() {
             var $searchBar = $('.search-bar');
             $searchBar.addClass('open');
             $searchBar.find('input[type="text"]').focus();
             console.log($searchBar);
         },
-        hideSearchBar: function () {
+        hideSearchBar: function() {
             var $searchBar = $('.search-bar');
             $searchBar.removeClass('open');
             $searchBar.find('input[type="text"]').val('');
@@ -236,23 +236,23 @@
     *  
     */
     $.AdminBSB.navbar = {
-        activate: function () {
+        activate: function() {
             var $body = $('body');
             var $overlay = $('.overlay');
 
             //Open left sidebar panel
-            $('.bars').on('click', function () {
+            $('.bars').on('click', function() {
                 $body.toggleClass('overlay-open');
                 if ($body.hasClass('overlay-open')) { $overlay.fadeIn(); } else { $overlay.fadeOut(); }
             });
 
             //Close collapse bar on click event
-            $('.nav [data-close="true"]').on('click', function () {
+            $('.nav [data-close="true"]').on('click', function() {
                 var isVisible = $('.navbar-toggle').is(':visible');
                 var $navbarCollapse = $('.navbar-collapse');
 
                 if (isVisible) {
-                    $navbarCollapse.slideUp(function () {
+                    $navbarCollapse.slideUp(function() {
                         $navbarCollapse.removeClass('in').removeAttr('style');
                     });
                 }
@@ -266,16 +266,16 @@
     *  
     */
     $.AdminBSB.input = {
-        activate: function ($parentSelector) {
+        activate: function($parentSelector) {
             $parentSelector = $parentSelector || $('body');
 
             //On focus event
-            $parentSelector.find('.form-control').focus(function () {
+            $parentSelector.find('.form-control').focus(function() {
                 $(this).parent().addClass('focused');
             });
 
             //On focusout event
-            $parentSelector.find('.form-control').focusout(function () {
+            $parentSelector.find('.form-control').focusout(function() {
                 var $this = $(this);
                 if ($this.parents('.form-group').hasClass('form-float')) {
                     if ($this.val() == '') { $this.parents('.form-line').removeClass('focused'); }
@@ -286,12 +286,12 @@
             });
 
             //On label click
-            $parentSelector.on('click', '.form-float .form-line .form-label', function () {
+            $parentSelector.on('click', '.form-float .form-line .form-label', function() {
                 $(this).parent().find('input').focus();
             });
 
             //Not blank form
-            $parentSelector.find('.form-control').each(function () {
+            $parentSelector.find('.form-control').each(function() {
                 if ($(this).val() !== '') {
                     $(this).parents('.form-line').addClass('focused');
                 }
@@ -305,11 +305,19 @@
     *  
     */
     $.AdminBSB.select = {
-        activate: function () {
+        activate: function() {
             if ($.fn.selectpicker) { $('select:not(.ms)').selectpicker(); }
         }
     }
     //==========================================================================================================================
+
+
+    $.AdminBSB.colorpicker = {
+        activate: function() {
+            if ($.fn.colorpicker) { $('.colorpicker').colorpicker(); }
+        }
+    }
+
 
     /* DropdownMenu - Function =================================================================================================
     *  You can manage the dropdown menu
@@ -317,26 +325,26 @@
     */
 
     $.AdminBSB.dropdownMenu = {
-        activate: function () {
+        activate: function() {
             var _this = this;
 
             $('.dropdown, .dropup, .btn-group').on({
-                "show.bs.dropdown": function () {
+                "show.bs.dropdown": function() {
                     var dropdown = _this.dropdownEffect(this);
                     _this.dropdownEffectStart(dropdown, dropdown.effectIn);
                 },
-                "shown.bs.dropdown": function () {
+                "shown.bs.dropdown": function() {
                     var dropdown = _this.dropdownEffect(this);
                     if (dropdown.effectIn && dropdown.effectOut) {
-                        _this.dropdownEffectEnd(dropdown, function () { });
+                        _this.dropdownEffectEnd(dropdown, function() { });
                     }
                 },
-                "hide.bs.dropdown": function (e) {
+                "hide.bs.dropdown": function(e) {
                     var dropdown = _this.dropdownEffect(this);
                     if (dropdown.effectOut) {
                         e.preventDefault();
                         _this.dropdownEffectStart(dropdown, dropdown.effectOut);
-                        _this.dropdownEffectEnd(dropdown, function () {
+                        _this.dropdownEffectEnd(dropdown, function() {
                             dropdown.dropdown.removeClass('open');
                         });
                     }
@@ -347,7 +355,7 @@
             Waves.attach('.dropdown-menu li a', ['waves-block']);
             Waves.init();
         },
-        dropdownEffect: function (target) {
+        dropdownEffect: function(target) {
             var effectIn = $.AdminBSB.options.dropdownMenu.effectIn, effectOut = $.AdminBSB.options.dropdownMenu.effectOut;
             var dropdown = $(target), dropdownMenu = $('.dropdown-menu', target);
 
@@ -366,16 +374,16 @@
                 effectOut: effectOut
             };
         },
-        dropdownEffectStart: function (data, effectToStart) {
+        dropdownEffectStart: function(data, effectToStart) {
             if (effectToStart) {
                 data.dropdown.addClass('dropdown-animating');
                 data.dropdownMenu.addClass('animated dropdown-animated');
                 data.dropdownMenu.addClass(effectToStart);
             }
         },
-        dropdownEffectEnd: function (data, callback) {
+        dropdownEffectEnd: function(data, callback) {
             var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-            data.dropdown.one(animationEnd, function () {
+            data.dropdown.one(animationEnd, function() {
                 data.dropdown.removeClass('dropdown-animating');
                 data.dropdownMenu.removeClass('animated dropdown-animated');
                 data.dropdownMenu.removeClass(data.effectIn);
@@ -402,13 +410,13 @@
     var safari = 'Safari';
 
     $.AdminBSB.browser = {
-        activate: function () {
+        activate: function() {
             var _this = this;
             var className = _this.getClassName();
 
             if (className !== '') $('html').addClass(_this.getClassName());
         },
-        getBrowser: function () {
+        getBrowser: function() {
             var userAgent = navigator.userAgent.toLowerCase();
 
             if (/edge/i.test(userAgent)) {
@@ -429,7 +437,7 @@
 
             return undefined;
         },
-        getClassName: function () {
+        getClassName: function() {
             var browser = this.getBrowser();
 
             if (browser === edge) {
@@ -453,14 +461,26 @@
     }
     //==========================================================================================================================
 
-    $.AdminBSB.activateAll = function () {
+    $.AdminBSB.inputmask = {
+        activate: function() {
+            if ($.fn.inputmask) {
+                $.each($(".input-mask[input-mask-format]"), function(i, obj) {
+                    $(obj).inputmask($(obj).attr("input-mask-format"));
+                })
+            }
+        }
+    }
+
+    $.AdminBSB.activateAll = function() {
         $.AdminBSB.browser.activate();
         $.AdminBSB.leftSideBar.activate();
         $.AdminBSB.rightSideBar.activate();
         $.AdminBSB.navbar.activate();
-        //$.AdminBSB.dropdownMenu.activate(); //Breaks drop downs, so disabled it!
+        $.AdminBSB.dropdownMenu.activate(); //Breaks drop downs, so disabled it!
         $.AdminBSB.input.activate();
         $.AdminBSB.select.activate();
         $.AdminBSB.search.activate();
+        $.AdminBSB.colorpicker.activate();
+        $.AdminBSB.inputmask.activate();
     }
 })();
