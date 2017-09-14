@@ -68,7 +68,8 @@
     "ts-helpers": "^1.1.2",
     "zone.js": "0.8.17",
     "inputmask": "^3.3.8",
-    "jstree": "^3.3.4"
+    "jstree": "^3.3.4",
+    "dropzone": "^5.1.1"
   },
   "devDependencies": {
     "@angular/cli": "^1.3.2",
