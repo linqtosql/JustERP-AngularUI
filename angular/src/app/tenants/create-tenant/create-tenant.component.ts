@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { TenantServiceProxy, CreateTenantDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
@@ -34,6 +34,7 @@ export class CreateTenantComponent extends AppComponentBase {
     }
 
     onShown(): void {
+        console.log("onShown");
         $.AdminBSB.input.activate($(this.modalContent.nativeElement));
     }
 

@@ -9,6 +9,7 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from "app/roles/roles.component";
 import { AuditLogComponent } from "./auditlog/auditlog.component";
 import { DemoComponent } from "@app/demo/demo.component";
+import { FormDemoComponent } from "@app/demo/form-demo-component"
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { DemoComponent } from "@app/demo/demo.component";
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' } },
                     { path: 'about', component: AboutComponent },
                     { path: 'auditlogs', component: AuditLogComponent },
-                    { path: 'demo', component: DemoComponent }
+                    { path: 'demo', component: DemoComponent },
+                    { path: 'dynamicform', component: FormDemoComponent }
                 ]
             }
         ])

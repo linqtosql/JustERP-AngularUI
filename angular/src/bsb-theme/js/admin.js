@@ -474,7 +474,13 @@
     $.AdminBSB.dropzone = {
         activate: function () {
             if ($.fn.dropzone) {
-                $(".dropzone").dropzone({ url: "/file/post" });
+                $.each($(".dropzone"), function (i, element) {
+                    if (element.dropzone) {
+                        return;
+                    }
+                    $(element).dropzone({ url: "/file/post" });
+                });
+                
             }
         }
     }
@@ -497,7 +503,6 @@
 
     $.AdminBSB.nouislider = {
         activate: function (options) {
-            console.log(document.getElementById(options.id));
             if (noUiSlider) {
                 noUiSlider.create(document.getElementById(options.id), options);
             }

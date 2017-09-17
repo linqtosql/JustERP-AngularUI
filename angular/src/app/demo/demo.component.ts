@@ -11,6 +11,7 @@ export class DemoComponent implements OnInit {
         $.AdminBSB.inputmask.activate();
         $.AdminBSB.tagsinput.activate();
         $.AdminBSB.spinner.activate();
+        $.AdminBSB.dropzone.activate();
         $.AdminBSB.nouislider.activate({
             id: "nouislider_basic",
             start: 30,
