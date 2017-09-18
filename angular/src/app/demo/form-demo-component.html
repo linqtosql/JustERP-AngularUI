@@ -6,10 +6,7 @@
             </div>
             <div class="body">
                 <form #formContent>
-                    <form-item></form-item>
-                    <form-item></form-item>
-                    <form-item></form-item>
-                    <form-item></form-item>
+                    <form-item [item]="item" *ngFor="let item of formItems"></form-item>
                 </form>
             </div>
         </div>

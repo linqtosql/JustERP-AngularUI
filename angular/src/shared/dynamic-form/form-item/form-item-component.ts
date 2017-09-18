@@ -8,7 +8,7 @@ import { AppComponentBase } from "@shared/app-component-base"
 })
 export class FormItemComponent extends AppComponentBase {
 
-    @Input() item: FormItemBase
+    @Input() item: FormItemBase<any>
 
     constructor(injector: Injector) {
         super(injector);
