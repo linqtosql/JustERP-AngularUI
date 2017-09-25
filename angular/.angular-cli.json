@@ -1,107 +1,45 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "abp-project-name-template"
+    "name": "JustERP-Web"
   },
-  "apps": [
-    {
-      "root": "src",
-      "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico",
-        {
-          "glob": "abp.signalr.js",
-          "input": "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/",
-          "output": "./assets/abp/"
-        }
-      ],
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.json",
-      "prefix": "app",
-      "styles": [
-        "assets/fonts/roboto/roboto.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/bootstrap-select/dist/css/bootstrap-select.css",
-        "../node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css",
-        "../node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.less",
-        "../node_modules/dropzone/dist/min/basic.min.css",
-        "../node_modules/dropzone/dist/min/dropzone.min.css",
-        "../node_modules/jquery.spinner/dist/css/bootstrap-spinner.min.css",
-        "../node_modules/nouislider/distribute/nouislider.min.css",
-        "../node_modules/simple-line-icons/css/simple-line-icons.css",
-        "../node_modules/font-awesome/css/font-awesome.css",
-        "../node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
-        "../node_modules/toastr/build/toastr.css",
-        "../node_modules/sweetalert/dist/sweetalert.css",
-        "../node_modules/node-waves/dist/waves.css",
-        "../src/bsb-theme/css/materialize.css",
-        "../src/bsb-theme/css/style.css",
-        "../src/bsb-theme/css/themes/all-themes.css",
-        "../src/shared/core.less"
-      ],
-      "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/jquery-migrate/dist/jquery-migrate.min.js",
-        "../node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
-        "../node_modules/jquery.spinner/dist/js/jquery.spinner.min.js",
-        "../node_modules/jquery-sparkline/jquery.sparkline.min.js",
-        "../node_modules/jquery-countto/jquery.countTo.js",
-        "../node_modules/js-cookie/src/js.cookie.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.js",
-        "../node_modules/bootstrap-select/dist/js/bootstrap-select.js",
-        "../node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js",
-        "../node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
-        "../node_modules/lodash/lodash.min.js",
-        "../node_modules/moment/min/moment.min.js",
-        "../node_modules/signalr/jquery.signalR.js",
-        "../node_modules/toastr/toastr.js",
-        "../node_modules/sweetalert/dist/sweetalert.min.js",
-        "../node_modules/block-ui/jquery.blockUI.js",
-        "../node_modules/spin.js/spin.min.js",
-        "../node_modules/spin.js/jquery.spin.js",
-        "../node_modules/push.js/bin/push.min.js",
-        "../node_modules/node-waves/dist/waves.min.js",
-        "../node_modules/raphael/raphael.min.js",
-        "../node_modules/morris.js/morris.min.js",
-        "../node_modules/chart.js/dist/Chart.bundle.min.js",
-        "../node_modules/flot/jquery.flot.js",
-        "../node_modules/flot/jquery.flot.resize.js",
-        "../node_modules/flot/jquery.flot.pie.js",
-        "../node_modules/flot/jquery.flot.categories.js",
-        "../node_modules/flot/jquery.flot.time.js",
-        "../node_modules/inputmask/dist/min/jquery.inputmask.bundle.min.js",
-        "../node_modules/dropzone/dist/dropzone.js",
-        "../node_modules/nouislider/distribute/nouislider.min.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/abp.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
-        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
-        "../src/bsb-theme/js/admin.js",
-        "../src/bsb-theme/js/demo.js",
-        "../src/bsb-theme/js/jquery.validate.js"
-      ],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts",
-        "hmr": "environments/environment.hmr.ts"
+  "apps": [{
+    "root": "src",
+    "outDir": "dist",
+    "assets": [
+      "assets",
+      "favicon.ico",
+      {
+        "glob": "abp.signalr.js",
+        "input": "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/",
+        "output": "./assets/abp/"
       }
+    ],
+    "index": "index.html",
+    "main": "main.ts",
+    "polyfills": "polyfills.ts",
+    "test": "test.ts",
+    "tsconfig": "tsconfig.json",
+    "prefix": "app",
+    "styles": [
+      "styles.scss",
+      "..\/node_modules\/primeng\/resources\/primeng.css",
+      "..\/node_modules\/primeng\/resources\/themes\/bootstrap\/theme.css"
+    ],
+    "scripts": [],
+    "environmentSource": "environments/environment.ts",
+    "environments": {
+      "dev": "environments/environment.ts",
+      "prod": "environments/environment.prod.ts",
+      "hmr": "environments/environment.hmr.ts"
     }
-  ],
+  }],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
     }
   },
-  "lint": [
-    {
+  "lint": [{
       "files": "src/**/*.ts",
       "project": "src/tsconfig.json"
     },
@@ -116,7 +54,29 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {}
+    "styleExt": "scss",
+    "component": {
+      "spec": false,
+      "inlineStyle": true,
+      "inlineTemplate": true
+    },
+    "directive": {
+      "spec": false
+    },
+    "class": {
+      "spec": false
+    },
+    "guard": {
+      "spec": false
+    },
+    "module": {
+      "spec": false
+    },
+    "pipe": {
+      "spec": false
+    },
+    "service": {
+      "spec": false
+    }
   }
 }

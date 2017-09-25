@@ -14,7 +14,6 @@ import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 
 import { RootComponent } from './root.component';
 import { AppPreBootstrap } from './AppPreBootstrap';
-import { ModalModule } from 'ngx-bootstrap';
 
 
 export function appInitializerFactory(injector: Injector) {
@@ -23,7 +22,7 @@ export function appInitializerFactory(injector: Injector) {
     abp.ui.setBusy();
     return new Promise<boolean>((resolve, reject) => {
       AppPreBootstrap.run(() => {
-        var appSessionService: AppSessionService = injector.get(AppSessionService);
+        const appSessionService: AppSessionService = injector.get(AppSessionService);
         appSessionService.init().then(
           (result) => {
             abp.ui.clearBusy();
@@ -48,7 +47,6 @@ export function getRemoteServiceBaseUrl(): string {
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule.forRoot(),
-    ModalModule.forRoot(),
     AbpModule,
     ServiceProxyModule,
     RootRoutingModule
