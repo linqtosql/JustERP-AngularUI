@@ -10,6 +10,6 @@ export class MaterialInput implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        $.AdminBSB.input.activate($(this._element.nativeElement).parent());
+        
     }
 }

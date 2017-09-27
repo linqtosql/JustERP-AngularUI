@@ -9,8 +9,8 @@ import { ScrollTopComponent } from './scroll-top/scroll-top.component';
 import { TooltipsComponent } from './tooltips/tooltips.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HrefPreventDefaultDirective } from '../../_directives/href-prevent-default.directive';
-import { UnwrapTagDirective } from '../../_directives/unwrap-tag.directive';
+import { HrefPreventDefaultDirective } from '@shared/directives/href-prevent-default.directive';
+import { UnwrapTagDirective } from '@shared/directives/unwrap-tag.directive';
 
 @NgModule({
     declarations: [

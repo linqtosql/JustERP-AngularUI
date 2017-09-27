@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../_services/authentication.service";
-import { Helpers } from "../../helpers";
+import { Helpers } from "@shared/helpers";
 
 @Component({
     selector: 'app-logout',

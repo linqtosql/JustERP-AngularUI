@@ -3,43 +3,48 @@
   "project": {
     "name": "JustERP-Web"
   },
-  "apps": [{
-    "root": "src",
-    "outDir": "dist",
-    "assets": [
-      "assets",
-      "favicon.ico",
-      {
-        "glob": "abp.signalr.js",
-        "input": "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/",
-        "output": "./assets/abp/"
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        {
+          "glob": "abp.signalr.js",
+          "input": "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/",
+          "output": "./assets/abp/"
+        }
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.json",
+      "prefix": "app",
+      "styles": [
+        "styles.scss"
+      ],
+      "scripts": [
+        "../node_modules/signalr/jquery.signalR.js",        
+        "../node_modules/abp-web-resources/Abp/Framework/scripts/abp.js",
+        "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js"        
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts",
+        "hmr": "environments/environment.hmr.ts"
       }
-    ],
-    "index": "index.html",
-    "main": "main.ts",
-    "polyfills": "polyfills.ts",
-    "test": "test.ts",
-    "tsconfig": "tsconfig.json",
-    "prefix": "app",
-    "styles": [
-      "styles.scss",
-      "..\/node_modules\/primeng\/resources\/primeng.css",
-      "..\/node_modules\/primeng\/resources\/themes\/bootstrap\/theme.css"
-    ],
-    "scripts": [],
-    "environmentSource": "environments/environment.ts",
-    "environments": {
-      "dev": "environments/environment.ts",
-      "prod": "environments/environment.prod.ts",
-      "hmr": "environments/environment.hmr.ts"
     }
-  }],
+  ],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
     }
   },
-  "lint": [{
+  "lint": [
+    {
       "files": "src/**/*.ts",
       "project": "src/tsconfig.json"
     },

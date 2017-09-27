@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef } from '@angular/core';
-import { Helpers } from '../helpers';
+import { Helpers } from '@shared/helpers';
 
 
 @Directive({

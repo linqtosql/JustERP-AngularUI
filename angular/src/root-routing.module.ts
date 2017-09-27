@@ -1,18 +1,11 @@
 ﻿import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LogoutComponent } from "./app/auth/logout/logout.component";
 
 const routes: Routes = [
-    { path: '', redirectTo: '/app/home', pathMatch: 'full' },
-    {
-        path: 'account',
-        loadChildren: 'account/account.module#AccountModule', //Lazy load account module
-        data: { preload: true }
-    },
-    {
-        path: 'app',
-        loadChildren: 'app/app.module#AppModule', //Lazy load account module
-        data: { preload: true }
-    }
+    { path: 'login', loadChildren: './app/auth/auth.module#AuthModule' },
+    { path: 'logout', component: LogoutComponent },
+    { path: '', redirectTo: 'index', pathMatch: 'full' },
 ];
 
 @NgModule({
