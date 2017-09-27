@@ -8,6 +8,12 @@ import { SharedModule } from '@shared/shared.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { RootRoutingModule } from './root-routing.module';
 
+import { LayoutModule } from './app/theme/layouts/layout.module';
+import { ScriptLoaderService } from '@shared/services/script-loader.service';
+import { ThemeRoutingModule } from './app/theme/theme-routing.module';
+import { AuthModule } from './app/auth/auth.module';
+import { ThemeComponent } from './app/theme/theme.component';
+
 import { AppConsts } from '@shared/AppConsts';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
@@ -49,13 +55,18 @@ export function getRemoteServiceBaseUrl(): string {
     SharedModule.forRoot(),
     AbpModule,
     ServiceProxyModule,
-    RootRoutingModule
+    RootRoutingModule,
+    ThemeRoutingModule,
+    LayoutModule,
+    AuthModule
   ],
   declarations: [
-    RootComponent
+    RootComponent,
+    ThemeComponent
   ],
   providers: [
     ABP_HTTP_PROVIDER,
+    ScriptLoaderService,
     { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
     {
       provide: APP_INITIALIZER,

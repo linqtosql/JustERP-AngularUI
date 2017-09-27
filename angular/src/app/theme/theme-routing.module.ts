@@ -7,16 +7,7 @@ const routes: Routes = [
     {
         "path": "",
         "component": ThemeComponent,
-        "canActivate": [AuthGuard],
         "children": [
-            {
-                "path": "angular\/ng-bootstrap",
-                "loadChildren": ".\/pages\/default\/angular\/ng-bootstrap\/ng-bootstrap.module#NgBootstrapModule"
-            },
-            {
-                "path": "angular\/primeng",
-                "loadChildren": ".\/pages\/default\/angular\/primeng\/primeng.module#PrimengModule"
-            },
             {
                 "path": "index",
                 "loadChildren": ".\/pages\/default\/index\/index.module#IndexModule"

@@ -1,10 +1,10 @@
-﻿import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd } from "@angular/router"
-import { Helpers } from "@shared/helpers";
+﻿import { Component, ViewEncapsulation, OnInit } from '@angular/core'
+import { Router, NavigationStart, NavigationEnd } from '@angular/router'
+import { Helpers } from '@shared/helpers'
 
 @Component({
     selector: 'body',
-    template: './app.component.html',
+    templateUrl: './root.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class RootComponent implements OnInit {
