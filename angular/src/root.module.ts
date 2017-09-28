@@ -67,13 +67,7 @@ export function getRemoteServiceBaseUrl(): string {
   providers: [
     ABP_HTTP_PROVIDER,
     ScriptLoaderService,
-    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
-      deps: [Injector],
-      multi: true
-    }
+    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl }
   ],
   bootstrap: [RootComponent]
 })
