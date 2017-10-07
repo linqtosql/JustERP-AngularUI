@@ -4,6 +4,7 @@ import { Helpers } from '@shared/helpers';
 import { ScriptLoaderService } from '@shared/services/script-loader.service';
 
 declare let mApp: any;
+declare let mUtil: any;
 @Component({
     selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
     templateUrl: "./theme.component.html",
@@ -24,8 +25,13 @@ export class ThemeComponent implements OnInit {
             if (route instanceof NavigationStart) {
                 (<any>mApp).scrollTop();
                 Helpers.setLoading(true);
+                // hide visible popover
+                (<any>$('[data-toggle="m-popover"]')).popover('hide');
             }
             if (route instanceof NavigationEnd) {
+                // init required js
+                (<any>mApp).init();
+                (<any>mUtil).init();
                 Helpers.setLoading(false);
                 // content m-wrapper animation
                 let animation = 'm-animate-fade-in-up';
