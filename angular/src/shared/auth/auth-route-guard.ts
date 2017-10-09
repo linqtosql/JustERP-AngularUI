@@ -20,7 +20,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this._sessionService.user) {
-            this._router.navigate(['/account/login']);
+            this._router.navigate(['/login']);
             return false;
         }
 

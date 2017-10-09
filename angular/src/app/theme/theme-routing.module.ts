@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from "../auth/_guards/auth.guard";
+import { AppRouteGuard } from "@shared/auth/auth-route-guard";
 
 const routes: Routes = [
     {
         "path": "",
         "component": ThemeComponent,
+        "canActivate": [AppRouteGuard],
         "children": [
             {
                 "path": "index",
