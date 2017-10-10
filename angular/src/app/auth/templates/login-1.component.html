@@ -28,15 +28,15 @@
 						<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertSignin></ng-template>
 							<div class="form-group m-form__group">
-								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">
+								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" #email="ngModel" autocomplete="off">
 							</div>
 							<div class="form-group m-form__group">
-								<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel">
+								<input class="form-control m-input m-login__form-input--last" type="password" placeholder="Password" name="password" [(ngModel)]="authService.authenticateModel.password" #password="ngModel">
 							</div>
 							<div class="row m-login__form-sub">
 								<div class="col m--align-left">
 									<label class="m-checkbox m-checkbox--focus">
-										<input type="checkbox" name="remember" [(ngModel)]="model.remember" #remember="ngModel">
+										<input type="checkbox" name="remember" [(ngModel)]="authService.rememberMe" #remember="ngModel">
 										Remember me
 										<span></span>
 									</label>

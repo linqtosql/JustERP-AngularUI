@@ -13,6 +13,7 @@ import { AlertService } from "./_services/alert.service";
 import { AuthenticationService } from "./_services/authentication.service";
 import { UserService } from "./_services/user.service";
 import { fakeBackendProvider } from "./_helpers/index";
+import { LoginService } from './_services/login.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import { fakeBackendProvider } from "./_helpers/index";
     providers: [
         AuthGuard,
         AlertService,
-        AuthenticationService,
+        LoginService,
         UserService,
         // api backend simulation
         fakeBackendProvider,
