@@ -54,7 +54,7 @@ export class LoginService {
             //Unexpected result!
 
             this._logService.warn('Unexpected authenticateResult!');
-            this._router.navigate(['account/login']);
+            this._router.navigate(['/login']);
         }
     }
 

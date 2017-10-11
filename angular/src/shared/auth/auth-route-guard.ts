@@ -42,7 +42,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
     selectBestRoute(): string {
         if (!this._sessionService.user) {
-            return '/account/login';
+            return '/login';
         }
         
         if (this._permissionChecker.isGranted('Pages.Users')) {
