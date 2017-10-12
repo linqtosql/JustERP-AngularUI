@@ -1,4 +1,4 @@
-(function () {
+﻿(function() {
     if (typeof jQuery === "undefined") {
         throw new Error("jQuery plugins need to be before this file");
     }
@@ -311,14 +311,6 @@
     }
     //==========================================================================================================================
 
-
-    $.AdminBSB.colorpicker = {
-        activate: function () {
-            if ($.fn.colorpicker) { $('.colorpicker').colorpicker(); }
-        }
-    }
-
-
     /* DropdownMenu - Function =================================================================================================
     *  You can manage the dropdown menu
     *  
@@ -461,66 +453,14 @@
     }
     //==========================================================================================================================
 
-    $.AdminBSB.inputmask = {
-        activate: function () {
-            if ($.fn.inputmask) {
-                $.each($(".input-mask[input-mask-format]"), function (i, obj) {
-                    $(obj).inputmask($(obj).attr("input-mask-format"));
-                })
-            }
-        }
-    }
-
-    $.AdminBSB.dropzone = {
-        activate: function () {
-            if ($.fn.dropzone) {
-                $.each($(".dropzone"), function (i, element) {
-                    if (element.dropzone) {
-                        return;
-                    }
-                    $(element).dropzone({ url: "/file/post" });
-                });
-                
-            }
-        }
-    }
-
-    $.AdminBSB.tagsinput = {
-        activate: function () {
-            if ($.fn.tagsinput) {
-                $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
-            }
-        }
-    }
-
-    $.AdminBSB.spinner = {
-        activate: function () {
-            if ($.fn.spinner) {
-                $('[data-trigger="spinner"]').spinner();
-            }
-        }
-    }
-
-    $.AdminBSB.nouislider = {
-        activate: function (options) {
-            if (noUiSlider) {
-                noUiSlider.create(document.getElementById(options.id), options);
-            }
-        }
-    }
-
-
     $.AdminBSB.activateAll = function () {
         $.AdminBSB.browser.activate();
         $.AdminBSB.leftSideBar.activate();
         $.AdminBSB.rightSideBar.activate();
         $.AdminBSB.navbar.activate();
-        $.AdminBSB.dropdownMenu.activate(); //Breaks drop downs, so disabled it!
+        //$.AdminBSB.dropdownMenu.activate(); //Breaks drop downs, so disabled it!
         $.AdminBSB.input.activate();
         $.AdminBSB.select.activate();
         $.AdminBSB.search.activate();
-        $.AdminBSB.colorpicker.activate();
-        $.AdminBSB.inputmask.activate();
-        $.AdminBSB.dropzone.activate();
     }
 })();

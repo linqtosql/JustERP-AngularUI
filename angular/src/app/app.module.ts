@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
@@ -32,10 +32,6 @@ import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
-import { FormItemComponent } from "@shared/dynamic-form/form-item/form-item-component";
-import { AuditLogComponent } from '@app/auditlog/auditlog.component';
-import { DemoComponent } from "@app/demo/demo.component";
-import { FormDemoComponent } from "@app/demo/form-demo-component"
 
 @NgModule({
     declarations: [
@@ -43,24 +39,21 @@ import { FormDemoComponent } from "@app/demo/form-demo-component"
         HomeComponent,
         AboutComponent,
         TenantsComponent,
-        CreateTenantComponent,
-        EditTenantComponent,
+		CreateTenantComponent,
+		EditTenantComponent,
         UsersComponent,
-        CreateUserComponent,
-        EditUserComponent,
-        RolesComponent,
-        CreateRoleComponent,
-        EditRoleComponent,
-        AuditLogComponent,
+		CreateUserComponent,
+		EditUserComponent,
+      	RolesComponent,        
+		CreateRoleComponent,
+		EditRoleComponent,
         TopBarComponent,
         TopBarLanguageSwitchComponent,
         SideBarUserAreaComponent,
         SideBarNavComponent,
         SideBarFooterComponent,
-        RightSideBarComponent,
-        FormItemComponent,
-        DemoComponent,
-        FormDemoComponent
+        RightSideBarComponent
+    
     ],
     imports: [
         CommonModule,
