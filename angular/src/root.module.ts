@@ -12,6 +12,7 @@ import { AppConsts } from '@shared/AppConsts';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 
+import { LayoutModule } from '@app/layout/metronic/layout.module';
 import { RootComponent } from './root.component';
 import { AppPreBootstrap } from './AppPreBootstrap';
 import { ModalModule } from 'ngx-bootstrap';
@@ -44,7 +45,7 @@ export function getRemoteServiceBaseUrl(): string {
 }
 
 export function getCurrentLanguage(): string {
-    return abp.localization.currentLanguage.name;
+  return abp.localization.currentLanguage.name;
 }
 
 @NgModule({
@@ -54,6 +55,7 @@ export function getCurrentLanguage(): string {
     SharedModule.forRoot(),
     ModalModule.forRoot(),
     AbpModule,
+    LayoutModule,
     ServiceProxyModule,
     RootRoutingModule
   ],
@@ -69,10 +71,10 @@ export function getCurrentLanguage(): string {
       deps: [Injector],
       multi: true
     },
-      {
-          provide: LOCALE_ID,
-          useFactory: getCurrentLanguage
-      }
+    {
+      provide: LOCALE_ID,
+      useFactory: getCurrentLanguage
+    }
   ],
   bootstrap: [RootComponent]
 })

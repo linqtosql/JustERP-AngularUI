@@ -6,8 +6,10 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+import { LayoutModule } from '@app/layout/metronic/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppBodyComponent } from './app-body.component';
 
 import { AbpModule } from '@abp/abp.module';
 
@@ -36,24 +38,24 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
 @NgModule({
     declarations: [
         AppComponent,
+        AppBodyComponent,
         HomeComponent,
         AboutComponent,
         TenantsComponent,
-		CreateTenantComponent,
-		EditTenantComponent,
+        CreateTenantComponent,
+        EditTenantComponent,
         UsersComponent,
-		CreateUserComponent,
-		EditUserComponent,
-      	RolesComponent,        
-		CreateRoleComponent,
-		EditRoleComponent,
+        CreateUserComponent,
+        EditUserComponent,
+        RolesComponent,
+        CreateRoleComponent,
+        EditRoleComponent,
         TopBarComponent,
         TopBarLanguageSwitchComponent,
         SideBarUserAreaComponent,
         SideBarNavComponent,
         SideBarFooterComponent,
         RightSideBarComponent
-    
     ],
     imports: [
         CommonModule,
@@ -61,6 +63,7 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
         HttpModule,
         JsonpModule,
         ModalModule.forRoot(),
+        LayoutModule,
         AbpModule,
         AppRoutingModule,
         ServiceProxyModule,

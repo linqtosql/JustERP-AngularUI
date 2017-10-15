@@ -1,8 +1,9 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'app-root',
-    template: `<router-outlet></router-outlet>`
+    selector: 'body',
+    templateUrl: `./root.component.html`,
+    encapsulation: ViewEncapsulation.None
 })
 export class RootComponent {
 

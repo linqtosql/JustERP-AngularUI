@@ -1,11 +1,13 @@
-﻿import { Component, ViewContainerRef, Injector, OnInit, AfterViewInit } from '@angular/core';
+﻿import { Component, ViewEncapsulation, ViewContainerRef, Injector, OnInit, AfterViewInit } from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/app-component-base';
 
 import { SignalRHelper } from '@shared/helpers/SignalRHelper';
 
 @Component({
-  templateUrl: './app.component.html'
+  selector: ".m-grid.m-grid--hor.m-grid--root.m-page",
+  templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent extends AppComponentBase implements OnInit, AfterViewInit {
 
