@@ -33,6 +33,62 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
             .subscribe((result: PagedResultDtoOfUserDto) => {
                 this.users = result.items;
                 this.showPaging(result, pageNumber);
+                //todo 需要封装成 table 组件
+                var datatable = $('.m_datatable').mDatatable({
+                    // datasource definition
+                    data: {
+                        type: 'local',
+                        source: result.items,
+                        pageSize: 10
+                    },
+
+                    // layout definition
+                    layout: {
+                        theme: 'default', // datatable theme
+                        class: '', // custom wrapper class
+                        scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                        height: 450, // datatable's body's fixed height
+                        footer: false // display/hide footer
+                    },
+
+                    // column sorting(refer to Kendo UI)
+                    sortable: true,
+
+                    // column based filtering(refer to Kendo UI)
+                    filterable: false,
+
+                    pagination: true,
+
+                    columns: [
+                        {
+                            field: "userName",
+                            title: "用户名",
+                            width: 80,
+                            responsive: { visible: 'lg' },
+                            selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+                        },
+                        {
+                            field: "name",
+                            title: "名字",
+                            responsive: { visible: 'lg' }
+                        },
+                        {
+                            field: "surname",
+                            title: "姓",
+                            responsive: { visible: 'lg' }
+                        },
+                        {
+                            field: "emailAddress",
+                            title: "邮箱",
+                            responsive: { visible: 'lg' }
+                        },
+                        {
+                            field: "fullName",
+                            title: "全名",
+                            responsive: { visible: 'lg' }
+                        },
+                    ]
+                });
             });
     }
 

@@ -20,12 +20,18 @@ declare var Push: any;
 
 interface JQuery {
     countTo(...any): any;
-}
-
-interface JQuery {
     sparkline(...any): any;
+    mMenu(options: any): JQuery;
+    animateClass(options: any): JQuery;
+    setActiveItem(item: any): JQuery;
+    getPageTitle(item: any): JQuery;
+    getBreadcrumbs(item: any): JQuery;
+    validate(options: any): JQuery;
+    valid(): JQuery;
+    resetForm(): JQuery;
+    mDatatable(options: any): any;
 }
 
 interface JQueryStatic {
-    
+
 }

@@ -8,7 +8,6 @@ import { Helpers } from "@shared/helpers/Helpers";
     templateUrl: './logout.component.html',
     encapsulation: ViewEncapsulation.None,
 })
-
 export class LogoutComponent implements OnInit {
 
     constructor(private _router: Router,
