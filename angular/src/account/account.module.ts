@@ -17,6 +17,7 @@ import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeModalComponent } from './tenant/tenant-change-modal.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { LogoutComponent } from './logout/logout.component';
 import { AccountLanguagesComponent } from './layout/account-languages.component';
 
 import { LoginService } from './login/login.service';
@@ -39,6 +40,7 @@ import { LoginService } from './login/login.service';
         TenantChangeModalComponent,
         LoginComponent,
         RegisterComponent,
+        LogoutComponent,
         AccountLanguagesComponent
     ],
     providers: [

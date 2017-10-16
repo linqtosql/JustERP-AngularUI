@@ -6,44 +6,44 @@ import { CreateRoleComponent } from "app/roles/create-role/create-role.component
 import { EditRoleComponent } from "app/roles/edit-role/edit-role.component";
 
 @Component({
-  templateUrl: './roles.component.html',
-  animations: [appModuleAnimation()]
+	selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+	templateUrl: './roles.component.html',
+	animations: [appModuleAnimation()]
 })
 export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 
 	@ViewChild('createRoleModal') createRoleModal: CreateRoleComponent;
 	@ViewChild('editRoleModal') editRoleModal: EditRoleComponent;
-	
+
 	roles: RoleDto[] = [];
 
 	constructor(
-		private injector:Injector,
+		private injector: Injector,
 		private rolesService: RoleServiceProxy
 	) {
 		super(injector);
 	}
-    
+
 	list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
 		this.rolesService.getAll(request.skipCount, request.maxResultCount)
-			.finally( ()=> {
+			.finally(() => {
 				finishedCallback();
 			})
-            .subscribe((result: PagedResultDtoOfRoleDto)=>{
+			.subscribe((result: PagedResultDtoOfRoleDto) => {
 				this.roles = result.items;
 				this.showPaging(result, pageNumber);
-		});
+			});
 	}
 
 	delete(role: RoleDto): void {
 		abp.message.confirm(
-			"Remove Users from Role and delete Role '"+ role.displayName +"'?",
+			"Remove Users from Role and delete Role '" + role.displayName + "'?",
 			"Permanently delete this Role",
-			(result:boolean) =>{
-				if(result)
-				{
+			(result: boolean) => {
+				if (result) {
 					this.rolesService.delete(role.id)
 						.finally(() => {
-							abp.notify.info("Deleted Role: " + role.displayName );
+							abp.notify.info("Deleted Role: " + role.displayName);
 							this.refresh();
 						})
 						.subscribe(() => { });
@@ -57,7 +57,7 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 		this.createRoleModal.show();
 	}
 
-	editRole(role:RoleDto): void {
+	editRole(role: RoleDto): void {
 		this.editRoleModal.show(role.id);
 	}
 }

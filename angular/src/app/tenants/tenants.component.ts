@@ -7,6 +7,7 @@ import { EditTenantComponent } from "app/tenants/edit-tenant/edit-tenant.compone
 import { CreateTenantComponent } from "app/tenants/create-tenant/create-tenant.component";
 
 @Component({
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: './tenants.component.html',
     animations: [appModuleAnimation()]
 })

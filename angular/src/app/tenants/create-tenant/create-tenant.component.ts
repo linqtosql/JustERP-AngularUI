@@ -34,10 +34,6 @@ export class CreateTenantComponent extends AppComponentBase {
         this.tenant.init({isActive:true});
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
-
     save(): void {
         this.saving = true;
         this._tenantService.create(this.tenant)

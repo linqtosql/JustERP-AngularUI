@@ -43,10 +43,6 @@ export class EditRoleComponent extends AppComponentBase implements OnInit {
             });
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
-
     checkPermission(permissionName: string): string {
         if (this.role.permissions.indexOf(permissionName) != -1) {
             return "checked";

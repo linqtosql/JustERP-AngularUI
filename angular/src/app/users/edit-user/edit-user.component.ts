@@ -54,10 +54,6 @@ export class EditUserComponent extends AppComponentBase {
             );
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
-
     save(): void {
         var roles = [];
         $(this.modalContent.nativeElement).find("[name=role]").each(function (ind: number, elem: Element) {

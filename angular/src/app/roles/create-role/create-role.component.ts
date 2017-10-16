@@ -40,10 +40,6 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
         this.modal.show();
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
-
     save(): void {
         var permissions = [];
         $(this.modalContent.nativeElement).find("[name=permission]").each(

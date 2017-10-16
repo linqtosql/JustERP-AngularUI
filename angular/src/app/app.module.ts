@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AppBodyComponent } from './app-body.component';
 
 import { AbpModule } from '@abp/abp.module';
+import { ScriptLoaderService } from '@shared/services/script-loader.service';
 
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
@@ -27,12 +28,7 @@ import { EditRoleComponent } from './roles/edit-role/edit-role.component';
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.component';
 import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component';
-import { TopBarComponent } from '@app/layout/topbar.component';
 import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
-import { SideBarUserAreaComponent } from '@app/layout/sidebar-user-area.component';
-import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
-import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
-import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
 
 @NgModule({
@@ -50,12 +46,7 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
         RolesComponent,
         CreateRoleComponent,
         EditRoleComponent,
-        TopBarComponent,
-        TopBarLanguageSwitchComponent,
-        SideBarUserAreaComponent,
-        SideBarNavComponent,
-        SideBarFooterComponent,
-        RightSideBarComponent
+        TopBarLanguageSwitchComponent
     ],
     imports: [
         CommonModule,
@@ -71,7 +62,7 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
         NgxPaginationModule
     ],
     providers: [
-
+        ScriptLoaderService
     ]
 })
 export class AppModule { }

@@ -6,6 +6,7 @@ import { CreateUserComponent } from "app/users/create-user/create-user.component
 import { EditUserComponent } from "app/users/edit-user/edit-user.component";
 
 @Component({
+    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: './users.component.html',
     animations: [appModuleAnimation()]
 })

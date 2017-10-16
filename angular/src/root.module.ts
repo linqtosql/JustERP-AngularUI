@@ -21,17 +21,14 @@ import { ModalModule } from 'ngx-bootstrap';
 export function appInitializerFactory(injector: Injector) {
   return () => {
 
-    abp.ui.setBusy();
     return new Promise<boolean>((resolve, reject) => {
       AppPreBootstrap.run(() => {
         var appSessionService: AppSessionService = injector.get(AppSessionService);
         appSessionService.init().then(
           (result) => {
-            abp.ui.clearBusy();
             resolve(result);
           },
           (err) => {
-            abp.ui.clearBusy();
             reject(err);
           }
         );

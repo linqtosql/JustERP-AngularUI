@@ -42,10 +42,6 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
         this.user.init({ isActive: true });
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
-
     save(): void {
         //TODO: Refactor this, don't use jQuery style code
         var roles = [];

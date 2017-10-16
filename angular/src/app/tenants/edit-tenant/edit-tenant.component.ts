@@ -38,10 +38,6 @@ export class EditTenantComponent extends AppComponentBase{
 			});
     }
 
-    onShown(): void {
-        $.AdminBSB.input.activate($(this.modalContent.nativeElement));
-    }
-
     save(): void {
         this.saving = true;
         this._tenantService.update(this.tenant)
