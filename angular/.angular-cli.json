@@ -23,6 +23,7 @@
             "tsconfig": "tsconfig.json",
             "prefix": "app",
             "styles": [
+                "./assets/style.less",
                 "./assets/metronic-theme/vendors.bundle.css",
                 "./assets/metronic-theme/style.bundle.css"
             ],

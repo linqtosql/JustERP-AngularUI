@@ -6,10 +6,8 @@ import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 
 @Component({
+    selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
     templateUrl: './login.component.html',
-    styleUrls: [
-        './login.component.less'
-    ],
     animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase {

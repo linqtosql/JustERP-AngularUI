@@ -1,12 +1,11 @@
 ﻿import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { LoginService } from './login/login.service';
 import { AppComponentBase } from '@shared/app-component-base';
+import { Helpers } from '@shared/helpers/Helpers';
 
 @Component({
+    selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
     templateUrl: './account.component.html',
-    styleUrls: [
-        './account.component.less'
-    ],
     encapsulation: ViewEncapsulation.None
 })
 export class AccountComponent extends AppComponentBase implements OnInit {
@@ -31,6 +30,6 @@ export class AccountComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        $('body').attr('class', 'login-page');
+        Helpers.setLoading(false);
     }
 }

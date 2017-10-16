@@ -34,7 +34,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
                 this.users = result.items;
                 this.showPaging(result, pageNumber);
                 //todo 需要封装成 table 组件
-                var datatable = $('.m_datatable').mDatatable({
+                let datatable = $('.m_datatable').mDatatable({
                     // datasource definition
                     data: {
                         type: 'local',
