@@ -1,56 +1,132 @@
-﻿<div class="row clearfix" [@routerTransition]>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card main-content">
-            <div class="header">
-                <h2>
-                    {{l('Roles')}}
-                </h2>
-                <ul class="header-dropdown m-r--5">
-                    <i class="fa fa-spin fa-spinner" *ngIf="isTableLoading"></i>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);" class=" waves-effect <waves-block></waves-block>" (click)="refresh();"><i class="material-icons">refresh</i> Refresh</a></li>
-                        </ul>
+﻿<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{l('Roles')}}
+                        <small>
+                            {{l("Roles Manager")}}
+                        </small>
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <ul class="m-portlet__nav">
+                    <li class="m-portlet__nav-item">
+                        <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover"
+                            aria-expanded="true">
+                            <a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle">
+                                <i class="la la-plus m--hide"></i>
+                                <i class="la la-ellipsis-h m--font-brand"></i>
+                            </a>
+                            <div class="m-dropdown__wrapper">
+                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                <div class="m-dropdown__inner">
+                                    <div class="m-dropdown__body">
+                                        <div class="m-dropdown__content">
+                                            <ul class="m-nav">
+                                                <li class="m-nav__section m-nav__section--first">
+                                                    <span class="m-nav__section-text">
+                                                        Quick Actions
+                                                    </span>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="" class="m-nav__link">
+                                                        <i class="m-nav__link-icon flaticon-share"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Create Post
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="" class="m-nav__link">
+                                                        <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Send Messages
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="" class="m-nav__link">
+                                                        <i class="m-nav__link-icon flaticon-multimedia-2"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Upload File
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__section">
+                                                    <span class="m-nav__section-text">
+                                                        Useful Links
+                                                    </span>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="" class="m-nav__link">
+                                                        <i class="m-nav__link-icon flaticon-info"></i>
+                                                        <span class="m-nav__link-text">
+                                                            FAQ
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="" class="m-nav__link">
+                                                        <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                                        <span class="m-nav__link-text">
+                                                            Support
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__separator m-nav__separator--fit m--hide"></li>
+                                                <li class="m-nav__item m--hide">
+                                                    <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
+                                                        Submit
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
-            <div class="body table-responsive">
-
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>{{l('RoleName')}}</th>
-                            <th>{{l('DisplayName')}}</th>
-                            <th>{{l('Actions')}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let role of roles | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
-                            <td>{{role.name}}</td>
-                            <td>{{role.displayName}}</td>
-                            <td class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">menu</i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="editRole(role)"><i class="material-icons">create</i>Edit</a></li>
-                                    <li><a href="javascript:void(0);" class="waves-effect waves-block" (click)="delete(role)"><i class="material-icons">delete_sweep</i>Delete</a></li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="text-align: center;" *ngIf="totalItems > pageSize">
-                    <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
+        </div>
+        <div class="m-portlet__body">
+            <!--begin: Search Form -->
+            <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-4">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="m_form_search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <a (click)="createRole()" href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                            <span>
+                                <i class="la la-user-plus"></i>
+                                <span>
+                                    New Role
+                                </span>
+                            </span>
+                        </a>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
                 </div>
-                <button type="button" data-toggle="modal" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="createRole()">
-                    <i class="material-icons">add</i>
-                </button>
             </div>
+            <!--end: Search Form -->
+            <!--begin: Datatable -->
+            <div class="m_datatable" id="local_data"></div>
+            <!--end: Datatable -->
         </div>
     </div>
 </div>

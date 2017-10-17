@@ -25,31 +25,82 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
         super(injector);
     }
 
-    list(request:PagedRequestDto, pageNumber:number, finishedCallback: Function): void {
+    list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
         this._tenantService.getAll(request.skipCount, request.maxResultCount)
-            .finally(()=>{
+            .finally(() => {
                 finishedCallback();
             })
-            .subscribe((result:PagedResultDtoOfTenantDto)=>{
-				this.tenants = result.items;
-				this.showPaging(result, pageNumber);
+            .subscribe((result: PagedResultDtoOfTenantDto) => {
+                this.tenants = result.items;
+                let datatable = $('.m_datatable').mDatatable({
+                    // datasource definition
+                    data: {
+                        type: 'local',
+                        source: result.items,
+                        pageSize: 10
+                    },
+
+                    // layout definition
+                    layout: {
+                        theme: 'default', // datatable theme
+                        class: '', // custom wrapper class
+                        scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                        height: 450, // datatable's body's fixed height
+                        footer: false // display/hide footer
+                    },
+
+                    // column sorting(refer to Kendo UI)
+                    sortable: true,
+
+                    // column based filtering(refer to Kendo UI)
+                    filterable: false,
+
+                    pagination: true,
+
+                    columns: [
+                        {
+                            field: "id",
+                            title: "#",
+                            width: 40,
+                            selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+                        },
+                        {
+                            field: "tenancyName",
+                            title: "租户名称",
+                            width: 80
+                        },
+                        {
+                            field: "name",
+                            title: "名字",
+                            width: 80
+                        },
+                        {
+                            field: "isActive",
+                            title: "是否启用",
+                            width: 80
+                        },
+                        {
+                            title: "操作"
+                        }
+                    ]
+                });
             });
     }
 
     delete(tenant: TenantDto): void {
-		abp.message.confirm(
-			"Delete tenant '"+ tenant.name +"'?",
-			(result:boolean) => {
-				if(result) {
-					this._tenantService.delete(tenant.id)
-						.finally(() => {
-					        abp.notify.info("Deleted tenant: " + tenant.name );
-							this.refresh();
-						})
-						.subscribe(() => { });
-				}
-			}
-		);
+        abp.message.confirm(
+            "Delete tenant '" + tenant.name + "'?",
+            (result: boolean) => {
+                if (result) {
+                    this._tenantService.delete(tenant.id)
+                        .finally(() => {
+                            abp.notify.info("Deleted tenant: " + tenant.name);
+                            this.refresh();
+                        })
+                        .subscribe(() => { });
+                }
+            }
+        );
     }
 
     // Show modals
@@ -57,7 +108,7 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
         this.createTenantModal.show();
     }
 
-    editTenant(tenant:TenantDto): void{
+    editTenant(tenant: TenantDto): void {
         this.editTenantModal.show(tenant.id);
     }
 }

@@ -61,32 +61,41 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
 
                     columns: [
                         {
+                            field: "id",
+                            title: "#",
+                            width: 40,
+                            selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+                        },
+                        {
                             field: "userName",
                             title: "用户名",
-                            width: 80,
-                            responsive: { visible: 'lg' },
-                            selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+                            width: 80
                         },
                         {
                             field: "name",
                             title: "名字",
-                            responsive: { visible: 'lg' }
+                            width: 80
                         },
                         {
                             field: "surname",
                             title: "姓",
-                            responsive: { visible: 'lg' }
+                            width: 80
                         },
                         {
                             field: "emailAddress",
                             title: "邮箱",
-                            responsive: { visible: 'lg' }
+                            width: 120
                         },
                         {
                             field: "fullName",
                             title: "全名",
-                            responsive: { visible: 'lg' }
+                            width: 80
                         },
+                        {
+                            field: "isActive",
+                            title: "是否激活",
+                            width: 80
+                        }
                     ]
                 });
             });
