@@ -18,7 +18,6 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { SharedModule } from '@shared/shared.module';
 
 import { HomeComponent } from '@app/home/home.component';
-import { AboutComponent } from '@app/about/about.component';
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
@@ -30,13 +29,13 @@ import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.com
 import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component';
 import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         AppBodyComponent,
         HomeComponent,
-        AboutComponent,
         TenantsComponent,
         CreateTenantComponent,
         EditTenantComponent,
@@ -46,7 +45,8 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
         RolesComponent,
         CreateRoleComponent,
         EditRoleComponent,
-        TopBarLanguageSwitchComponent
+        TopBarLanguageSwitchComponent,
+        NotFoundComponent
     ],
     imports: [
         CommonModule,

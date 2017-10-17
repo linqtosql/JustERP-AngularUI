@@ -2,92 +2,76 @@
 <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark" appunwraptag="">
 	<!-- BEGIN: Aside Menu -->
 	<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" data-menu-vertical="true"
-	    data-menu-scrollable="false" data-menu-dropdown-timeout="500">
+	 data-menu-scrollable="false" data-menu-dropdown-timeout="500">
 		<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
-			<li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-				<a routerLink="/app/home" class="m-menu__link">
-					<i class="m-menu__link-icon flaticon-line-graph"></i>
-					<span class="m-menu__link-title">
-						<span class="m-menu__link-wrap">
-							<span class="m-menu__link-text">
-								Dashboard
-							</span>
-							<span class="m-menu__link-badge">
-								<span class="m-badge m-badge--danger">
-									2
-								</span>
-							</span>
+			<ng-template ngFor let-menuItem [ngForOf]="menuItems" let-mainMenuItemIndex="index">
+				<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+					<a [routerLink]="[menuItem.route]" *ngIf="!menuItem.items" class="m-menu__link" [ngClass]="{'m-menu__toggle':menuItem.items}">
+						<i class="m-menu__link-icon flaticon-settings"></i>
+						<span class="m-menu__link-text">
+							{{menuItem.name}}
 						</span>
-					</span>
-				</a>
-			</li>
-			<li class="m-menu__section">
-				<h4 class="m-menu__section-text">
-					Angular
-				</h4>
-				<i class="m-menu__section-icon flaticon-more-v3"></i>
-			</li>
-			<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-				<a routerLink="/app/users" class="m-menu__link">
-					<i class="m-menu__link-icon flaticon-settings"></i>
-					<span class="m-menu__link-text">
-						Ng-Bootstrap
-					</span>
-				</a>
-			</li>
-			<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-menu-submenu-toggle="hover">
-				<a href="#" class="m-menu__link m-menu__toggle">
-					<i class="m-menu__link-icon flaticon-settings"></i>
-					<span class="m-menu__link-text">
-						PrimeNG
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
-						    aria-haspopup="true">
-							<a href="#" class="m-menu__link">
-								<span class="m-menu__link-text">
-									PrimeNG
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/app/roles" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Input
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/app/tenants" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Button
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
-							<a routerLink="/app/about" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Panel
-								</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</li>
-			
+					</a>
+					<a href="#" *ngIf="menuItem.items" class="m-menu__link m-menu__toggle">
+						<i class="m-menu__link-icon flaticon-settings"></i>
+						<span class="m-menu__link-text">
+							{{menuItem.name}}
+						</span>
+						<i class="m-menu__ver-arrow la la-angle-right"></i>
+					</a>
+					<div class="m-menu__submenu" *ngIf="menuItem.items">
+						<span class="m-menu__arrow"></span>
+						<ul class="m-menu__subnav">
+							<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+							 aria-haspopup="true">
+								<a href="#" class="m-menu__link">
+									<span class="m-menu__link-text">
+										{{menuItem.name}}
+									</span>
+								</a>
+							</li>
+							<ng-template ngFor let-subMenuItem [ngForOf]="menuItem.items" let-mainMenuItemIndex="index">
+								<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+									<a [routerLink]="[subMenuItem.route]" *ngIf="!subMenuItem.items" class="m-menu__link" [ngClass]="{'m-menu__toggle':subMenuItem.items}">
+										<i class="m-menu__link-bullet m-menu__link-bullet--dot">
+											<span></span>
+										</i>
+										<span class="m-menu__link-text">
+											{{subMenuItem.name}}
+										</span>
+									</a>
+									<a href="#" *ngIf="subMenuItem.items" class="m-menu__link m-menu__toggle">
+										<i class="m-menu__link-bullet m-menu__link-bullet--dot">
+											<span></span>
+										</i>
+										<span class="m-menu__link-text">
+											{{subMenuItem.name}}
+										</span>
+										<i class="m-menu__ver-arrow la la-angle-right"></i>
+									</a>
+									<div class="m-menu__submenu" *ngIf="subMenuItem.items">
+										<span class="m-menu__arrow"></span>
+										<ul class="m-menu__subnav">
+											<ng-template ngFor let-subSubMenuItem [ngForOf]="subMenuItem.items" let-mainMenuItemIndex="index">
+												<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+													<a [routerLink]="[subMenuItem.route]" class="m-menu__link">
+														<i class="m-menu__link-bullet m-menu__link-bullet--dot">
+															<span></span>
+														</i>
+														<span class="m-menu__link-text">
+															{{subSubMenuItem.name}}
+														</span>
+													</a>
+												</li>
+											</ng-template>
+										</ul>
+									</div>
+								</li>
+							</ng-template>
+						</ul>
+					</div>
+				</li>
+			</ng-template>
 		</ul>
 	</div>
 	<!-- END: Aside Menu -->
