@@ -17,7 +17,7 @@ export class AppPreBootstrap {
 
     private static getApplicationConfig(callback: () => void) {
         return abp.ajax({
-            url: '/assets/appconfig.json',
+            url: '/assets/appconfig.json?t=' + new Date().getTime(),
             method: 'GET',
             headers: {
                 'Abp.TenantId': abp.multiTenancy.getTenantIdCookie()
@@ -25,7 +25,7 @@ export class AppPreBootstrap {
         }).done(result => {
             AppConsts.appBaseUrl = result.appBaseUrl;
             AppConsts.remoteServiceBaseUrl = result.remoteServiceBaseUrl;
-            
+
             callback();
         });
     }

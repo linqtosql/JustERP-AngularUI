@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { ModalModule } from 'ngx-bootstrap';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { LayoutModule } from '@app/layout/metronic/layout.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,7 +27,6 @@ import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.component';
 import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component';
 import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
-import { MaterialInput } from '@shared/directives/material-input.directive';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -58,8 +56,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         AbpModule,
         AppRoutingModule,
         ServiceProxyModule,
-        SharedModule,
-        NgxPaginationModule
+        SharedModule
     ],
     providers: [
         ScriptLoaderService
