@@ -74,6 +74,11 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 							width: 80
 						},
 						{
+							field: "permissions",
+							title: "权限",
+							width: 160
+						},
+						{
 							title: "操作"
 						}
 					]

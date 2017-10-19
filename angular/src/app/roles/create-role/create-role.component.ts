@@ -1,7 +1,8 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
-import { RoleServiceProxy, CreateRoleDto, ListResultDtoOfPermissionDto } from '@shared/service-proxies/service-proxies';
+import { RoleServiceProxy, CreateRoleDto, PermissionDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
+import { CheckItem } from '@shared/AppClass';
 
 @Component({
     selector: 'create-role-modal',
@@ -14,7 +15,7 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
     active: boolean = false;
     saving: boolean = false;
 
-    permissions: ListResultDtoOfPermissionDto = null;
+    permissions: CheckItem<PermissionDto>[] = null;
     role: CreateRoleDto = null;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
@@ -27,8 +28,8 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this._roleService.getAllPermissions()
-            .subscribe((permissions: ListResultDtoOfPermissionDto) => {
-                this.permissions = permissions;
+            .subscribe((permissions) => {
+                this.permissions = permissions.items.map(p => new CheckItem(p));
             });
     }
 
@@ -41,15 +42,7 @@ export class CreateRoleComponent extends AppComponentBase implements OnInit {
     }
 
     save(): void {
-        var permissions = [];
-        $(this.modalContent.nativeElement).find("[name=permission]").each(
-            (index: number, elem: Element) => {
-                if ($(elem).is(":checked")) {
-                    permissions.push(elem.getAttribute("value").valueOf());
-                }
-            }
-        );
-
+        var permissions = this.permissions.filter(p => p.checked).map(p => p.data.name);
         this.role.permissions = permissions;
 
         this.saving = true;

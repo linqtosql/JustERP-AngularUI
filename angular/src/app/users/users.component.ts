@@ -72,16 +72,6 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
                             width: 80
                         },
                         {
-                            field: "name",
-                            title: "名字",
-                            width: 80
-                        },
-                        {
-                            field: "surname",
-                            title: "姓",
-                            width: 80
-                        },
-                        {
                             field: "emailAddress",
                             title: "邮箱",
                             width: 120
@@ -90,6 +80,11 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
                             field: "fullName",
                             title: "全名",
                             width: 80
+                        },
+                        {
+                            field: "roleNames",
+                            title: "角色",
+                            width: 120
                         },
                         {
                             field: "isActive",

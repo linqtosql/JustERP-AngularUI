@@ -2,12 +2,13 @@
 import { ModalDirective } from 'ngx-bootstrap';
 import { UserServiceProxy, CreateUserDto, RoleDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
+import { CheckItem } from '@shared/AppClass';
 
 import * as _ from "lodash";
 
 @Component({
-  selector: 'create-user-modal',
-  templateUrl: './create-user.component.html'
+    selector: 'create-user-modal',
+    templateUrl: './create-user.component.html'
 })
 export class CreateUserComponent extends AppComponentBase implements OnInit {
 
@@ -19,7 +20,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
     active: boolean = false;
     saving: boolean = false;
     user: CreateUserDto = null;
-    roles: RoleDto[] = null;
+    roles: CheckItem<RoleDto>[] = null;
 
     constructor(
         injector: Injector,
@@ -30,12 +31,12 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this._userService.getRoles()
-        .subscribe((result) => {
-            this.roles = result.items;
-        });
+            .subscribe((result) => {
+                this.roles = result.items.map(r => new CheckItem(r));
+            });
     }
 
-    show(): void {
+    show(id?: number): void {
         this.active = true;
         this.modal.show();
         this.user = new CreateUserDto();
@@ -44,12 +45,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
 
     save(): void {
         //TODO: Refactor this, don't use jQuery style code
-        var roles = [];
-        $(this.modalContent.nativeElement).find("[name=role]").each((ind:number, elem:Element) => {
-            if($(elem).is(":checked") == true){
-                roles.push(elem.getAttribute("value").valueOf());
-            }
-        });
+        var roles = this.roles.filter(r => r.checked).map(r => r.data.normalizedName);
 
         this.user.roleNames = roles;
         this.saving = true;
