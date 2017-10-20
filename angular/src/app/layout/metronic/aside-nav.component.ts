@@ -15,7 +15,7 @@ export class AsideNavComponent extends AppComponentBase implements AfterViewInit
     }
 
     menuItems: MenuItem[] = [
-        new MenuItem(this.l("HomePage"), "", "home", "/app/home"),
+        new MenuItem(this.l("仪表盘"), "", "home", "/app/home"),
 
         new MenuItem(this.l("Tenants"), "Pages.Tenants", "business", "/app/tenants"),
         new MenuItem(this.l("Users"), "Pages.Users", "people", "/app/users"),

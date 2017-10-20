@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { AppBodyComponent } from './app-body.component';
 
 import { AbpModule } from '@abp/abp.module';
-import { ScriptLoaderService } from '@shared/services/script-loader.service';
+import { ResourceLoaderService } from '@shared/services/resources-loader.service';
 
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
@@ -59,7 +59,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         SharedModule
     ],
     providers: [
-        ScriptLoaderService
+        ResourceLoaderService
     ]
 })
 export class AppModule { }

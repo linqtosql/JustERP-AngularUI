@@ -1,10 +1,12 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Helpers } from '@shared/helpers/Helpers';
-import { ScriptLoaderService } from '@shared/services/script-loader.service';
+import { ResourceLoaderService } from '@shared/services/resources-loader.service';
 
 declare let mApp: any;
 declare let mUtil: any;
+declare let mLayout: any;
+
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop.m-body',
     templateUrl: './app-body.component.html',
@@ -12,7 +14,7 @@ declare let mUtil: any;
 })
 export class AppBodyComponent implements OnInit {
 
-    constructor(private _script: ScriptLoaderService, private _router: Router) {
+    constructor(private _script: ResourceLoaderService, private _router: Router) {
 
     }
 
@@ -22,10 +24,15 @@ export class AppBodyComponent implements OnInit {
             'assets/metronic-theme/scripts.bundle.js')
             .then(result => {
                 Helpers.setLoading(false);
+                this._script.load('head',
+                    'assets/metronic-theme/custom/fullcalendar/fullcalendar.bundle.css',
+                    'assets/metronic-theme/custom/fullcalendar/fullcalendar.bundle.js');
             });
 
         this._router.events.subscribe((route) => {
             if (route instanceof NavigationStart) {
+                (<any>mLayout).closeMobileAsideMenuOffcanvas();
+                (<any>mLayout).closeMobileHorMenuOffcanvas();
                 (<any>mApp).scrollTop();
                 Helpers.setLoading(true);
                 // hide visible popover

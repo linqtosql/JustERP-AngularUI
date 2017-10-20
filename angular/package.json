@@ -33,7 +33,6 @@
         "abp-ng2-module": "^1.2.0",
         "abp-web-resources": "^2.2.1",
         "core-js": "^2.4.1",
-        "moment": "^2.18.1",
         "moment-timezone": "^0.5.13",
         "rxjs": "^5.3.0",
         "signalr": "^2.2.1",
