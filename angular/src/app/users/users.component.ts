@@ -33,6 +33,16 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
             .subscribe((result: PagedResultDtoOfUserDto) => {
                 this.users = result.items;
                 this.showPaging(result, pageNumber);
+                //remove data format
+                // "meta": {
+                //     "page": 5,
+                //     "pages": 18,
+                //     "perpage": 20,
+                //     "total": 350,
+                //     "sort": "asc",
+                //     "field": "OrderID"
+                // },
+                // "data":[]
                 //todo 需要封装成 table 组件
                 let datatable = $('.m_datatable').mDatatable({
                     // datasource definition
