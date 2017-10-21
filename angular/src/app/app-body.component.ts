@@ -1,11 +1,13 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Helpers } from '@shared/helpers/Helpers';
+import { AppConsts } from '@shared/AppConsts';
 import { ResourceLoaderService } from '@shared/services/resources-loader.service';
 
 declare let mApp: any;
 declare let mUtil: any;
 declare let mLayout: any;
+declare let document: any;
 
 @Component({
     selector: '.m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop.m-body',
@@ -19,7 +21,11 @@ export class AppBodyComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        // for mDatatable remote data authorization
+        $(document).ajaxSend((event, request, settings) => {
+            settings.url = AppConsts.remoteServiceBaseUrl + settings.url;
+            request.setRequestHeader("Authorization", "Bearer " + abp.auth.getToken());
+        });
         this._script.load('body',
             'assets/metronic-theme/scripts.bundle.js')
             .then(result => {
