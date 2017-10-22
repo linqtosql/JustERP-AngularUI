@@ -1030,7 +1030,7 @@ var Dashboard = function () {
             }
         },
         C = function () {
-            if (0 !== $("#m_datatable_latest_orders").length) $(".m_datatable").mDatatable({
+            if (0 !== $("#m_datatable_latest_orders").length) $("#m_datatable_latest_orders").mDatatable({
                 data: {
                     type: "remote",
                     source: {
