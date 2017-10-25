@@ -33,7 +33,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
                 method: "GET",
                 source: {
                     read: {
-                        url: '/api/services/app/User/GetAllWithSort',
+                        url: '/api/services/app/User/GetMetronicTable',
                         mapCallback: r => r.result,
                         paramsDataMap: data => {
                             return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query);
