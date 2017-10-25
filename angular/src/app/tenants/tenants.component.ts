@@ -8,8 +8,7 @@ import { CreateTenantComponent } from "app/tenants/create-tenant/create-tenant.c
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-    templateUrl: './tenants.component.html',
-    animations: [appModuleAnimation()]
+    templateUrl: './tenants.component.html'
 })
 export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
 

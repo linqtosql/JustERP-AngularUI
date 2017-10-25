@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from "app/roles/roles.component";
+import { OrganizationunitsComponent } from "./organizationunits/organizationunits.component";
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -22,9 +23,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
                         component: AppBodyComponent,
                         children: [
                             { path: 'home', component: HomeComponent },
-                            { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }},
-                            { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }},
-                            { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }},
+                            { path: 'organizationunits', component: OrganizationunitsComponent, data: { permission: 'Pages.OrganizationUnits' } },
+                            { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' } },
+                            { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' } },
+                            { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' } },
                             { path: '404', component: NotFoundComponent }
                         ]
                     }

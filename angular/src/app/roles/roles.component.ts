@@ -7,8 +7,7 @@ import { EditRoleComponent } from "app/roles/edit-role/edit-role.component";
 
 @Component({
 	selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
-	templateUrl: './roles.component.html',
-	animations: [appModuleAnimation()]
+	templateUrl: './roles.component.html'
 })
 export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 

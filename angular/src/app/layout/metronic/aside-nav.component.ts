@@ -10,17 +10,12 @@ declare let mLayout: any;
 })
 export class AsideNavComponent extends AppComponentBase implements AfterViewInit {
 
-    constructor(private injector: Injector) {
-        super(injector);
-    }
-
     menuItems: MenuItem[] = [
         new MenuItem(this.l("仪表盘"), "", "home", "/app/home"),
-
+        new MenuItem(this.l("OrganizationUnits"), "", "business", "/app/organizationunits"),
         new MenuItem(this.l("Tenants"), "Pages.Tenants", "business", "/app/tenants"),
         new MenuItem(this.l("Users"), "Pages.Users", "people", "/app/users"),
         new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/app/roles"),
-        
         new MenuItem(this.l("订单中心"), "", "menu", "#", [
             new MenuItem("销售订单", "", "", "/app/order", [
                 new MenuItem("待接单", "", "", "/app/order/wait"),
@@ -44,6 +39,10 @@ export class AsideNavComponent extends AppComponentBase implements AfterViewInit
             new MenuItem("出库单查询", "", "", "/app/store/out")
         ])
     ];
+
+    constructor(private injector: Injector) {
+        super(injector);
+    }
 
     showMenuItem(menuItem): boolean {
         if (menuItem.permissionName) {

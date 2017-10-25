@@ -30,6 +30,7 @@ interface JQuery {
     valid(): JQuery;
     resetForm(): JQuery;
     mDatatable(options: any): any;
+    jstree(options: any): any;
 }
 
 interface JQueryStatic {
