@@ -190,6 +190,356 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class OrganizationUnitServiceProxy {
+    private http: Http;
+    private baseUrl: string;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfOrganizationUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetMetronicTable?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetMetronicTable(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetMetronicTable(response_);
+                } catch (e) {
+                    return <Observable<MetronicPagedResultDtoOfOrganizationUnitDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MetronicPagedResultDtoOfOrganizationUnitDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetMetronicTable(response: Response): Observable<MetronicPagedResultDtoOfOrganizationUnitDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetronicPagedResultDtoOfOrganizationUnitDto.fromJS(resultData200) : new MetronicPagedResultDtoOfOrganizationUnitDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MetronicPagedResultDtoOfOrganizationUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    get(id: number): Observable<OrganizationUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Get?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGet(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGet(response_);
+                } catch (e) {
+                    return <Observable<OrganizationUnitDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<OrganizationUnitDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGet(response: Response): Observable<OrganizationUnitDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? OrganizationUnitDto.fromJS(resultData200) : new OrganizationUnitDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<OrganizationUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfOrganizationUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetAll?";
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetAll(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetAll(response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfOrganizationUnitDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfOrganizationUnitDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAll(response: Response): Observable<PagedResultDtoOfOrganizationUnitDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfOrganizationUnitDto.fromJS(resultData200) : new PagedResultDtoOfOrganizationUnitDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<PagedResultDtoOfOrganizationUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    create(input: CreateOrganizationUnitDto): Observable<OrganizationUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processCreate(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processCreate(response_);
+                } catch (e) {
+                    return <Observable<OrganizationUnitDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<OrganizationUnitDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processCreate(response: Response): Observable<OrganizationUnitDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? OrganizationUnitDto.fromJS(resultData200) : new OrganizationUnitDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<OrganizationUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    update(input: OrganizationUnitDto): Observable<OrganizationUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processUpdate(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processUpdate(response_);
+                } catch (e) {
+                    return <Observable<OrganizationUnitDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<OrganizationUnitDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdate(response: Response): Observable<OrganizationUnitDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? OrganizationUnitDto.fromJS(resultData200) : new OrganizationUnitDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<OrganizationUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    delete(id: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "delete",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processDelete(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processDelete(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processDelete(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: Http;
     private baseUrl: string;
@@ -410,6 +760,74 @@ export class RoleServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
         return Observable.of<ListResultDtoOfPermissionDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfRoleDto> {
+        let url_ = this.baseUrl + "/api/services/app/Role/GetMetronicTable?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetMetronicTable(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetMetronicTable(response_);
+                } catch (e) {
+                    return <Observable<MetronicPagedResultDtoOfRoleDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MetronicPagedResultDtoOfRoleDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetMetronicTable(response: Response): Observable<MetronicPagedResultDtoOfRoleDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetronicPagedResultDtoOfRoleDto.fromJS(resultData200) : new MetronicPagedResultDtoOfRoleDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MetronicPagedResultDtoOfRoleDto>(<any>null);
     }
 
     /**
@@ -695,6 +1113,74 @@ export class TenantServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
         return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfTenantDto> {
+        let url_ = this.baseUrl + "/api/services/app/Tenant/GetMetronicTable?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetMetronicTable(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetMetronicTable(response_);
+                } catch (e) {
+                    return <Observable<MetronicPagedResultDtoOfTenantDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MetronicPagedResultDtoOfTenantDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetMetronicTable(response: Response): Observable<MetronicPagedResultDtoOfTenantDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetronicPagedResultDtoOfTenantDto.fromJS(resultData200) : new MetronicPagedResultDtoOfTenantDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MetronicPagedResultDtoOfTenantDto>(<any>null);
     }
 
     /**
@@ -1249,6 +1735,195 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
+    getUsersInOUnit(organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserOUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetUsersInOUnit?";
+        if (organizationUnitId !== undefined)
+            url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetUsersInOUnit(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetUsersInOUnit(response_);
+                } catch (e) {
+                    return <Observable<MetronicPagedResultDtoOfUserOUnitDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MetronicPagedResultDtoOfUserOUnitDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetUsersInOUnit(response: Response): Observable<MetronicPagedResultDtoOfUserOUnitDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetronicPagedResultDtoOfUserOUnitDto.fromJS(resultData200) : new MetronicPagedResultDtoOfUserOUnitDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MetronicPagedResultDtoOfUserOUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    addToOUnit(input: UserOUnitDto): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/AddToOUnit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processAddToOUnit(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processAddToOUnit(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processAddToOUnit(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserDto> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetMetronicTable?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetMetronicTable(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetMetronicTable(response_);
+                } catch (e) {
+                    return <Observable<MetronicPagedResultDtoOfUserDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MetronicPagedResultDtoOfUserDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetMetronicTable(response: Response): Observable<MetronicPagedResultDtoOfUserDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetronicPagedResultDtoOfUserDto.fromJS(resultData200) : new MetronicPagedResultDtoOfUserDto();
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MetronicPagedResultDtoOfUserDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
     get(id: number): Observable<UserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/Get?";
         if (id !== undefined)
@@ -1591,6 +2266,272 @@ export interface IChangeUiThemeInput {
     theme: string;
 }
 
+export class MetronicPagedResultDtoOfOrganizationUnitDto implements IMetronicPagedResultDtoOfOrganizationUnitDto {
+    data: OrganizationUnitDto[];
+    meta: MetronicPagedResultRequestDto;
+
+    constructor(data?: IMetronicPagedResultDtoOfOrganizationUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["data"] && data["data"].constructor === Array) {
+                this.data = [];
+                for (let item of data["data"])
+                    this.data.push(OrganizationUnitDto.fromJS(item));
+            }
+            this.meta = data["meta"] ? MetronicPagedResultRequestDto.fromJS(data["meta"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): MetronicPagedResultDtoOfOrganizationUnitDto {
+        let result = new MetronicPagedResultDtoOfOrganizationUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.data && this.data.constructor === Array) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new MetronicPagedResultDtoOfOrganizationUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetronicPagedResultDtoOfOrganizationUnitDto {
+    data: OrganizationUnitDto[];
+    meta: MetronicPagedResultRequestDto;
+}
+
+export class OrganizationUnitDto implements IOrganizationUnitDto {
+    displayName: string;
+    id: number;
+
+    constructor(data?: IOrganizationUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayName = data["displayName"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): OrganizationUnitDto {
+        let result = new OrganizationUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new OrganizationUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOrganizationUnitDto {
+    displayName: string;
+    id: number;
+}
+
+export class MetronicPagedResultRequestDto implements IMetronicPagedResultRequestDto {
+    page: number;
+    pages: number;
+    perpage: number;
+    total: number;
+    sort: string;
+    field: string;
+    skipCount: number;
+    maxResultCount: number;
+
+    constructor(data?: IMetronicPagedResultRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.page = data["page"];
+            this.pages = data["pages"];
+            this.perpage = data["perpage"];
+            this.total = data["total"];
+            this.sort = data["sort"];
+            this.field = data["field"];
+            this.skipCount = data["skipCount"];
+            this.maxResultCount = data["maxResultCount"];
+        }
+    }
+
+    static fromJS(data: any): MetronicPagedResultRequestDto {
+        let result = new MetronicPagedResultRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["page"] = this.page;
+        data["pages"] = this.pages;
+        data["perpage"] = this.perpage;
+        data["total"] = this.total;
+        data["sort"] = this.sort;
+        data["field"] = this.field;
+        data["skipCount"] = this.skipCount;
+        data["maxResultCount"] = this.maxResultCount;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new MetronicPagedResultRequestDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetronicPagedResultRequestDto {
+    page: number;
+    pages: number;
+    perpage: number;
+    total: number;
+    sort: string;
+    field: string;
+    skipCount: number;
+    maxResultCount: number;
+}
+
+export class PagedResultDtoOfOrganizationUnitDto implements IPagedResultDtoOfOrganizationUnitDto {
+    totalCount: number;
+    items: OrganizationUnitDto[];
+
+    constructor(data?: IPagedResultDtoOfOrganizationUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(OrganizationUnitDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfOrganizationUnitDto {
+        let result = new PagedResultDtoOfOrganizationUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfOrganizationUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfOrganizationUnitDto {
+    totalCount: number;
+    items: OrganizationUnitDto[];
+}
+
+export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
+    displayName: string;
+
+    constructor(data?: ICreateOrganizationUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayName = data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrganizationUnitDto {
+        let result = new CreateOrganizationUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new CreateOrganizationUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOrganizationUnitDto {
+    displayName: string;
+}
+
 export class CreateRoleDto implements ICreateRoleDto {
     name: string;
     displayName: string;
@@ -1837,6 +2778,60 @@ export interface IPermissionDto {
     displayName: string;
     description: string;
     id: number;
+}
+
+export class MetronicPagedResultDtoOfRoleDto implements IMetronicPagedResultDtoOfRoleDto {
+    data: RoleDto[];
+    meta: MetronicPagedResultRequestDto;
+
+    constructor(data?: IMetronicPagedResultDtoOfRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["data"] && data["data"].constructor === Array) {
+                this.data = [];
+                for (let item of data["data"])
+                    this.data.push(RoleDto.fromJS(item));
+            }
+            this.meta = data["meta"] ? MetronicPagedResultRequestDto.fromJS(data["meta"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): MetronicPagedResultDtoOfRoleDto {
+        let result = new MetronicPagedResultDtoOfRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.data && this.data.constructor === Array) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new MetronicPagedResultDtoOfRoleDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetronicPagedResultDtoOfRoleDto {
+    data: RoleDto[];
+    meta: MetronicPagedResultRequestDto;
 }
 
 export class PagedResultDtoOfRoleDto implements IPagedResultDtoOfRoleDto {
@@ -2223,6 +3218,60 @@ export interface ITenantDto {
     name: string;
     isActive: boolean;
     id: number;
+}
+
+export class MetronicPagedResultDtoOfTenantDto implements IMetronicPagedResultDtoOfTenantDto {
+    data: TenantDto[];
+    meta: MetronicPagedResultRequestDto;
+
+    constructor(data?: IMetronicPagedResultDtoOfTenantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["data"] && data["data"].constructor === Array) {
+                this.data = [];
+                for (let item of data["data"])
+                    this.data.push(TenantDto.fromJS(item));
+            }
+            this.meta = data["meta"] ? MetronicPagedResultRequestDto.fromJS(data["meta"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): MetronicPagedResultDtoOfTenantDto {
+        let result = new MetronicPagedResultDtoOfTenantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.data && this.data.constructor === Array) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new MetronicPagedResultDtoOfTenantDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetronicPagedResultDtoOfTenantDto {
+    data: TenantDto[];
+    meta: MetronicPagedResultRequestDto;
 }
 
 export class PagedResultDtoOfTenantDto implements IPagedResultDtoOfTenantDto {
@@ -2741,6 +3790,176 @@ export class ListResultDtoOfRoleDto implements IListResultDtoOfRoleDto {
 
 export interface IListResultDtoOfRoleDto {
     items: RoleDto[];
+}
+
+export class MetronicPagedResultDtoOfUserOUnitDto implements IMetronicPagedResultDtoOfUserOUnitDto {
+    data: UserOUnitDto[];
+    meta: MetronicPagedResultRequestDto;
+
+    constructor(data?: IMetronicPagedResultDtoOfUserOUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["data"] && data["data"].constructor === Array) {
+                this.data = [];
+                for (let item of data["data"])
+                    this.data.push(UserOUnitDto.fromJS(item));
+            }
+            this.meta = data["meta"] ? MetronicPagedResultRequestDto.fromJS(data["meta"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): MetronicPagedResultDtoOfUserOUnitDto {
+        let result = new MetronicPagedResultDtoOfUserOUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.data && this.data.constructor === Array) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new MetronicPagedResultDtoOfUserOUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetronicPagedResultDtoOfUserOUnitDto {
+    data: UserOUnitDto[];
+    meta: MetronicPagedResultRequestDto;
+}
+
+export class UserOUnitDto implements IUserOUnitDto {
+    userName: string;
+    name: string;
+    surname: string;
+    userId: number;
+    organizationUnitId: number;
+    id: number;
+
+    constructor(data?: IUserOUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.name = data["name"];
+            this.surname = data["surname"];
+            this.userId = data["userId"];
+            this.organizationUnitId = data["organizationUnitId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserOUnitDto {
+        let result = new UserOUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["userId"] = this.userId;
+        data["organizationUnitId"] = this.organizationUnitId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new UserOUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserOUnitDto {
+    userName: string;
+    name: string;
+    surname: string;
+    userId: number;
+    organizationUnitId: number;
+    id: number;
+}
+
+export class MetronicPagedResultDtoOfUserDto implements IMetronicPagedResultDtoOfUserDto {
+    data: UserDto[];
+    meta: MetronicPagedResultRequestDto;
+
+    constructor(data?: IMetronicPagedResultDtoOfUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["data"] && data["data"].constructor === Array) {
+                this.data = [];
+                for (let item of data["data"])
+                    this.data.push(UserDto.fromJS(item));
+            }
+            this.meta = data["meta"] ? MetronicPagedResultRequestDto.fromJS(data["meta"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): MetronicPagedResultDtoOfUserDto {
+        let result = new MetronicPagedResultDtoOfUserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.data && this.data.constructor === Array) {
+            data["data"] = [];
+            for (let item of this.data)
+                data["data"].push(item.toJSON());
+        }
+        data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new MetronicPagedResultDtoOfUserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMetronicPagedResultDtoOfUserDto {
+    data: UserDto[];
+    meta: MetronicPagedResultRequestDto;
 }
 
 export class PagedResultDtoOfUserDto implements IPagedResultDtoOfUserDto {

@@ -29,6 +29,7 @@ import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component
 import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizationunitsComponent } from './organizationunits/organizationunits.component';
+import { CreateOunitComponent } from './organizationunits/create-ounit/create-ounit.component';
 
 @NgModule({
     declarations: [
@@ -45,9 +46,10 @@ import { OrganizationunitsComponent } from './organizationunits/organizationunit
         CreateRoleComponent,
         EditRoleComponent,
         TopBarLanguageSwitchComponent,
-        NotFoundComponent,
-    OrganizationunitsComponent
-],
+        NotFoundComponent,
+        OrganizationunitsComponent,
+        CreateOunitComponent
+    ],
     imports: [
         CommonModule,
         FormsModule,
