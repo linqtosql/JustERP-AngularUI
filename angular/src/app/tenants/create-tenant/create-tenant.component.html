@@ -1,4 +1,4 @@
-﻿<div bsModal #createTenantModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createUserModal"
+﻿<div bsModal #createUpdateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createUserModal"
     aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog">
 
@@ -18,26 +18,26 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="form-label">{{l("TenancyName")}}</label>
-                        <input class="form-control" type="text" name="TenancyName" [(ngModel)]="tenant.tenancyName" required maxlength="64" minlength="2">
+                        <input class="form-control" type="text" name="TenancyName" [(ngModel)]="createEntityDto.tenancyName" required maxlength="64" minlength="2">
 
                     </div>
                     <div class="form-group">
                         <label class="form-label">{{l("Name")}}</label>
-                        <input type="text" name="Name" class="form-control" [(ngModel)]="tenant.name" required maxlength="128">
+                        <input type="text" name="Name" class="form-control" [(ngModel)]="createEntityDto.name" required maxlength="128">
                     </div>
                     <div class="form-group">
                         <label class="form-label">{{l("DatabaseConnectionString")}} ({{l("Optional")}})</label>
-                        <input type="text" name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString" maxlength="1024">
+                        <input type="text" name="ConnectionString" class="form-control" [(ngModel)]="createEntityDto.connectionString" maxlength="1024">
                     </div>
                     <div class="form-group">
                         <label class="form-label">{{l("AdminEmailAddress")}}</label>
-                        <input type="email" name="AdminEmailAddress" class="form-control" [(ngModel)]="tenant.adminEmailAddress" required maxlength="256"
+                        <input type="email" name="AdminEmailAddress" class="form-control" [(ngModel)]="createEntityDto.adminEmailAddress" required maxlength="256"
                             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
                     </div>
                     <div class="form-group">
                         <div class="m-checkbox-list">
                             <label class="m-checkbox">
-                                <input id="isactive" type="checkbox" name="IsActive" [(ngModel)]="tenant.isActive" checked />{{l("IsActive")}}
+                                <input id="isactive" type="checkbox" name="IsActive" [(ngModel)]="createEntityDto.isActive" checked />{{l("IsActive")}}
                                 <span></span>
                             </label>
                         </div>

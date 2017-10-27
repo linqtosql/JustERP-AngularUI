@@ -1,25 +1,34 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef, OnInit } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
-import { UserServiceProxy, CreateUserDto, RoleDto } from '@shared/service-proxies/service-proxies';
-import { AppComponentBase } from '@shared/app-component-base';
+﻿import { Component, Injector, OnInit } from '@angular/core';
+import { UserServiceProxy, CreateUserDto, RoleDto, UserDto } from '@shared/service-proxies/service-proxies';
+import { CreateUpdateComponentBase } from '@shared/create-update-component-base';
 import { CheckItem } from '@shared/AppClass';
-
-import * as _ from "lodash";
+import { Observable } from 'rxjs/Observable';
 
 @Component({
-    selector: 'create-user-modal',
+    selector: 'create-update-user-modal',
     templateUrl: './create-user.component.html'
 })
-export class CreateUserComponent extends AppComponentBase implements OnInit {
+export class CreateUserComponent extends CreateUpdateComponentBase<UserDto, CreateUserDto> implements OnInit {
 
-    @ViewChild('createUserModal') modal: ModalDirective;
-    @ViewChild('modalContent') modalContent: ElementRef;
+    protected instanceCreateEntityDto(): CreateUserDto {
+        let createUserDto = new CreateUserDto();
+        createUserDto.init({ isActive: true });
+        return createUserDto;
+    }
 
-    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+    protected get(id: number): Observable<UserDto> {
+        return this._userService.get(id);
+    }
 
-    active: boolean = false;
-    saving: boolean = false;
-    user: CreateUserDto = null;
+    protected create(): Observable<UserDto> {
+        this.createEntityDto.roleNames = this.getRoleNames();
+        return this._userService.create(this.createEntityDto);
+    }
+    protected update(): Observable<UserDto> {
+        this.entityDto.roleNames = this.getRoleNames();
+        return this._userService.update(this.entityDto);
+    }
+
     roles: CheckItem<RoleDto>[] = null;
 
     constructor(
@@ -30,36 +39,14 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        this._userService.getRoles()
+        this._userService
+            .getRoles()
             .subscribe((result) => {
                 this.roles = result.items.map(r => new CheckItem(r));
             });
     }
 
-    show(id?: number): void {
-        this.active = true;
-        this.modal.show();
-        this.user = new CreateUserDto();
-        this.user.init({ isActive: true });
-    }
-
-    save(): void {
-        //TODO: Refactor this, don't use jQuery style code
-        var roles = this.roles.filter(r => r.checked).map(r => r.data.normalizedName);
-
-        this.user.roleNames = roles;
-        this.saving = true;
-        this._userService.create(this.user)
-            .finally(() => { this.saving = false; })
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
-    }
-
-    close(): void {
-        this.active = false;
-        this.modal.hide();
+    getRoleNames(): string[] {
+        return this.roles.filter(r => r.checked).map(r => r.data.normalizedName);
     }
 }

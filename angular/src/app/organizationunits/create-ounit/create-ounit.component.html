@@ -1,4 +1,4 @@
-<div bsModal #createOUnitModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOUnitModal"
+<div bsModal #createUpdateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOUnitModal"
     aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog">
 
@@ -18,7 +18,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="form-label">{{l("DisplayName")}}</label>
-                        <input class="form-control" type="text" name="displayName" [(ngModel)]="createOUnit.displayName" required maxlength="64" minlength="2">
+                        <input class="form-control" type="text" name="displayName" [(ngModel)]="createEntityDto.displayName" required maxlength="64" minlength="2">
                     </div>
                 </div>
 

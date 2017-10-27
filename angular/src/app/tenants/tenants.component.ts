@@ -3,7 +3,6 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { TenantServiceProxy, TenantDto, PagedResultDtoOfTenantDto } from '@shared/service-proxies/service-proxies';
 
 import { PagedListingComponentBase, PagedRequestDto } from "shared/paged-listing-component-base";
-import { EditTenantComponent } from "app/tenants/edit-tenant/edit-tenant.component";
 import { CreateTenantComponent } from "app/tenants/create-tenant/create-tenant.component";
 
 @Component({
@@ -13,7 +12,6 @@ import { CreateTenantComponent } from "app/tenants/create-tenant/create-tenant.c
 export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
 
     @ViewChild('createTenantModal') createTenantModal: CreateTenantComponent;
-    @ViewChild('editTenantModal') editTenantModal: EditTenantComponent;
 
     tenants: TenantDto[] = [];
 
@@ -139,9 +137,5 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
     // Show modals
     createTenant(): void {
         this.createTenantModal.show();
-    }
-
-    editTenant(tenant: TenantDto): void {
-        this.editTenantModal.show(tenant.id);
     }
 }

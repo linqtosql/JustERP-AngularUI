@@ -3,7 +3,6 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { UserServiceProxy, UserDto, PagedResultDtoOfUserDto } from '@shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from "shared/paged-listing-component-base";
 import { CreateUserComponent } from "app/users/create-user/create-user.component";
-import { EditUserComponent } from "app/users/edit-user/edit-user.component";
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -12,7 +11,6 @@ import { EditUserComponent } from "app/users/edit-user/edit-user.component";
 export class UsersComponent extends PagedListingComponentBase<UserDto> {
 
     @ViewChild('createUserModal') createUserModal: CreateUserComponent;
-    @ViewChild('editUserModal') editUserModal: EditUserComponent;
 
     active = false;
     users: UserDto[] = [];
@@ -150,9 +148,5 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     // Show Modals
     createUser(): void {
         this.createUserModal.show();
-    }
-
-    editUser(user: UserDto): void {
-        this.editUserModal.show(user.id);
     }
 }

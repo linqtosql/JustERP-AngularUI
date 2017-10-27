@@ -6,10 +6,6 @@ export class PagedResultDto {
     totalCount: number;
 }
 
-export class EntityDto {
-    id: number;
-}
-
 export class PagedRequestDto {
     skipCount: number;
     maxResultCount: number;

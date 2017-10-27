@@ -1,8 +1,8 @@
-﻿<div bsModal #createUserModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createUserModal"
+﻿<div bsModal #createUpdateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createUserModal"
     aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog">
 
-        <div #modalContent class="modal-content">
+        <div class="modal-content">
 
             <form *ngIf="active" #createUserForm="ngForm" id="frm_create_user" novalidate (ngSubmit)="save()">
                 <div class="modal-header">
@@ -30,42 +30,42 @@
                         <div class="tab-pane active animated fadeIn" id="user-details" role="tabpanel">
                             <div class="form-group">
                                 <label for="username" class="form-label">{{l("UserName")}}</label>
-                                <input id="username" type="text" name="UserName" [(ngModel)]="user.userName" required maxlength="32" minlength="2" class="validate form-control">
+                                <input id="username" type="text" name="UserName" [(ngModel)]="createEntityDto.userName" required maxlength="32" minlength="2" class="validate form-control">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="name" class="form-label">{{l("Name")}}</label>
-                                        <input id="name" type="text" name="Name" [(ngModel)]="user.name" required maxlength="32" class="validate form-control">
+                                        <input id="name" type="text" name="Name" [(ngModel)]="createEntityDto.name" required maxlength="32" class="validate form-control">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="surname" class="form-label">{{l("Surname")}}</label>
-                                        <input id="surname" type="text" name="Surname" [(ngModel)]="user.surname" required maxlength="32" class="validate form-control">
+                                        <input id="surname" type="text" name="Surname" [(ngModel)]="createEntityDto.surname" required maxlength="32" class="validate form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">{{l("EmailAddress")}}</label>
-                                <input id="email" type="email" name="EmailAddress" [(ngModel)]="user.emailAddress" maxlength="256" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
+                                <input id="email" type="email" name="EmailAddress" [(ngModel)]="createEntityDto.emailAddress" maxlength="256" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
                                     class="validate form-control">
                             </div>
                             <div class="form-group">
                                 <label for="password" class="form-label">{{l("Password")}}</label>
-                                <input id="password" type="password" name="Password" [(ngModel)]="user.password" required maxlength="32" class="validate form-control">
+                                <input id="password" type="password" name="Password" [(ngModel)]="createEntityDto.password" required maxlength="32" class="validate form-control">
                             </div>
 
                             <div class="form-group">
                                 <label for="confirmpassword" class="form-label">Confirm Password</label>
-                                <input id="confirmpassword" type="password" name="ConfirmPassword" class="validate form-control" [(ngModel)]="user.confirmPassword"
+                                <input id="confirmpassword" type="password" name="ConfirmPassword" class="validate form-control" [(ngModel)]="createEntityDto.confirmPassword"
                                     equalTo="#password" data-msg-equalto="Please enter the same password again." required maxlength="32">
 
                             </div>
                             <div class="form-group">
                                 <div class="m-checkbox-list">
                                     <label for="isactive" class="m-checkbox">
-                                        <input id="isactive" type="checkbox" name="IsActive" [(ngModel)]="user.isActive" checked>
+                                        <input id="isactive" type="checkbox" name="IsActive" [(ngModel)]="createEntityDto.isActive" checked>
                                         {{l("IsActive")}}
                                         <span></span>
                                     </label>
