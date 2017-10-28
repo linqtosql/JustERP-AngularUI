@@ -1,19 +1,10 @@
-import { AppComponentBase } from "shared/app-component-base";
-import { Injector, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
+import { Injector } from '@angular/core';
 import { Observable } from "rxjs/Observable";
+import { BaseEntityDto } from './AppClass';
+import { EditComponentBase } from './edit-component-base';
 
-interface BaseEntityDto {
-    init(): void;
-}
+export abstract class CreateUpdateComponentBase<EntityDto extends BaseEntityDto, CreateEntityDto extends BaseEntityDto> extends EditComponentBase {
 
-export abstract class CreateUpdateComponentBase<EntityDto extends BaseEntityDto, CreateEntityDto extends BaseEntityDto> extends AppComponentBase implements OnInit {
-
-    @ViewChild('createUpdateModal') modal: ModalDirective;
-    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
-    active: boolean = false;
-    saving: boolean = false;
     entityDto: EntityDto = null;
     createEntityDto: CreateEntityDto = null;
 
@@ -21,40 +12,21 @@ export abstract class CreateUpdateComponentBase<EntityDto extends BaseEntityDto,
         super(injector);
     }
 
-    ngOnInit(): void {
-
-    }
-
     show(id?: number): void {
         if (id) {
             this.get(id).finally(() => {
-                this.active = true;
-                this.modal.show();
+                super.show();
             }).subscribe((result: EntityDto) => {
                 this.entityDto = result;
             });
         } else {
             this.createEntityDto = this.instanceCreateEntityDto();
-            this.active = true;
-            this.modal.show();
+            super.show();
         }
     }
 
     save(): void {
-        var serviceMethod = this.createEntityDto != null ? this.create : this.update;
-        this.saving = true;
-        serviceMethod().finally(() => {
-            this.saving = false;
-        }).subscribe(() => {
-            this.notify.info(this.l('SavedSuccessfully'));
-            this.close();
-            this.modalSave.emit(null);
-        });
-    }
-
-    close(): void {
-        this.active = false;
-        this.modal.hide();
+        this.createEntityDto != null ? super.save(this.create()) : super.save(this.update());
     }
 
     protected abstract create(): Observable<any>;

@@ -10,6 +10,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class CreateUserComponent extends CreateUpdateComponentBase<UserDto, CreateUserDto> implements OnInit {
 
+    roles: CheckItem<RoleDto>[] = null;
+
     protected instanceCreateEntityDto(): CreateUserDto {
         let createUserDto = new CreateUserDto();
         createUserDto.init({ isActive: true });
@@ -28,8 +30,6 @@ export class CreateUserComponent extends CreateUpdateComponentBase<UserDto, Crea
         this.entityDto.roleNames = this.getRoleNames();
         return this._userService.update(this.entityDto);
     }
-
-    roles: CheckItem<RoleDto>[] = null;
 
     constructor(
         injector: Injector,

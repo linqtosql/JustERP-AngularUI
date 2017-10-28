@@ -7,3 +7,7 @@ export class CheckItem<Dto> {
         this.data = data;
     }
 }
+
+export interface BaseEntityDto {
+    init(): void;
+}
