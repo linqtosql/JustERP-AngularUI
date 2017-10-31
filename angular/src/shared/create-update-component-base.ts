@@ -5,8 +5,7 @@ import { EditComponentBase } from './edit-component-base';
 
 export abstract class CreateUpdateComponentBase<EntityDto extends BaseEntityDto, CreateEntityDto extends BaseEntityDto> extends EditComponentBase {
 
-    entityDto: EntityDto = null;
-    createEntityDto: CreateEntityDto = null;
+    model: EntityDto | CreateEntityDto = null;
 
     constructor(injector: Injector) {
         super(injector);
@@ -17,16 +16,16 @@ export abstract class CreateUpdateComponentBase<EntityDto extends BaseEntityDto,
             this.get(id).finally(() => {
                 super.show();
             }).subscribe((result: EntityDto) => {
-                this.entityDto = result;
+                this.model = result;
             });
         } else {
-            this.createEntityDto = this.instanceCreateEntityDto();
+            this.model = this.instanceCreateEntityDto();
             super.show();
         }
     }
 
     save(): void {
-        this.createEntityDto != null ? super.save(this.create()) : super.save(this.update());
+        !this.model["id"] ? super.save(this.create()) : super.save(this.update());
     }
 
     protected abstract create(): Observable<any>;

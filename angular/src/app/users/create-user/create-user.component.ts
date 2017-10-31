@@ -23,12 +23,12 @@ export class CreateUserComponent extends CreateUpdateComponentBase<UserDto, Crea
     }
 
     protected create(): Observable<UserDto> {
-        this.createEntityDto.roleNames = this.getRoleNames();
-        return this._userService.create(this.createEntityDto);
+        this.model.roleNames = this.getRoleNames();
+        return this._userService.create(<CreateUserDto>this.model);
     }
     protected update(): Observable<UserDto> {
-        this.entityDto.roleNames = this.getRoleNames();
-        return this._userService.update(this.entityDto);
+        this.model.roleNames = this.getRoleNames();
+        return this._userService.update(<UserDto>this.model);
     }
 
     constructor(

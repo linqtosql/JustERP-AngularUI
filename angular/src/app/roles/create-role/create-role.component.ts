@@ -10,14 +10,16 @@ import { Observable } from 'rxjs/Observable';
 })
 export class CreateRoleComponent extends CreateUpdateComponentBase<RoleDto, CreateRoleDto> implements OnInit {
 
+    permissions: CheckItem<PermissionDto>[] = null;
+
     protected create(): Observable<any> {
-        this.createEntityDto.permissions = this.getPermissions();
-        return this._roleService.create(this.createEntityDto);
+        this.model.permissions = this.getPermissions();
+        return this._roleService.create(<CreateRoleDto>this.model);
     }
 
     protected update(): Observable<any> {
-        this.entityDto.permissions = this.getPermissions();
-        return this._roleService.update(this.entityDto);
+        this.model.permissions = this.getPermissions();
+        return this._roleService.update(<RoleDto>this.model);
     }
 
     protected get(id: number): Observable<RoleDto> {
@@ -29,8 +31,6 @@ export class CreateRoleComponent extends CreateUpdateComponentBase<RoleDto, Crea
         createRoleDto.init({ isStatic: false });
         return createRoleDto;
     }
-
-    permissions: CheckItem<PermissionDto>[] = null;
 
     constructor(
         injector: Injector,

@@ -5,7 +5,7 @@ import { EditComponentBase } from './edit-component-base';
 
 export abstract class UpdateComponentBase<EntityDto extends BaseEntityDto> extends EditComponentBase {
 
-    entityDto: EntityDto = null;
+    model: EntityDto = null;
     constructor(injector: Injector) {
         super(injector);
     }
@@ -14,7 +14,7 @@ export abstract class UpdateComponentBase<EntityDto extends BaseEntityDto> exten
         this.get(id).finally(() => {
             super.show();
         }).subscribe((result: EntityDto) => {
-            this.entityDto = result;
+            this.model = result;
         });
     }
 

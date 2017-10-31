@@ -2520,6 +2520,7 @@ export interface IChangeUiThemeInput {
 
 export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
     displayName: string;
+    parentId: number;
 
     constructor(data?: ICreateOrganizationUnitDto) {
         if (data) {
@@ -2533,6 +2534,7 @@ export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
     init(data?: any) {
         if (data) {
             this.displayName = data["displayName"];
+            this.parentId = data["parentId"];
         }
     }
 
@@ -2545,6 +2547,7 @@ export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["displayName"] = this.displayName;
+        data["parentId"] = this.parentId;
         return data; 
     }
 
@@ -2558,6 +2561,7 @@ export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
 
 export interface ICreateOrganizationUnitDto {
     displayName: string;
+    parentId: number;
 }
 
 export class OrganizationUnitDto implements IOrganizationUnitDto {

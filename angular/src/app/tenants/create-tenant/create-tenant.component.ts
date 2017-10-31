@@ -10,10 +10,10 @@ import { Observable } from 'rxjs/Observable';
 export class CreateTenantComponent extends CreateUpdateComponentBase<TenantDto, CreateTenantDto> {
 
     protected create(): Observable<any> {
-        return this._tenantService.create(this.createEntityDto)
+        return this._tenantService.create(<CreateTenantDto>this.model)
     }
     protected update(): Observable<any> {
-        return this._tenantService.update(this.entityDto);
+        return this._tenantService.update(<TenantDto>this.model);
     }
     protected get(id: number): Observable<TenantDto> {
         return this._tenantService.get(id);

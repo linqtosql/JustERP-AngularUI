@@ -13,6 +13,7 @@ export class OrganizationunitsComponent extends PagedListingComponentBase<Organi
   @ViewChild('createOUnitModal') createOUnitModal: CreateOunitComponent;
 
   private _units: JsTreeItem[];
+  private _currentUnit: JsTreeItem;
 
   constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy) {
     super(injector);
@@ -26,30 +27,34 @@ export class OrganizationunitsComponent extends PagedListingComponentBase<Organi
         this._units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName));
         $("#m_tree_ouo")
           .on("changed.jstree", (e, data) => {
-            console.log(data);
+            this._currentUnit = data.node;
           }).jstree({
             plugins: ["types", "contextmenu", "wholerow"],
             contextmenu: {
+              show_at_node: false,
               items: {
                 edit: {
                   label: "修改",
                   title: "修改",
                   action: (e) => {
-                    console.log(e);
+                    this.createOUnitModal.show(<number>this._currentUnit.id);
                   }
                 },
                 create: {
                   label: "添加子组织",
                   title: "添加子组织",
                   action: (e) => {
-                    console.log(e);
+                    this.createOUnitModal.show();
+                    this.createOUnitModal.setParent(this._currentUnit.id);
                   }
                 },
                 delete: {
                   label: "删除",
                   title: "删除组织",
                   action: (e) => {
-                    console.log(e);
+                    let data = new OrganizationUnitDto();
+                    data.init({ id: this._currentUnit.id, displayName: this._currentUnit.text });
+                    this.delete(data);
                   }
                 }
               }
@@ -74,7 +79,19 @@ export class OrganizationunitsComponent extends PagedListingComponentBase<Organi
   }
 
   protected delete(entity: OrganizationUnitDto): void {
-
+    abp.message.confirm(
+      "Delete OrganizationUnit '" + entity.displayName + "'?",
+      (result: boolean) => {
+        if (result) {
+          this._ouoService.delete(entity.id)
+            .finally(() => {
+              abp.notify.info("Deleted OrganizationUnit: " + entity.displayName);
+              this.refresh();
+            })
+            .subscribe(() => { });
+        }
+      }
+    );
   }
 
   ngOnInit() {
@@ -108,7 +125,6 @@ export class OrganizationunitsComponent extends PagedListingComponentBase<Organi
     //     theme: 'default', // datatable theme
     //     class: '', // custom wrapper class
     //     scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-    //     height: 450, // datatable's body's fixed height
     //     footer: false // display/hide footer
     //   },
 

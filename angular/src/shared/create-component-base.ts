@@ -5,14 +5,14 @@ import { EditComponentBase } from './edit-component-base';
 
 export abstract class CreateComponentBase<CreateEntityDto extends BaseEntityDto> extends EditComponentBase {
 
-    createEntityDto: CreateEntityDto = null;
+    model: CreateEntityDto = null;
 
     constructor(injector: Injector) {
         super(injector);
     }
 
     show(): void {
-        this.createEntityDto = this.instanceCreateEntityDto();
+        this.model = this.instanceCreateEntityDto();
         super.show();
     }
 

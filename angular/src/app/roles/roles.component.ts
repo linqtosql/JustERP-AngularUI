@@ -51,7 +51,6 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 				theme: 'default', // datatable theme
 				class: '', // custom wrapper class
 				scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-				height: 450, // datatable's body's fixed height
 				footer: false // display/hide footer
 			},
 

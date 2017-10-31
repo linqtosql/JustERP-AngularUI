@@ -10,16 +10,20 @@ import { Observable } from 'rxjs/Observable';
 export class CreateOunitComponent extends CreateUpdateComponentBase<OrganizationUnitDto, CreateOrganizationUnitDto> {
 
   protected create(): Observable<any> {
-    return this._organizationUnitService.create(this.createEntityDto);
+    return this._organizationUnitService.create(<CreateOrganizationUnitDto>this.model);
   }
   protected update(): Observable<any> {
-    return this._organizationUnitService.update(this.entityDto);
+    return this._organizationUnitService.update(<OrganizationUnitDto>this.model);
   }
   protected get(id: number): Observable<OrganizationUnitDto> {
     return this._organizationUnitService.get(id);
   }
   protected instanceCreateEntityDto(): CreateOrganizationUnitDto {
     return new CreateOrganizationUnitDto();
+  }
+
+  setParent(parentId: any): void {
+    this.model.parentId = parentId;
   }
 
   constructor(
