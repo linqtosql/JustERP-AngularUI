@@ -26,9 +26,9 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 			// datasource definition
 			data: {
 				type: 'remote',
-				method: "GET",
 				source: {
 					read: {
+						method: "GET",
 						url: '/api/services/app/Role/GetMetronicTable',
 						mapCallback: r => r.result,
 						paramsDataMap: data => {

@@ -27,9 +27,9 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
             // datasource definition
             data: {
                 type: 'remote',
-                method: "GET",
                 source: {
                     read: {
+                        method: "GET",
                         url: '/api/services/app/Tenant/GetMetronicTable',
                         mapCallback: r => r.result,
                         paramsDataMap: data => {

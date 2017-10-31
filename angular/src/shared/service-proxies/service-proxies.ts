@@ -133,6 +133,80 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class AuditLogServiceProxy {
+    private http: Http;
+    private baseUrl: string;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
+
+    constructor(@Inject(Http) http: Http, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfAuditLogDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/GetMetronicTable?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetMetronicTable(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetMetronicTable(response_);
+                } catch (e) {
+                    return <Observable<MetronicPagedResultDtoOfAuditLogDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<MetronicPagedResultDtoOfAuditLogDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetMetronicTable(response: Response): Observable<MetronicPagedResultDtoOfAuditLogDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? MetronicPagedResultDtoOfAuditLogDto.fromJS(resultData200) : new MetronicPagedResultDtoOfAuditLogDto();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<MetronicPagedResultDtoOfAuditLogDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: Http;
     private baseUrl: string;
@@ -203,28 +277,15 @@ export class OrganizationUnitServiceProxy {
     /**
      * @return Success
      */
-    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfOrganizationUnitDto> {
-        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetMetronicTable?";
-        if (page !== undefined)
-            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
-            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
-            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
-            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
-        if (sort !== undefined)
-            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
-        if (field !== undefined)
-            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+    create(input: CreateOrganizationUnitDto): Observable<OrganizationUnitDto> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Create";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(input);
+        
         let options_ = {
-            method: "get",
+            body: content_,
+            method: "post",
             headers: new Headers({
                 "Content-Type": "application/json", 
                 "Accept": "application/json"
@@ -232,20 +293,20 @@ export class OrganizationUnitServiceProxy {
         };
 
         return this.http.request(url_, options_).flatMap((response_) => {
-            return this.processGetMetronicTable(response_);
+            return this.processCreate(response_);
         }).catch((response_: any) => {
             if (response_ instanceof Response) {
                 try {
-                    return this.processGetMetronicTable(response_);
+                    return this.processCreate(response_);
                 } catch (e) {
-                    return <Observable<MetronicPagedResultDtoOfOrganizationUnitDto>><any>Observable.throw(e);
+                    return <Observable<OrganizationUnitDto>><any>Observable.throw(e);
                 }
             } else
-                return <Observable<MetronicPagedResultDtoOfOrganizationUnitDto>><any>Observable.throw(response_);
+                return <Observable<OrganizationUnitDto>><any>Observable.throw(response_);
         });
     }
 
-    protected processGetMetronicTable(response: Response): Observable<MetronicPagedResultDtoOfOrganizationUnitDto> {
+    protected processCreate(response: Response): Observable<OrganizationUnitDto> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -253,7 +314,7 @@ export class OrganizationUnitServiceProxy {
             const _responseText = response.text();
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? MetronicPagedResultDtoOfOrganizationUnitDto.fromJS(resultData200) : new MetronicPagedResultDtoOfOrganizationUnitDto();
+            result200 = resultData200 ? OrganizationUnitDto.fromJS(resultData200) : new OrganizationUnitDto();
             return Observable.of(result200);
         } else if (status === 401) {
             const _responseText = response.text();
@@ -265,7 +326,63 @@ export class OrganizationUnitServiceProxy {
             const _responseText = response.text();
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Observable.of<MetronicPagedResultDtoOfOrganizationUnitDto>(<any>null);
+        return Observable.of<OrganizationUnitDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getOrganizationUnits(): Observable<OrganizationUnitDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetOrganizationUnits";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetOrganizationUnits(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetOrganizationUnits(response_);
+                } catch (e) {
+                    return <Observable<OrganizationUnitDto[]>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<OrganizationUnitDto[]>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetOrganizationUnits(response: Response): Observable<OrganizationUnitDto[]> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(OrganizationUnitDto.fromJS(item));
+            }
+            return Observable.of(result200);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<OrganizationUnitDto[]>(<any>null);
     }
 
     /**
@@ -376,61 +493,6 @@ export class OrganizationUnitServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
         return Observable.of<PagedResultDtoOfOrganizationUnitDto>(<any>null);
-    }
-
-    /**
-     * @return Success
-     */
-    create(input: CreateOrganizationUnitDto): Observable<OrganizationUnitDto> {
-        let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Create";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(input);
-        
-        let options_ = {
-            body: content_,
-            method: "post",
-            headers: new Headers({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request(url_, options_).flatMap((response_) => {
-            return this.processCreate(response_);
-        }).catch((response_: any) => {
-            if (response_ instanceof Response) {
-                try {
-                    return this.processCreate(response_);
-                } catch (e) {
-                    return <Observable<OrganizationUnitDto>><any>Observable.throw(e);
-                }
-            } else
-                return <Observable<OrganizationUnitDto>><any>Observable.throw(response_);
-        });
-    }
-
-    protected processCreate(response: Response): Observable<OrganizationUnitDto> {
-        const status = response.status; 
-
-        let _headers: any = response.headers ? response.headers.toJSON() : {};
-        if (status === 200) {
-            const _responseText = response.text();
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? OrganizationUnitDto.fromJS(resultData200) : new OrganizationUnitDto();
-            return Observable.of(result200);
-        } else if (status === 401) {
-            const _responseText = response.text();
-            return throwException("A server error occurred.", status, _responseText, _headers);
-        } else if (status === 403) {
-            const _responseText = response.text();
-            return throwException("A server error occurred.", status, _responseText, _headers);
-        } else if (status !== 200 && status !== 204) {
-            const _responseText = response.text();
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-        }
-        return Observable.of<OrganizationUnitDto>(<any>null);
     }
 
     /**
@@ -2224,53 +2286,11 @@ export interface IRegisterOutput {
     canLogin: boolean;
 }
 
-export class ChangeUiThemeInput implements IChangeUiThemeInput {
-    theme: string;
-
-    constructor(data?: IChangeUiThemeInput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.theme = data["theme"];
-        }
-    }
-
-    static fromJS(data: any): ChangeUiThemeInput {
-        let result = new ChangeUiThemeInput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["theme"] = this.theme;
-        return data; 
-    }
-
-    clone() {
-        const json = this.toJSON();
-        let result = new ChangeUiThemeInput();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IChangeUiThemeInput {
-    theme: string;
-}
-
-export class MetronicPagedResultDtoOfOrganizationUnitDto implements IMetronicPagedResultDtoOfOrganizationUnitDto {
-    data: OrganizationUnitDto[];
+export class MetronicPagedResultDtoOfAuditLogDto implements IMetronicPagedResultDtoOfAuditLogDto {
+    data: AuditLogDto[];
     meta: MetronicPagedResultRequestDto;
 
-    constructor(data?: IMetronicPagedResultDtoOfOrganizationUnitDto) {
+    constructor(data?: IMetronicPagedResultDtoOfAuditLogDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2284,14 +2304,14 @@ export class MetronicPagedResultDtoOfOrganizationUnitDto implements IMetronicPag
             if (data["data"] && data["data"].constructor === Array) {
                 this.data = [];
                 for (let item of data["data"])
-                    this.data.push(OrganizationUnitDto.fromJS(item));
+                    this.data.push(AuditLogDto.fromJS(item));
             }
             this.meta = data["meta"] ? MetronicPagedResultRequestDto.fromJS(data["meta"]) : <any>undefined;
         }
     }
 
-    static fromJS(data: any): MetronicPagedResultDtoOfOrganizationUnitDto {
-        let result = new MetronicPagedResultDtoOfOrganizationUnitDto();
+    static fromJS(data: any): MetronicPagedResultDtoOfAuditLogDto {
+        let result = new MetronicPagedResultDtoOfAuditLogDto();
         result.init(data);
         return result;
     }
@@ -2309,22 +2329,27 @@ export class MetronicPagedResultDtoOfOrganizationUnitDto implements IMetronicPag
 
     clone() {
         const json = this.toJSON();
-        let result = new MetronicPagedResultDtoOfOrganizationUnitDto();
+        let result = new MetronicPagedResultDtoOfAuditLogDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IMetronicPagedResultDtoOfOrganizationUnitDto {
-    data: OrganizationUnitDto[];
+export interface IMetronicPagedResultDtoOfAuditLogDto {
+    data: AuditLogDto[];
     meta: MetronicPagedResultRequestDto;
 }
 
-export class OrganizationUnitDto implements IOrganizationUnitDto {
-    displayName: string;
+export class AuditLogDto implements IAuditLogDto {
+    userName: string;
+    executionTime: moment.Moment;
+    serviceName: string;
+    methodName: string;
+    clientIpAddress: string;
+    clientName: string;
     id: number;
 
-    constructor(data?: IOrganizationUnitDto) {
+    constructor(data?: IAuditLogDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2335,34 +2360,49 @@ export class OrganizationUnitDto implements IOrganizationUnitDto {
 
     init(data?: any) {
         if (data) {
-            this.displayName = data["displayName"];
+            this.userName = data["userName"];
+            this.executionTime = data["executionTime"] ? moment(data["executionTime"].toString()) : <any>undefined;
+            this.serviceName = data["serviceName"];
+            this.methodName = data["methodName"];
+            this.clientIpAddress = data["clientIpAddress"];
+            this.clientName = data["clientName"];
             this.id = data["id"];
         }
     }
 
-    static fromJS(data: any): OrganizationUnitDto {
-        let result = new OrganizationUnitDto();
+    static fromJS(data: any): AuditLogDto {
+        let result = new AuditLogDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["displayName"] = this.displayName;
+        data["userName"] = this.userName;
+        data["executionTime"] = this.executionTime ? this.executionTime.toISOString() : <any>undefined;
+        data["serviceName"] = this.serviceName;
+        data["methodName"] = this.methodName;
+        data["clientIpAddress"] = this.clientIpAddress;
+        data["clientName"] = this.clientName;
         data["id"] = this.id;
         return data; 
     }
 
     clone() {
         const json = this.toJSON();
-        let result = new OrganizationUnitDto();
+        let result = new AuditLogDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IOrganizationUnitDto {
-    displayName: string;
+export interface IAuditLogDto {
+    userName: string;
+    executionTime: moment.Moment;
+    serviceName: string;
+    methodName: string;
+    clientIpAddress: string;
+    clientName: string;
     id: number;
 }
 
@@ -2436,6 +2476,148 @@ export interface IMetronicPagedResultRequestDto {
     maxResultCount: number;
 }
 
+export class ChangeUiThemeInput implements IChangeUiThemeInput {
+    theme: string;
+
+    constructor(data?: IChangeUiThemeInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.theme = data["theme"];
+        }
+    }
+
+    static fromJS(data: any): ChangeUiThemeInput {
+        let result = new ChangeUiThemeInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["theme"] = this.theme;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new ChangeUiThemeInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IChangeUiThemeInput {
+    theme: string;
+}
+
+export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
+    displayName: string;
+
+    constructor(data?: ICreateOrganizationUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayName = data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrganizationUnitDto {
+        let result = new CreateOrganizationUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new CreateOrganizationUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateOrganizationUnitDto {
+    displayName: string;
+}
+
+export class OrganizationUnitDto implements IOrganizationUnitDto {
+    displayName: string;
+    code: string;
+    parentId: number;
+    memberCount: number;
+    id: number;
+
+    constructor(data?: IOrganizationUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.displayName = data["displayName"];
+            this.code = data["code"];
+            this.parentId = data["parentId"];
+            this.memberCount = data["memberCount"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): OrganizationUnitDto {
+        let result = new OrganizationUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        data["code"] = this.code;
+        data["parentId"] = this.parentId;
+        data["memberCount"] = this.memberCount;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new OrganizationUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IOrganizationUnitDto {
+    displayName: string;
+    code: string;
+    parentId: number;
+    memberCount: number;
+    id: number;
+}
+
 export class PagedResultDtoOfOrganizationUnitDto implements IPagedResultDtoOfOrganizationUnitDto {
     totalCount: number;
     items: OrganizationUnitDto[];
@@ -2488,48 +2670,6 @@ export class PagedResultDtoOfOrganizationUnitDto implements IPagedResultDtoOfOrg
 export interface IPagedResultDtoOfOrganizationUnitDto {
     totalCount: number;
     items: OrganizationUnitDto[];
-}
-
-export class CreateOrganizationUnitDto implements ICreateOrganizationUnitDto {
-    displayName: string;
-
-    constructor(data?: ICreateOrganizationUnitDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.displayName = data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrganizationUnitDto {
-        let result = new CreateOrganizationUnitDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["displayName"] = this.displayName;
-        return data; 
-    }
-
-    clone() {
-        const json = this.toJSON();
-        let result = new CreateOrganizationUnitDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICreateOrganizationUnitDto {
-    displayName: string;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {

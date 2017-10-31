@@ -27,9 +27,9 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
             // datasource definition
             data: {
                 type: 'remote',
-                method: "GET",
                 source: {
                     read: {
+                        method: "GET",
                         url: '/api/services/app/User/GetMetronicTable',
                         mapCallback: r => r.result,
                         paramsDataMap: data => {
