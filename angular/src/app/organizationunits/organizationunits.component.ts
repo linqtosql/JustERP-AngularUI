@@ -50,7 +50,9 @@ export class OrganizationunitsComponent extends PagedListingComponentBase<Organi
 
   ngOnInit() {
     this.$treeOuo = $("#m_tree_ouo")
-      .on("changed.jstree", this.nodeChangedHandle)
+      .on("changed.jstree", (e, data) => {
+        this.nodeChangedHandle(e, data);
+      })
       .jstree({
         plugins: ["types", "contextmenu", "wholerow"],
         contextmenu: {

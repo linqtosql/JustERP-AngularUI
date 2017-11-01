@@ -27,6 +27,7 @@ import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizationunitsComponent } from './organizationunits/organizationunits.component';
 import { CreateOunitComponent } from './organizationunits/create-ounit/create-ounit.component';
+import { MDatatableComponent } from './shared/m-datatable/m-datatable.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { CreateOunitComponent } from './organizationunits/create-ounit/create-ou
         TopBarLanguageSwitchComponent,
         NotFoundComponent,
         OrganizationunitsComponent,
-        CreateOunitComponent
+        CreateOunitComponent,
+        MDatatableComponent
     ],
     imports: [
         CommonModule,
