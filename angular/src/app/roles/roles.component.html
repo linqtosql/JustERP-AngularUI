@@ -125,7 +125,7 @@
             </div>
             <!--end: Search Form -->
             <!--begin: Datatable -->
-            <div class="m_datatable" id="role_data"></div>
+            <m-datatable [config]="config" (onButtonClick)="actionClick($event)"></m-datatable>
             <!--end: Datatable -->
         </div>
     </div>

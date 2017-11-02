@@ -1,21 +1,16 @@
 ﻿import { Component, Injector, ViewChild } from '@angular/core';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { UserServiceProxy, UserDto, PagedResultDtoOfUserDto } from '@shared/service-proxies/service-proxies';
-import { PagedListingComponentBase, PagedRequestDto } from "shared/paged-listing-component-base";
 import { CreateUserComponent } from "app/users/create-user/create-user.component";
-import { MDatatableComponent } from '../shared/m-datatable/m-datatable.component';
+import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
     templateUrl: './users.component.html'
 })
-export class UsersComponent extends PagedListingComponentBase<UserDto> {
+export class UsersComponent extends MDatatableListingComponent {
 
-    @ViewChild('createUserModal') createUserModal: CreateUserComponent;
-    @ViewChild(MDatatableComponent) mDatatable: MDatatableComponent;
+    @ViewChild(CreateUserComponent) createUserModal: CreateUserComponent;
 
-    active = false;
-    users: UserDto[] = [];
     config: any = {
         url: "/api/services/app/User/GetMetronicTable",
         columns: [
@@ -38,12 +33,12 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
             {
                 field: "fullName",
                 title: "全名",
-                width: 80
+                width: 120
             },
             {
                 field: "roleNames",
                 title: "角色",
-                width: 120
+                width: 180
             },
             {
                 field: "isActive",
@@ -59,10 +54,6 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
         private _userService: UserServiceProxy
     ) {
         super(injector);
-    }
-
-    protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-
     }
 
     protected delete(user: UserDto): void {
@@ -87,7 +78,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     }
 
     actionClick(e: any): void {
-        console.log(e);
+        console.log(e.command);
         this.createUserModal.show(e.data.id);
     }
 }
