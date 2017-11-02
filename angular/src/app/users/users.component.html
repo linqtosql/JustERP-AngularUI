@@ -177,7 +177,7 @@
             </div>
             <!--end: Search Form -->
             <!--begin: Datatable -->
-            <m-datatable [url]="url" [columns]="columns" [buttons]="buttons"></m-datatable>
+            <m-datatable [config]="config" (actionClick)="actionClick($event)"></m-datatable>
             <!--end: Datatable -->
         </div>
     </div>

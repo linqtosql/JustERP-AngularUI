@@ -12,44 +12,47 @@ import { MDatatableComponent } from '../shared/m-datatable/m-datatable.component
 export class UsersComponent extends PagedListingComponentBase<UserDto> {
 
     @ViewChild('createUserModal') createUserModal: CreateUserComponent;
+    @ViewChild(MDatatableComponent) mDatatable: MDatatableComponent;
 
     active = false;
     users: UserDto[] = [];
-    url = "/api/services/app/User/GetMetronicTable";
-    columns: any = [
-        {
-            field: "id",
-            title: "#",
-            width: 40,
-            selector: { class: 'm-checkbox--solid m-checkbox--brand' }
-        },
-        {
-            field: "userName",
-            title: "用户名",
-            width: 80
-        },
-        {
-            field: "emailAddress",
-            title: "邮箱",
-            width: 120
-        },
-        {
-            field: "fullName",
-            title: "全名",
-            width: 80
-        },
-        {
-            field: "roleNames",
-            title: "角色",
-            width: 120
-        },
-        {
-            field: "isActive",
-            title: "是否激活",
-            width: 80
-        }
-    ];
-    buttons = ["update", "delete"];
+    config: any = {
+        url: "/api/services/app/User/GetMetronicTable",
+        columns: [
+            {
+                field: "id",
+                title: "#",
+                width: 40,
+                selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+            },
+            {
+                field: "userName",
+                title: "用户名",
+                width: 80
+            },
+            {
+                field: "emailAddress",
+                title: "邮箱",
+                width: 120
+            },
+            {
+                field: "fullName",
+                title: "全名",
+                width: 80
+            },
+            {
+                field: "roleNames",
+                title: "角色",
+                width: 120
+            },
+            {
+                field: "isActive",
+                title: "是否激活",
+                width: 80
+            }
+        ],
+        buttons: ["update", "delete"]
+    }
 
     constructor(
         injector: Injector,
@@ -81,5 +84,10 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     // Show Modals
     createUser(): void {
         this.createUserModal.show();
+    }
+
+    actionClick(e: any): void {
+        console.log(e);
+        this.createUserModal.show(e.data.id);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, Injector } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, Injector, EventEmitter, Output } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
@@ -7,9 +7,12 @@ import { AppComponentBase } from '@shared/app-component-base';
 })
 export class MDatatableComponent extends AppComponentBase implements OnInit {
 
-  @Input() url: string;
-  @Input() columns: [{ field: string, title: string, width?: number, selector?: any, sortable?: boolean, overflow?: string, template?: any }]
-  @Input() buttons: Array<string>
+  @Output() actionClick = new EventEmitter<{ command: string, data: any }>();
+  @Input() config: {
+    url: string,
+    columns: [{ field: string, title: string, width?: number, selector?: any, sortable?: boolean, overflow?: string, template?: any }],
+    buttons: Array<string>
+  }
   @ViewChild("ele") ele: ElementRef
 
   datatable: any
@@ -19,8 +22,8 @@ export class MDatatableComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    if (this.buttons && this.buttons.length > 0) {
-      this.columns.push({
+    if (this.config.buttons && this.config.buttons.length > 0) {
+      this.config.columns.push({
         field: "Actions",
         width: 110,
         title: "操作",
@@ -28,22 +31,22 @@ export class MDatatableComponent extends AppComponentBase implements OnInit {
         overflow: 'visible',
         template: function (row) {
           let dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-
+          
           return '\
             <div class="dropdown ' + dropup + '">\
-                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
+                <a href="javascript:;" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
                     <i class="la la-ellipsis-h"></i>\
                 </a>\
                   <div class="dropdown-menu dropdown-menu-right">\
-                    <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-                    <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-                    <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-edit"></i> Edit Details</a>\
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-leaf"></i> Update Status</a>\
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-print"></i> Generate Report</a>\
                   </div>\
             </div>\
-            <a (click)="createUser()" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
+            <a href="javascript:;" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
                 <i class="la la-edit"></i>\
             </a>\
-            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
+            <a href="javascript:;" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
                 <i class="la la-trash"></i>\
             </a>\
         ';
@@ -57,7 +60,7 @@ export class MDatatableComponent extends AppComponentBase implements OnInit {
         source: {
           read: {
             method: "GET",
-            url: this.url,
+            url: this.config.url,
             mapCallback: r => r.result,
             paramsDataMap: data => {
               return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query);
@@ -90,8 +93,15 @@ export class MDatatableComponent extends AppComponentBase implements OnInit {
 
       pagination: true,
 
-      columns: this.columns
+      columns: this.config.columns
     });
+    //events
+    $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", (e) => {
+      this.actionClick.emit({
+        command: "edit",
+        data: $(e.target).parentsUntil(this.ele.nativeElement, ".m-datatable__row").data("obj")
+      });
+    })
   }
 
 }
