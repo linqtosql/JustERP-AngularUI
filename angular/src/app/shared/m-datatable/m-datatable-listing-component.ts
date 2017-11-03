@@ -4,14 +4,16 @@ import { MDatatableComponent } from './m-datatable.component';
 
 export abstract class MDatatableListingComponent extends AppComponentBase {
 
-    @ViewChild(MDatatableComponent) mDatatable: MDatatableComponent
+    @ViewChild(MDatatableComponent) private mDatatable: MDatatableComponent
 
     constructor(injector: Injector) {
         super(injector);
     }
 
     query(query: any): void {
-        this.mDatatable.setDataSourceQuery(query);
+        setTimeout(() => {
+            this.mDatatable.setDataSourceQuery(query);
+        }, 0);
     }
 
     refresh(): void {

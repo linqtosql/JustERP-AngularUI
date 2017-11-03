@@ -949,8 +949,20 @@ export class RoleServiceProxy {
     /**
      * @return Success
      */
-    getAll(skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfRoleDto> {
+    getAll(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfRoleDto> {
         let url_ = this.baseUrl + "/api/services/app/Role/GetAll?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
         if (skipCount !== undefined)
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
         if (maxResultCount !== undefined)
@@ -1302,8 +1314,20 @@ export class TenantServiceProxy {
     /**
      * @return Success
      */
-    getAll(skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfTenantDto> {
+    getAll(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfTenantDto> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/GetAll?";
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
         if (skipCount !== undefined)
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
         if (maxResultCount !== undefined)
@@ -1797,8 +1821,10 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getUsersInOUnit(organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserOUnitDto> {
+    getUsersInOUnit(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserOUnitDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetUsersInOUnit?";
+        if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
         if (organizationUnitId !== undefined)
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
         if (page !== undefined)
@@ -1867,7 +1893,7 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    addToOUnit(input: UserOUnitDto): Observable<void> {
+    addToOUnit(input: UserOUnitDto[]): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/User/AddToOUnit";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1918,8 +1944,12 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserDto> {
+    getMetronicTable(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetMetronicTable?";
+        if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
+        if (organizationUnitId !== undefined)
+            url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
         if (page !== undefined)
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
         if (pages !== undefined)
@@ -2040,8 +2070,24 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getAll(skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfUserDto> {
+    getAll(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfUserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetAll?";
+        if (keyword !== undefined)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
+        if (organizationUnitId !== undefined)
+            url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
+        if (page !== undefined)
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages !== undefined)
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage !== undefined)
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total !== undefined)
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
         if (skipCount !== undefined)
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
         if (maxResultCount !== undefined)

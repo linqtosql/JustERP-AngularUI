@@ -28,6 +28,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizationunitsComponent } from './organizationunits/organizationunits.component';
 import { CreateOunitComponent } from './organizationunits/create-ounit/create-ounit.component';
 import { MDatatableComponent } from './shared/m-datatable/m-datatable.component';
+import { MJsTreeComponent } from './shared/m-jstree/m-jstree.component';
+import { SelectUserComponent } from './users/select-user/select-user.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +46,9 @@ import { MDatatableComponent } from './shared/m-datatable/m-datatable.component'
         NotFoundComponent,
         OrganizationunitsComponent,
         CreateOunitComponent,
-        MDatatableComponent
+        MDatatableComponent,
+        MJsTreeComponent,
+        SelectUserComponent
     ],
     imports: [
         CommonModule,

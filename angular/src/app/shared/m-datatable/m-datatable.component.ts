@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, Input, Injector, EventEmitter
 
 @Component({
   selector: 'm-datatable',
-  template: ''
+  template: '<ng-template></ng-template>'
 })
 export class MDatatableComponent implements OnInit {
 

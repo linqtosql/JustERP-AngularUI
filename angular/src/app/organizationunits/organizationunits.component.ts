@@ -1,35 +1,47 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { OrganizationUnitServiceProxy, OrganizationUnitDto, UserOUnitDto } from '@shared/service-proxies/service-proxies';
-import { PagedListingComponentBase, PagedRequestDto } from "shared/paged-listing-component-base";
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { JsTreeItem } from '@shared/AppClass';
+import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
+import { MJsTreeComponent } from '../shared/m-jstree/m-jstree.component';
+import { SelectUserComponent } from '../users/select-user/select-user.component';
 
 @Component({
   selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',
   templateUrl: './organizationunits.component.html'
 })
-export class OrganizationunitsComponent extends PagedListingComponentBase<OrganizationUnitDto> implements OnInit {
+export class OrganizationunitsComponent extends MDatatableListingComponent implements OnInit {
 
-  @ViewChild('createOUnitModal') createOUnitModal: CreateOunitComponent;
+  @ViewChild(CreateOunitComponent) createOUnitModal: CreateOunitComponent;
+  @ViewChild(MJsTreeComponent) jsTree: MJsTreeComponent;
+  @ViewChild(SelectUserComponent) selectUserModal: SelectUserComponent;
 
-  private _units: JsTreeItem[] = [];
-  private _currentUnit: JsTreeItem;
-  private $treeOuo: any;
-  private $users: any;
+  config: any = {
+    url: '/api/services/app/User/GetUsersInOUnit',
+    columns: [
+      {
+        field: "id",
+        title: "#",
+        width: 40,
+        selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+      },
+      {
+        field: "userName",
+        title: "用户名",
+        width: 80
+      },
+      {
+        field: "fullName",
+        title: "全名",
+        width: 100,
+        template: '{{surName}} - {{name}}'
+      }
+    ],
+    buttons: ["delete"]
+  }
 
   constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy) {
     super(injector);
-  }
-
-  protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    this._ouoService.getOrganizationUnits()
-      .finally(() => {
-        finishedCallback();
-      }).subscribe(result => {
-        this._units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName));
-        this.$treeOuo.jstree(true).settings.core.data = this._units;
-        this.$treeOuo.jstree(true).refresh();
-      });
   }
 
   protected delete(entity: OrganizationUnitDto): void {
@@ -49,167 +61,63 @@ export class OrganizationunitsComponent extends PagedListingComponentBase<Organi
   }
 
   ngOnInit() {
-    this.$treeOuo = $("#m_tree_ouo")
-      .on("changed.jstree", (e, data) => {
-        this.nodeChangedHandle(e, data);
-      })
-      .jstree({
-        plugins: ["types", "contextmenu", "wholerow"],
-        contextmenu: {
-          show_at_node: false,
-          items: {
-            edit: {
-              label: "修改",
-              title: "修改",
-              action: (e) => {
-                this.createOUnitModal.show(<number>this._currentUnit.id);
-              }
-            },
-            create: {
-              label: "添加子组织",
-              title: "添加子组织",
-              action: (e) => {
-                this.createOUnitModal.show();
-                this.createOUnitModal.setParent(this._currentUnit.id);
-              }
-            },
-            delete: {
-              label: "删除",
-              title: "删除组织",
-              action: (e) => {
-                let data = new OrganizationUnitDto();
-                data.init({ id: this._currentUnit.id, displayName: this._currentUnit.text });
-                this.delete(data);
-              }
+    this.jsTree.init({
+      data: [],
+      contextmenu: {
+        show_at_node: false,
+        items: {
+          edit: {
+            label: "修改",
+            title: "修改",
+            action: (e) => {
+              this.createOUnitModal.show(<number>this.jsTree.selectedItem.id);
             }
-          }
-        },
-        core: {
-          multiple: false,
-          themes: {
-            responsive: !1
           },
-          data: this._units
-        },
-        types: {
-          default: {
-            icon: "fa fa-folder m--font-warning"
+          create: {
+            label: "添加子组织",
+            title: "添加子组织",
+            action: (e) => {
+              this.createOUnitModal.show();
+              this.createOUnitModal.setParent(this.jsTree.selectedItem.id);
+            }
           },
-          file: {
-            icon: "fa fa-file  m--font-warning"
+          delete: {
+            label: "删除",
+            title: "删除组织",
+            action: (e) => {
+              let data = new OrganizationUnitDto();
+              data.init({ id: this.jsTree.selectedItem.id, displayName: this.jsTree.selectedItem.text });
+              this.delete(data);
+            }
           }
         }
-      });
-
-    super.ngOnInit();
-  }
-
-  private nodeChangedHandle(e, data): void {
-    if (!data.node ||
-      (this._currentUnit && data.node.id === this._currentUnit.id))
-      return;
-    this._currentUnit = data.node;
-    if (!this.$users) {
-      this.$users = $('#orgusers_data').mDatatable({
-        // datasource definition
-        data: {
-          type: 'remote',
-          source: {
-            read: {
-              method: "GET",
-              url: '/api/services/app/User/GetUsersInOUnit',
-              mapCallback: r => r.result,
-              paramsDataMap: data => {
-                return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query);
-              },
-              query: {
-                organizationUnitId: -1
-              }
-            }
-          },
-          pageSize: 10,
-          saveState: {
-            cookie: true,
-            webstorage: true
-          },
-          serverPaging: true,
-          serverFiltering: true,
-          serverSorting: true
-        },
-
-        // layout definition
-        layout: {
-          theme: 'default', // datatable theme
-          class: '', // custom wrapper class
-          scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
-          footer: false // display/hide footer
-        },
-
-        // column sorting(refer to Kendo UI)
-        sortable: true,
-
-        // column based filtering(refer to Kendo UI)
-        filterable: false,
-
-        pagination: true,
-
-        columns: [
-          {
-            field: "id",
-            title: "#",
-            width: 40,
-            selector: { class: 'm-checkbox--solid m-checkbox--brand' }
-          },
-          {
-            field: "userName",
-            title: "用户名",
-            width: 80
-          },
-          {
-            field: "fullName",
-            title: "全名",
-            width: 100,
-            template: '{{surName}} - {{name}}'
-          },
-          {
-            field: "Actions",
-            title: "操作",
-            sortable: false,
-            overflow: 'visible',
-            template: function (row) {
-              let dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-
-              return '\
-              <div class="dropdown ' + dropup + '">\
-                <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
-                                  <i class="la la-ellipsis-h"></i>\
-                              </a>\
-                  <div class="dropdown-menu dropdown-menu-right">\
-                    <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-                    <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-                    <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
-                  </div>\
-              </div>\
-              <a (click)="createUser()" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-                <i class="la la-edit"></i>\
-              </a>\
-              <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
-                <i class="la la-trash"></i>\
-              </a>\
-            ';
-            }
-          }
-        ]
-      });
-    } else {
-      let query: { organizationUnitId: any } = { organizationUnitId: this._currentUnit.id };
-      this.$users.setDataSourceQuery(query);
-      this.$users.load();
-    }
+      }
+    })
+    this.refresh();
   }
 
   createOUnit(): void {
     this.createOUnitModal.show();
+  }
+
+  actionClick(e: any) {
+
+  }
+
+  selectOuoChanged(treeItem: JsTreeItem) {
+    let query = { organizationUnitId: treeItem.id };
+    this.query(query);
+  }
+
+  refresh(): void {
+    this._ouoService.getOrganizationUnits().subscribe(result => {
+      let units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName));
+      this.jsTree.refresh(units);
+    });
+  }
+
+  showUserModal(): void {
+    this.selectUserModal.show();
   }
 
 }

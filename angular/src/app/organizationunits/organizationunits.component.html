@@ -10,8 +10,8 @@
                                 {{l("OrganizationUnits")}}
                             </h3>
                         </div>
-					</div>
-					<div class="m-portlet__head-tools">
+                    </div>
+                    <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
                                 <a (click)="createOUnit()" href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <div id="m_tree_ouo"></div>
+                    <m-jstree (onSelectNodeChanged)="selectOuoChanged($event)"></m-jstree>
                 </div>
             </div>
             <!--end::Portlet-->
@@ -43,14 +43,14 @@
                             </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
+                    <div *ngIf="jsTree.selectedItem" class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
-                                <a href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                                <a (click)="showUserModal()" href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
                                     <span>
                                         <i class="la la-user-plus"></i>
                                         <span>
-                                            {{l("New Person")}}
+                                            {{l("Add Person")}}
                                         </span>
                                     </span>
                                 </a>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <div class="m_datatable" id="orgusers_data"></div>
+                    <m-datatable *ngIf="jsTree.selectedItem" [config]="config" (onButtonClick)="actionClick($event)"></m-datatable>
                 </div>
             </div>
             <!--end::Portlet-->
@@ -67,3 +67,4 @@
     </div>
 </div>
 <create-update-ounit-modal #createOUnitModal (modalSave)="refresh()"></create-update-ounit-modal>
+<select-user-modal></select-user-modal>

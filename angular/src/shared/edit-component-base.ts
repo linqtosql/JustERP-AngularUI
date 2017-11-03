@@ -1,16 +1,10 @@
-import { AppComponentBase } from "shared/app-component-base";
 import { Injector, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
 import { Observable } from "rxjs/Observable";
-import { BaseEntityDto } from './AppClass';
+import { ModalComponentBase } from './modal-component-base';
 
-export abstract class EditComponentBase extends AppComponentBase {
+export abstract class EditComponentBase extends ModalComponentBase {
 
-    @ViewChild('createUpdateModal') modal: ModalDirective;
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
-    active = false;
-    saving = false;
 
     constructor(injector: Injector) {
         super(injector);
@@ -26,15 +20,4 @@ export abstract class EditComponentBase extends AppComponentBase {
             this.modalSave.emit(null);
         });
     }
-
-    show(id?: number): void {
-        this.active = true;
-        this.modal.show();
-    }
-
-    close(): void {
-        this.active = false;
-        this.modal.hide();
-    }
-
 }
