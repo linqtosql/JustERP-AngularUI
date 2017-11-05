@@ -59,10 +59,8 @@ export class MDatatableComponent implements OnInit {
           read: {
             method: "GET",
             url: this.config.url,
-            mapCallback: r => r.result,
-            paramsDataMap: data => {
-              return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query);
-            }
+            mapCallback: function (r) { return r.result; },
+            paramsDataMap: function (data) { return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query); }
           }
         },
         pageSize: 10,
