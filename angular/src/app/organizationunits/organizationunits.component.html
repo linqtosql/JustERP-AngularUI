@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <m-datatable *ngIf="jsTree.selectedItem" [config]="config" (onButtonClick)="actionClick($event)"></m-datatable>
+                    <m-datatable #mDatatable [config]="config" *ngIf="jsTree.selectedItem" (onButtonClick)="actionClick($event)"></m-datatable>
                 </div>
             </div>
             <!--end::Portlet-->
@@ -67,4 +67,4 @@
     </div>
 </div>
 <create-update-ounit-modal #createOUnitModal (modalSave)="refresh()"></create-update-ounit-modal>
-<select-user-modal></select-user-modal>
+<select-user-modal (modalSave)="userSelectComplete($event)"></select-user-modal>

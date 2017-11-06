@@ -1,27 +1,42 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, Injector, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, Injector, EventEmitter, Output, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'm-datatable',
   template: '<ng-template></ng-template>'
 })
-export class MDatatableComponent implements OnInit {
+export class MDatatableComponent implements AfterViewInit {
 
-  @Output() onButtonClick = new EventEmitter<{ command: string, data: any }>();
+  @Output() onButtonClick = new EventEmitter<{ command: string, data: any }>()
   @Input() config: {
     url: string,
+    query: any,
     columns: [{ field: string, title: string, width?: number, selector?: any, sortable?: boolean, overflow?: string, template?: any }],
     buttons: Array<string>
   }
 
   private datatable: any
 
-  constructor(private ele: ElementRef) {
+  constructor(private ele: ElementRef) { }
 
+  ngAfterViewInit(): void {
+    //events
+    $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", (e) => {
+      this.onButtonClick.emit({
+        command: $(e.target).attr("tag"),
+        data: $(e.target).parentsUntil(this.ele.nativeElement, ".m-datatable__row").data("obj")
+      });
+    })
+    if (this.config) {
+      this.init(this.config);
+    }
   }
 
-  ngOnInit() {
-    if (this.config.buttons && this.config.buttons.length > 0) {
-      this.config.columns.push({
+  init(config: any): MDatatableComponent {
+    if (this.datatable) {
+      return this;
+    }
+    if (config.buttons && config.buttons.length > 0) {
+      config.columns.push({
         field: "Actions",
         width: 110,
         title: "操作",
@@ -58,9 +73,12 @@ export class MDatatableComponent implements OnInit {
         source: {
           read: {
             method: "GET",
-            url: this.config.url,
+            url: config.url,
             mapCallback: function (r) { return r.result; },
-            paramsDataMap: function (data) { return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query); }
+            paramsDataMap: function (data) { return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query); },
+            params: {
+              query: config.query || null
+            }
           }
         },
         pageSize: 10,
@@ -89,28 +107,34 @@ export class MDatatableComponent implements OnInit {
 
       pagination: true,
 
-      columns: this.config.columns
+      columns: config.columns
     });
-    //events
-    $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", (e) => {
-      this.onButtonClick.emit({
-        command: $(e.target).attr("tag"),
-        data: $(e.target).parentsUntil(this.ele.nativeElement, ".m-datatable__row").data("obj")
-      });
-    })
+    this.config = config;
+    return this;
   }
 
   getDataSourceQuery(): any {
     return this.datatable.getDataSourceQuery();
   }
 
-  setDataSourceQuery(query: any): void {
+  setDataSourceQuery(query: any): MDatatableComponent {
     this.datatable.setDataSourceQuery(query);
-    this.datatable.load();
+    return this;
+  }
+
+  getSelectedRecords() {
+    return this.datatable.getSelectedRecords().map((rowIndex, row) => {
+      return $(row).data("obj");
+    });
   }
 
   reload(): void {
     this.setDataSourceQuery(this.getDataSourceQuery());
+    this.datatable.load();
+  }
+
+  mDataTableInited(): boolean {
+    return this.datatable !== null;
   }
 
 }

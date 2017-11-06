@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { OrganizationUnitServiceProxy, OrganizationUnitDto, UserOUnitDto } from '@shared/service-proxies/service-proxies';
+import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, UserOUnitDto } from '@shared/service-proxies/service-proxies';
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { JsTreeItem } from '@shared/AppClass';
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
@@ -40,7 +40,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     buttons: ["delete"]
   }
 
-  constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy) {
+  constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy, private _userService: UserServiceProxy) {
     super(injector);
   }
 
@@ -106,7 +106,11 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
 
   selectOuoChanged(treeItem: JsTreeItem) {
     let query = { organizationUnitId: treeItem.id };
-    this.query(query);
+    if (this.mDataTableInited()) {
+      this.query(query);
+      return;
+    }
+    this.config.query = query;
   }
 
   refresh(): void {
@@ -118,6 +122,12 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
 
   showUserModal(): void {
     this.selectUserModal.show();
+  }
+
+  userSelectComplete(users: Array<UserOUnitDto>) {
+    this._userService.addToOUnit(users).subscribe(r => {
+      super.refresh();
+    });
   }
 
 }
