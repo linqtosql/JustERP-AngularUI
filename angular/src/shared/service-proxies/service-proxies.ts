@@ -1944,6 +1944,59 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
+    removeFromOUnit(input: any[]): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/RemoveFromOUnit?";
+        if (input !== undefined)
+            input && input.forEach((item, index) => { 
+                for (let attr in item)
+                    url_ += "input[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+            });
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "delete",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processRemoveFromOUnit(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processRemoveFromOUnit(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processRemoveFromOUnit(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
     getMetronicTable(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetMetronicTable?";
         if (keyword !== undefined)
@@ -4038,9 +4091,7 @@ export interface IMetronicPagedResultDtoOfUserOUnitDto {
 
 export class UserOUnitDto implements IUserOUnitDto {
     userName: string;
-    name: string;
-    surname: string;
-    userId: number;
+    fullName: string;
     organizationUnitId: number;
     id: number;
 
@@ -4056,9 +4107,7 @@ export class UserOUnitDto implements IUserOUnitDto {
     init(data?: any) {
         if (data) {
             this.userName = data["userName"];
-            this.name = data["name"];
-            this.surname = data["surname"];
-            this.userId = data["userId"];
+            this.fullName = data["fullName"];
             this.organizationUnitId = data["organizationUnitId"];
             this.id = data["id"];
         }
@@ -4073,9 +4122,7 @@ export class UserOUnitDto implements IUserOUnitDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["userName"] = this.userName;
-        data["name"] = this.name;
-        data["surname"] = this.surname;
-        data["userId"] = this.userId;
+        data["fullName"] = this.fullName;
         data["organizationUnitId"] = this.organizationUnitId;
         data["id"] = this.id;
         return data; 
@@ -4091,9 +4138,7 @@ export class UserOUnitDto implements IUserOUnitDto {
 
 export interface IUserOUnitDto {
     userName: string;
-    name: string;
-    surname: string;
-    userId: number;
+    fullName: string;
     organizationUnitId: number;
     id: number;
 }

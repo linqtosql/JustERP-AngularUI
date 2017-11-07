@@ -16,6 +16,7 @@ export class UsersComponent extends MDatatableListingComponent {
         columns: [
             {
                 field: "id",
+                sortable: false,
                 title: "#",
                 width: 40,
                 selector: { class: 'm-checkbox--solid m-checkbox--brand' }

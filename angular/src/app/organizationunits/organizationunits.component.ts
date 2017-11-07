@@ -21,6 +21,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     columns: [
       {
         field: "id",
+        sortable: false,
         title: "#",
         width: 40,
         selector: { class: 'm-checkbox--solid m-checkbox--brand' }
@@ -33,8 +34,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
       {
         field: "fullName",
         title: "全名",
-        width: 100,
-        template: '{{surName}} - {{name}}'
+        width: 120
       }
     ],
     buttons: ["delete"]
@@ -100,8 +100,26 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     this.createOUnitModal.show();
   }
 
-  actionClick(e: any) {
+  actionClick(e: { command: string, data: UserOUnitDto }) {
+    switch (e.command) {
+      case "delete":
+        abp.message.confirm(
+          "Delete User '" + e.data.fullName + "' From OrganizationUnit '" + this.jsTree.selectedItem.text + "'?",
+          (result: boolean) => {
+            if (result) {
+              this._userService.removeFromOUnit([e.data])
+                .subscribe(() => {
+                  abp.notify.info("Deleted Success!");
+                  super.refresh();
+                });
+            }
+          }
+        );
+        break;
 
+      default:
+        break;
+    }
   }
 
   selectOuoChanged(treeItem: JsTreeItem) {
@@ -124,11 +142,12 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     this.selectUserModal.show();
   }
 
-  userSelectComplete(users: Array<UserDto>) {
-    var input = users.map((i, user) => {
+  userSelectComplete(users: UserDto[]) {
+    let ouoId = this.jsTree.selectedItem.id;
+    let input = $.map(users, user => {
       let dto = new UserOUnitDto();
-      dto.userId = user.id;
-      dto.organizationUnitId = <number>this.jsTree.selectedItem.id;
+      dto.id = user.id;
+      dto.organizationUnitId = <number>ouoId;
       return dto;
     });
     this._userService.addToOUnit(input).subscribe(r => {

@@ -11,21 +11,27 @@ import { Observable } from 'rxjs/Observable';
 export class SelectUserComponent extends ModalComponentBase {
 
   @ViewChild("selectUserModal") private mDatatable: MDatatableComponent
-  @Output("modalSave") modalSave = new EventEmitter<Array<UserDto>>()
+  @Output("modalSave") modalSave = new EventEmitter<UserDto[]>()
 
   config: any = {
     url: "/api/services/app/User/GetMetronicTable",
     columns: [
       {
         field: "id",
+        sortable: false,
         title: "#",
         width: 40,
         selector: { class: 'm-checkbox--solid m-checkbox--brand' }
       },
       {
+        field: "userName",
+        title: "用户名",
+        width: 100
+      },
+      {
         field: "fullName",
         title: "全名",
-        width: 120
+        width: 100
       }
     ]
   }
