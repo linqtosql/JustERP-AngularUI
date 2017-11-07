@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, UserOUnitDto } from '@shared/service-proxies/service-proxies';
+import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, UserOUnitDto, UserDto } from '@shared/service-proxies/service-proxies';
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { JsTreeItem } from '@shared/AppClass';
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
@@ -124,8 +124,14 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     this.selectUserModal.show();
   }
 
-  userSelectComplete(users: Array<UserOUnitDto>) {
-    this._userService.addToOUnit(users).subscribe(r => {
+  userSelectComplete(users: Array<UserDto>) {
+    var input = users.map((i, user) => {
+      let dto = new UserOUnitDto();
+      dto.userId = user.id;
+      dto.organizationUnitId = <number>this.jsTree.selectedItem.id;
+      return dto;
+    });
+    this._userService.addToOUnit(input).subscribe(r => {
       super.refresh();
     });
   }

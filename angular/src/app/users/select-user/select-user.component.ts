@@ -1,5 +1,5 @@
 import { Component, Injector, ViewChild, Output, EventEmitter } from '@angular/core';
-import { UserServiceProxy, UserOUnitDto } from '@shared/service-proxies/service-proxies';
+import { UserDto } from '@shared/service-proxies/service-proxies';
 import { MDatatableComponent } from '../../shared/m-datatable/m-datatable.component';
 import { ModalComponentBase } from '@shared/modal-component-base';
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 export class SelectUserComponent extends ModalComponentBase {
 
   @ViewChild("selectUserModal") private mDatatable: MDatatableComponent
-  @Output("modalSave") modalSave = new EventEmitter<Array<UserOUnitDto>>()
+  @Output("modalSave") modalSave = new EventEmitter<Array<UserDto>>()
 
   config: any = {
     url: "/api/services/app/User/GetMetronicTable",
@@ -30,7 +30,7 @@ export class SelectUserComponent extends ModalComponentBase {
     ]
   }
 
-  constructor(injector: Injector, private _userService: UserServiceProxy) {
+  constructor(injector: Injector) {
     super(injector);
   }
 
