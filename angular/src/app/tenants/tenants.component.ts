@@ -15,13 +15,6 @@ export class TenantsComponent extends MDatatableListingComponent {
         url: '/api/services/app/Tenant/GetMetronicTable',
         columns: [
             {
-                field: "id",
-                sortable: false,
-                title: "#",
-                width: 40,
-                selector: { class: 'm-checkbox--solid m-checkbox--brand' }
-            },
-            {
                 field: "tenancyName",
                 title: "租户名称",
                 width: 100

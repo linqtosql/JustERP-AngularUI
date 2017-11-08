@@ -15,13 +15,6 @@ export class RolesComponent extends MDatatableListingComponent {
 		url: '/api/services/app/Role/GetMetronicTable',
 		columns: [
 			{
-				field: "id",
-				sortable: false,
-				title: "#",
-				width: 40,
-				selector: { class: 'm-checkbox--solid m-checkbox--brand' }
-			},
-			{
 				field: "name",
 				title: "角色名称",
 				width: 180

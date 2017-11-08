@@ -1,5 +1,13 @@
 import { Component, ElementRef, ViewChild, Input, Injector, EventEmitter, Output, AfterViewInit } from '@angular/core';
 
+class ActionButton {
+  command: string
+  text?: string
+  icon?: string
+  handler?: (row: any) => void
+  buttons?: Array<ActionButton>
+}
+
 @Component({
   selector: 'm-datatable',
   template: '<ng-template></ng-template>'
@@ -11,9 +19,11 @@ export class MDatatableComponent implements AfterViewInit {
     url: string,
     query: any,
     columns: [{ field: string, title: string, width?: number, selector?: any, sortable?: boolean, overflow?: string, template?: any }],
-    buttons: Array<string>
+    buttons: ActionButton[]
   }
 
+  private checkBoxColumnAdded = false
+  private actionColumnAdded = false
   private datatable: any
 
   constructor(private ele: ElementRef) { }
@@ -35,36 +45,52 @@ export class MDatatableComponent implements AfterViewInit {
     if (this.datatable) {
       return this;
     }
-    if (config.buttons && config.buttons.length > 0) {
+    if (config.checkbox !== false && !this.checkBoxColumnAdded) {
+      config.columns.splice(0, 0, {
+        field: "id",
+        sortable: false,
+        title: "#",
+        width: 40,
+        selector: { class: 'm-checkbox--solid m-checkbox--brand' }
+      });
+      this.checkBoxColumnAdded = true;
+    }
+    if (config.buttons && config.buttons.length > 0 && !this.actionColumnAdded) {
       config.columns.push({
         field: "Actions",
         width: 110,
         title: "操作",
         sortable: false,
         overflow: 'visible',
-        template: function (row) {
-          let dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
-
-          return '\
-            <div class="dropdown ' + dropup + '">\
-                <a href="javascript:;" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
-                    <i class="la la-ellipsis-h"></i>\
-                </a>\
-                  <div class="dropdown-menu dropdown-menu-right">\
-                    <a tag="edit" class="dropdown-item" href="javascript:;"><i class="la la-edit"></i> Edit Details</a>\
-                    <a tag="update" class="dropdown-item" href="javascript:;"><i class="la la-leaf"></i> Update Status</a>\
-                    <a tag="generate" class="dropdown-item" href="javascript:;"><i class="la la-print"></i> Generate Report</a>\
-                  </div>\
-            </div>\
-            <a tag="edit" href="javascript:;" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">\
-                <i class="la la-edit"></i>\
-            </a>\
-            <a tag="delete" href="javascript:;" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete">\
-                <i class="la la-trash"></i>\
-            </a>\
-        ';
-        }
+        template: (function (buttons: ActionButton[]) {
+          let html = $.map(buttons, btn => {
+            if (btn.buttons && btn.buttons.length) {
+              return '\
+              <div class="dropdown ">\
+                  <a href="javascript:;" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">\
+                      <i class="la la-ellipsis-h"></i>\
+                  </a>\
+                    <div class="dropdown-menu dropdown-menu-right">\
+                      ' + ($.map(btn.buttons, subBtn => { return '<a name="' + subBtn.command + '" class="dropdown-item" href="javascript:;"><i class="la ' + subBtn.icon + '"></i> ' + subBtn.text + '</a>' })).join('') + '\
+                    </div>\
+              </div>\
+              ';
+            } else {
+              return '\
+              <a name="' + btn.command + '" href="javascript:;" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="' + btn.text + '">\
+                  <i class="la ' + btn.icon + '"></i>\
+              </a>\
+              ';
+            }
+          });
+          console.log(html.join(''));
+          return function (row) {
+            let dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
+            return html.join('');
+          }
+        })(config.buttons)
       })
+      this.actionColumnAdded = true;
     }
     this.datatable = $(this.ele.nativeElement).mDatatable({
       // datasource definition

@@ -20,13 +20,6 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     url: '/api/services/app/User/GetUsersInOUnit',
     columns: [
       {
-        field: "id",
-        sortable: false,
-        title: "#",
-        width: 40,
-        selector: { class: 'm-checkbox--solid m-checkbox--brand' }
-      },
-      {
         field: "userName",
         title: "用户名",
         width: 80
@@ -37,7 +30,10 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
         width: 120
       }
     ],
-    buttons: ["delete"]
+    buttons: [{
+      command: "delete",
+      icon: "la-trash"
+    }]
   }
 
   constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy, private _userService: UserServiceProxy) {

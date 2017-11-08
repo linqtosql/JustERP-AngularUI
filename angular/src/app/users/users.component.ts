@@ -15,13 +15,6 @@ export class UsersComponent extends MDatatableListingComponent {
         url: "/api/services/app/User/GetMetronicTable",
         columns: [
             {
-                field: "id",
-                sortable: false,
-                title: "#",
-                width: 40,
-                selector: { class: 'm-checkbox--solid m-checkbox--brand' }
-            },
-            {
                 field: "userName",
                 title: "用户名",
                 width: 80
