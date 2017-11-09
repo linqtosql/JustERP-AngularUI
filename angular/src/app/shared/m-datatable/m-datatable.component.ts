@@ -1,11 +1,19 @@
 import { Component, ElementRef, ViewChild, Input, Injector, EventEmitter, Output, AfterViewInit } from '@angular/core';
 
-class ActionButton {
+export class ActionButton {
   command: string
   text?: string
   icon?: string
   handler?: (row: any) => void
   buttons?: Array<ActionButton>
+
+  constructor(command: string, text?: string, icon?: string, handler?: (row: any) => void, buttons?: Array<ActionButton>) {
+    this.command = command;
+    this.text = text || '';
+    this.icon = icon || 'la-ellipsis-h';
+    this.handler = handler;
+    this.buttons = buttons || [];
+  }
 }
 
 @Component({
@@ -14,7 +22,6 @@ class ActionButton {
 })
 export class MDatatableComponent implements AfterViewInit {
 
-  @Output() onButtonClick = new EventEmitter<{ command: string, data: any }>()
   @Input() config: {
     url: string,
     query: any,
@@ -22,20 +29,22 @@ export class MDatatableComponent implements AfterViewInit {
     buttons: ActionButton[]
   }
 
-  private checkBoxColumnAdded = false
-  private actionColumnAdded = false
   private datatable: any
 
   constructor(private ele: ElementRef) { }
 
   ngAfterViewInit(): void {
-    //events
-    $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", (e) => {
-      this.onButtonClick.emit({
-        command: $(e.target).attr("tag"),
-        data: $(e.target).parentsUntil(this.ele.nativeElement, ".m-datatable__row").data("obj")
-      });
-    })
+    let self = this;
+    let btns = this.config.buttons;
+    if (btns && btns.length) {
+      //events
+      $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", function () {
+        let command = $(this).attr("name");
+        let button = btns.find<ActionButton>((btn, i) => { return btn.command === command }, null);
+        button && typeof (button.handler) === "function" && button.handler($(this).parentsUntil(self.ele.nativeElement, ".m-datatable__row").data("obj"))
+      })
+    }
+
     if (this.config) {
       this.init(this.config);
     }
@@ -45,18 +54,18 @@ export class MDatatableComponent implements AfterViewInit {
     if (this.datatable) {
       return this;
     }
-    if (config.checkbox !== false && !this.checkBoxColumnAdded) {
-      config.columns.splice(0, 0, {
+    let columns = [...config.columns];
+    if (config.checkbox !== false) {
+      columns.splice(0, 0, {
         field: "id",
         sortable: false,
         title: "#",
         width: 40,
         selector: { class: 'm-checkbox--solid m-checkbox--brand' }
       });
-      this.checkBoxColumnAdded = true;
     }
-    if (config.buttons && config.buttons.length > 0 && !this.actionColumnAdded) {
-      config.columns.push({
+    if (config.buttons && config.buttons.length > 0) {
+      columns.push({
         field: "Actions",
         width: 110,
         title: "操作",
@@ -90,7 +99,6 @@ export class MDatatableComponent implements AfterViewInit {
           }
         })(config.buttons)
       })
-      this.actionColumnAdded = true;
     }
     this.datatable = $(this.ele.nativeElement).mDatatable({
       // datasource definition
@@ -133,7 +141,7 @@ export class MDatatableComponent implements AfterViewInit {
 
       pagination: true,
 
-      columns: config.columns
+      columns: columns
     });
     this.config = config;
     return this;

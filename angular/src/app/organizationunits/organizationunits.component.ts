@@ -3,6 +3,7 @@ import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, Us
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { JsTreeItem } from '@shared/AppClass';
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
+import { ActionButton } from '../shared/m-datatable/m-datatable.component';
 import { MJsTreeComponent } from '../shared/m-jstree/m-jstree.component';
 import { SelectUserComponent } from '../users/select-user/select-user.component';
 
@@ -30,10 +31,9 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
         width: 120
       }
     ],
-    buttons: [{
-      command: "delete",
-      icon: "la-trash"
-    }]
+    buttons: [
+      new ActionButton("delete", null, "la-trash", (data) => { this.removeFromOUnit(data) })
+    ]
   }
 
   constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy, private _userService: UserServiceProxy) {
@@ -96,26 +96,19 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     this.createOUnitModal.show();
   }
 
-  actionClick(e: { command: string, data: UserOUnitDto }) {
-    switch (e.command) {
-      case "delete":
-        abp.message.confirm(
-          "Delete User '" + e.data.fullName + "' From OrganizationUnit '" + this.jsTree.selectedItem.text + "'?",
-          (result: boolean) => {
-            if (result) {
-              this._userService.removeFromOUnit([e.data])
-                .subscribe(() => {
-                  abp.notify.info("Deleted Success!");
-                  super.refresh();
-                });
-            }
-          }
-        );
-        break;
-
-      default:
-        break;
-    }
+  removeFromOUnit(data: UserOUnitDto) {
+    abp.message.confirm(
+      "Delete User '" + data.fullName + "' From OrganizationUnit '" + this.jsTree.selectedItem.text + "'?",
+      (result: boolean) => {
+        if (result) {
+          this._userService.removeFromOUnit([data])
+            .subscribe(() => {
+              abp.notify.info("Deleted Success!");
+              super.refresh();
+            });
+        }
+      }
+    );
   }
 
   selectOuoChanged(treeItem: JsTreeItem) {
