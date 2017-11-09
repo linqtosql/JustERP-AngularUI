@@ -16,6 +16,30 @@ export class ActionButton {
   }
 }
 
+export class DeleteActionButton extends ActionButton {
+  constructor(handler: (row: any) => void) {
+    super("delete", null, "la-trash", handler)
+  }
+}
+
+export class UpdateActionButton extends ActionButton {
+  constructor(handler: (row: any) => void) {
+    super("edit", null, "la-edit", handler)
+  }
+}
+
+export class DropdownItemActionButton extends ActionButton {
+  constructor(command: string, text: string, handler: (row: any) => void) {
+    super(command, text, null, handler);
+  }
+}
+
+export class DropdownActionButton extends ActionButton {
+  constructor(buttons: Array<DropdownItemActionButton>) {
+    super("dropdown", null, null, null, buttons);
+  }
+}
+
 @Component({
   selector: 'm-datatable',
   template: '<ng-template></ng-template>'
@@ -41,7 +65,8 @@ export class MDatatableComponent implements AfterViewInit {
       $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", function () {
         let command = $(this).attr("name");
         let button = btns.find<ActionButton>((btn, i) => { return btn.command === command }, null);
-        button && typeof (button.handler) === "function" && button.handler($(this).parentsUntil(self.ele.nativeElement, ".m-datatable__row").data("obj"))
+        // tslint:disable-next-line:no-unused-expression
+        button && typeof (button.handler) === "function" && button.handler($(this).parentsUntil(self.ele.nativeElement, ".m-datatable__row").data("obj"));
       })
     }
 

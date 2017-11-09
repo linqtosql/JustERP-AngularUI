@@ -2,6 +2,7 @@
 import { UserServiceProxy, UserDto, PagedResultDtoOfUserDto } from '@shared/service-proxies/service-proxies';
 import { CreateUserComponent } from "app/users/create-user/create-user.component";
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
+import { UpdateActionButton, DeleteActionButton } from '../shared/m-datatable/m-datatable.component';
 
 @Component({
     selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -40,7 +41,10 @@ export class UsersComponent extends MDatatableListingComponent {
                 width: 80
             }
         ],
-        buttons: ["update", "delete"]
+        buttons: [
+            new UpdateActionButton((data: UserDto) => { this.createUserModal.show(data.id); }),
+            new DeleteActionButton((data: UserDto) => { this.delete(data); })
+        ]
     }
 
     constructor(
@@ -69,10 +73,5 @@ export class UsersComponent extends MDatatableListingComponent {
     // Show Modals
     createUser(): void {
         this.createUserModal.show();
-    }
-
-    actionClick(e: any): void {
-        console.log(e.command);
-        this.createUserModal.show(e.data.id);
     }
 }

@@ -3,7 +3,7 @@ import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, Us
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { JsTreeItem } from '@shared/AppClass';
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
-import { ActionButton } from '../shared/m-datatable/m-datatable.component';
+import { DeleteActionButton } from '../shared/m-datatable/m-datatable.component';
 import { MJsTreeComponent } from '../shared/m-jstree/m-jstree.component';
 import { SelectUserComponent } from '../users/select-user/select-user.component';
 
@@ -17,7 +17,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
   @ViewChild(MJsTreeComponent) jsTree: MJsTreeComponent;
   @ViewChild(SelectUserComponent) selectUserModal: SelectUserComponent;
 
-  config: any = {
+  tableConfig: any = {
     url: '/api/services/app/User/GetUsersInOUnit',
     columns: [
       {
@@ -32,9 +32,42 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
       }
     ],
     buttons: [
-      new ActionButton("delete", null, "la-trash", (data) => { this.removeFromOUnit(data) })
+      new DeleteActionButton((data) => { this.removeFromOUnit(data) })
     ]
   }
+  treeConfig = {
+    data: [],
+    contextmenu: {
+      show_at_node: false,
+      items: {
+        edit: {
+          label: "修改",
+          title: "修改",
+          action: (e) => {
+            this.createOUnitModal.show(<number>this.jsTree.selectedItem.id);
+          }
+        },
+        create: {
+          label: "添加子组织",
+          title: "添加子组织",
+          action: (e) => {
+            this.createOUnitModal.show();
+            this.createOUnitModal.setParent(this.jsTree.selectedItem.id);
+          }
+        },
+        delete: {
+          label: "删除",
+          title: "删除组织",
+          action: (e) => {
+            let data = new OrganizationUnitDto();
+            data.init({ id: this.jsTree.selectedItem.id, displayName: this.jsTree.selectedItem.text });
+            this.delete(data);
+          }
+        }
+      }
+    }
+  }
+  existsTreeData = false
 
   constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy, private _userService: UserServiceProxy) {
     super(injector);
@@ -57,38 +90,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
   }
 
   ngOnInit() {
-    this.jsTree.init({
-      data: [],
-      contextmenu: {
-        show_at_node: false,
-        items: {
-          edit: {
-            label: "修改",
-            title: "修改",
-            action: (e) => {
-              this.createOUnitModal.show(<number>this.jsTree.selectedItem.id);
-            }
-          },
-          create: {
-            label: "添加子组织",
-            title: "添加子组织",
-            action: (e) => {
-              this.createOUnitModal.show();
-              this.createOUnitModal.setParent(this.jsTree.selectedItem.id);
-            }
-          },
-          delete: {
-            label: "删除",
-            title: "删除组织",
-            action: (e) => {
-              let data = new OrganizationUnitDto();
-              data.init({ id: this.jsTree.selectedItem.id, displayName: this.jsTree.selectedItem.text });
-              this.delete(data);
-            }
-          }
-        }
-      }
-    })
+    //this.jsTree.init()
     this.refresh();
   }
 
@@ -117,13 +119,19 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
       this.query(query);
       return;
     }
-    this.config.query = query;
+    this.tableConfig.query = query;
   }
 
   refresh(): void {
     this._ouoService.getOrganizationUnits().subscribe(result => {
       let units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName));
-      this.jsTree.refresh(units);
+      this.existsTreeData = units.length > 0;
+      if (!this.existsTreeData) { return };
+      if (!this.jsTree) {
+        this.treeConfig.data = units;
+      } else {
+        this.jsTree.refresh(units);
+      }
     });
   }
 

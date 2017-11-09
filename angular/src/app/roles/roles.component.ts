@@ -2,6 +2,7 @@
 import { RoleServiceProxy, RoleDto, PagedResultDtoOfRoleDto } from "shared/service-proxies/service-proxies";
 import { CreateRoleComponent } from "app/roles/create-role/create-role.component";
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
+import { UpdateActionButton, DeleteActionButton } from '../shared/m-datatable/m-datatable.component';
 
 @Component({
 	selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
@@ -30,7 +31,10 @@ export class RolesComponent extends MDatatableListingComponent {
 				width: 80
 			}
 		],
-		buttons: ["update", "delete"]
+		buttons: [
+			new UpdateActionButton((data: RoleDto) => { this.createRoleModal.show(data.id); }),
+			new DeleteActionButton((data: RoleDto) => { this.delete(data); })
+		]
 	}
 
 	constructor(
@@ -60,9 +64,5 @@ export class RolesComponent extends MDatatableListingComponent {
 	// Show Modals
 	createRole(): void {
 		this.createRoleModal.show();
-	}
-
-	actionClick(e: any): void {
-		this.createRoleModal.show(e.data.id);
 	}
 }
