@@ -117,7 +117,7 @@ export class MDatatableComponent implements AfterViewInit {
               ';
             }
           });
-          console.log(html.join(''));
+          
           return function (row) {
             let dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
             return html.join('');

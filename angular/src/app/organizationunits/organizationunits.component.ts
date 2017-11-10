@@ -14,7 +14,7 @@ import { SelectUserComponent } from '../users/select-user/select-user.component'
 export class OrganizationunitsComponent extends MDatatableListingComponent implements OnInit {
 
   @ViewChild(CreateOunitComponent) createOUnitModal: CreateOunitComponent;
-  @ViewChild(MJsTreeComponent) jsTree: MJsTreeComponent;
+  @ViewChild(MJsTreeComponent) jsTree?: MJsTreeComponent;
   @ViewChild(SelectUserComponent) selectUserModal: SelectUserComponent;
 
   tableConfig: any = {
@@ -67,7 +67,6 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
       }
     }
   }
-  existsTreeData = false
 
   constructor(injector: Injector, private _ouoService: OrganizationUnitServiceProxy, private _userService: UserServiceProxy) {
     super(injector);
@@ -114,6 +113,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
   }
 
   selectOuoChanged(treeItem: JsTreeItem) {
+    if (!treeItem) return;
     let query = { organizationUnitId: treeItem.id };
     if (this.mDataTableInited()) {
       this.query(query);
@@ -125,13 +125,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
   refresh(): void {
     this._ouoService.getOrganizationUnits().subscribe(result => {
       let units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName));
-      this.existsTreeData = units.length > 0;
-      if (!this.existsTreeData) { return };
-      if (!this.jsTree) {
-        this.treeConfig.data = units;
-      } else {
-        this.jsTree.refresh(units);
-      }
+      this.jsTree.refresh(units);
     });
   }
 

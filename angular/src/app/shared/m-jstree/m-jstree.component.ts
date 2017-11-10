@@ -1,19 +1,20 @@
-import { Component, AfterViewInit, ElementRef, EventEmitter, Output, Input } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { JsTreeItem } from '@shared/AppClass';
 
 @Component({
   selector: 'm-jstree',
-  template: '<ng-template></ng-template>'
+  template: '<p *ngIf="emptyTree">{{emptyText}}</p><div #jstree></div>'
 })
 export class MJsTreeComponent implements AfterViewInit {
 
-  private treeOuo: any;
+  private treeOuo: any
+  private emptyTree = false
 
   selectedItem: JsTreeItem;
   @Input() config: any
+  @Input() emptyText: string
   @Output() onSelectNodeChanged = new EventEmitter<JsTreeItem>()
-
-  constructor(private ele: ElementRef) { }
+  @ViewChild('jstree') jstree: ElementRef
 
   ngAfterViewInit(): void {
     if (this.config) {
@@ -22,7 +23,7 @@ export class MJsTreeComponent implements AfterViewInit {
   }
 
   init(options: any): void {
-    this.treeOuo = $(this.ele.nativeElement)
+    this.treeOuo = $(this.jstree.nativeElement)
       .on("changed.jstree", (e, data) => {
         // tslint:disable-next-line:curly
         if (!data.node || (this.selectedItem && data.node.id === this.selectedItem.id))
@@ -52,7 +53,14 @@ export class MJsTreeComponent implements AfterViewInit {
   }
 
   refresh(data: Array<JsTreeItem>): void {
-    this.treeOuo.jstree(true).settings.core.data = data;
-    this.treeOuo.jstree(true).refresh();
+    let jstree = this.treeOuo.jstree(true);
+    //检测是否做了删除操作
+    if (data.length < jstree.settings.core.data.length) {
+      this.selectedItem = null;
+      this.onSelectNodeChanged.emit(this.selectedItem);
+    }
+    jstree.settings.core.data = data;
+    jstree.refresh();
+    this.emptyTree = data.length === 0;
   }
 }

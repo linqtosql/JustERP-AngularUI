@@ -27,8 +27,7 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <p *ngIf="!existsTreeData">{{l("暂无组织机构")}}</p>
-                    <m-jstree *ngIf="existsTreeData" (onSelectNodeChanged)="selectOuoChanged($event)" [config]="treeConfig"></m-jstree>
+                    <m-jstree [emptyText]="l('暂无组织机构')" (onSelectNodeChanged)="selectOuoChanged($event)" [config]="treeConfig"></m-jstree>
                 </div>
             </div>
             <!--end::Portlet-->
@@ -44,7 +43,7 @@
                             </h3>
                         </div>
                     </div>
-                    <div *ngIf="jsTree && jsTree.selectedItem" class="m-portlet__head-tools">
+                    <div *ngIf="jsTree?.selectedItem" class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
                                 <a (click)="showUserModal()" href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
@@ -60,8 +59,8 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <p *ngIf="!jsTree || !jsTree.selectedItem">{{l("请选择一个组织机构")}}</p>
-                    <m-datatable #mDatatable [config]="tableConfig" *ngIf="jsTree && jsTree.selectedItem"></m-datatable>
+                    <p *ngIf="!jsTree?.selectedItem">{{l("请选择一个组织机构")}}</p>
+                    <m-datatable #mDatatable [config]="tableConfig" *ngIf="jsTree?.selectedItem"></m-datatable>
                 </div>
             </div>
             <!--end::Portlet-->
