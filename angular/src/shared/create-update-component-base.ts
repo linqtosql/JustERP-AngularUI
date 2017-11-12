@@ -17,9 +17,11 @@ export abstract class CreateUpdateComponentBase<EntityDto extends BaseEntityDto,
                 super.show();
             }).subscribe((result: EntityDto) => {
                 this.model = result;
+                this.beforeShow(this.model);
             });
         } else {
             this.model = this.instanceCreateEntityDto();
+            this.beforeShow(this.model);
             super.show();
         }
     }

@@ -47,15 +47,6 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <m-jstree [emptyText]="l('暂无权限')" [config]="treeConfig"></m-jstree>
-                                    <div class="m-checkbox-list">
-                                        <ng-template ngFor let-permission [ngForOf]="permissions" let-permissionIndex="index">
-                                            <label for="permission-{{permissionIndex}}" class="m-checkbox">
-                                                <input type="checkbox" name="permission" value="{{permission.data.name}}" class="filled-in" id="permission-{{permissionIndex}}"
-                                                    [(ngModel)]="permission.checked"> {{permission.data.displayName}}
-                                                <span></span>
-                                            </label>
-                                        </ng-template>
-                                    </div>
                                 </div>
                             </div>
                         </div>

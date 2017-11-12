@@ -9,10 +9,10 @@ import { Observable } from 'rxjs/Observable';
     selector: 'create-update-role-modal',
     templateUrl: './create-role.component.html'
 })
-export class CreateRoleComponent extends CreateUpdateComponentBase<RoleDto, CreateRoleDto> implements AfterViewInit {
+export class CreateRoleComponent extends CreateUpdateComponentBase<RoleDto, CreateRoleDto> implements OnInit {
 
     permissions: CheckItem<PermissionDto>[] = null;
-    treeConfig: any = {
+    treeConfig: { data: JsTreeItem[], checkbox: boolean } = {
         data: [],
         checkbox: true
     }
@@ -20,17 +20,29 @@ export class CreateRoleComponent extends CreateUpdateComponentBase<RoleDto, Crea
     @ViewChild(MJsTreeComponent) jsTree: MJsTreeComponent;
 
     protected create(): Observable<any> {
-        this.model.permissions = this.getPermissions();
+        this.model.permissions = this.jsTree.getCheckedNodes();
         return this._roleService.create(<CreateRoleDto>this.model);
     }
 
     protected update(): Observable<any> {
-        this.model.permissions = this.getPermissions();
+        this.model.permissions = this.jsTree.getCheckedNodes();
         return this._roleService.update(<RoleDto>this.model);
     }
 
     protected get(id: number): Observable<RoleDto> {
         return this._roleService.get(id);
+    }
+
+    protected beforeShow(entityDto: any): void {
+        if (entityDto instanceof CreateRoleDto) {
+            this.treeConfig.data.forEach(item => {
+                item.state.selected = true;
+            });
+        } else {
+            this.treeConfig.data.forEach(item => {
+                item.state.selected = entityDto.permissions.indexOf(<string>item.id) !== -1;
+            });
+        }
     }
 
     protected instanceCreateEntityDto(): CreateRoleDto {
@@ -46,16 +58,11 @@ export class CreateRoleComponent extends CreateUpdateComponentBase<RoleDto, Crea
         super(injector);
     }
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
         this._roleService.getAllPermissions()
             .subscribe((permissions) => {
-                this.permissions = permissions.items.map(p => new CheckItem(p));
-                let data = permissions.items.map(p => new JsTreeItem(p.id, null, p.displayName))
-                this.jsTree.refresh(data);
+                let data = permissions.items.map(p => new JsTreeItem(p.name, p.parentName, p.displayName));
+                this.treeConfig.data = data;
             });
-    }
-
-    private getPermissions(): string[] {
-        return this.permissions.filter(p => p.checked).map(p => p.data.name);
     }
 }

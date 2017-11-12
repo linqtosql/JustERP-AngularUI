@@ -6,19 +6,19 @@ export class JsTreeItem {
   text: string;
   icon: string;
   state: {
-      opened: boolean,
-      disabled: boolean,
-      selected: boolean
+    opened: boolean,
+    disabled: boolean,
+    selected: boolean
   };
   li_attr: any;
   a_attr: any;
 
   constructor(id: string | number, parent: string | number, text: string, icon = "", state: { opened: boolean, disabled: boolean, selected: boolean } = { opened: true, disabled: false, selected: false }) {
-      this.id = id.toString();
-      this.parent = parent === null ? "#" : parent.toString();
-      this.text = text;
-      this.icon = icon;
-      this.state = state;
+    this.id = id.toString();
+    this.parent = parent === null ? "#" : parent.toString();
+    this.text = text;
+    this.icon = icon;
+    this.state = state;
   }
 }
 
@@ -48,34 +48,34 @@ export class MJsTreeComponent implements AfterViewInit {
     let plugins = [...this.defaultTreePlugins];
     if (options.contextmenu) { plugins.push("contextmenu"); }
     if (options.checkbox) { plugins.push("checkbox"); }
-    if (options.contextmenu)
-      this.treeOuo = $(this.jstree.nativeElement)
-        .on("changed.jstree", (e, data) => {
-          // tslint:disable-next-line:curly
-          if (!data.node || (this.selectedItem && data.node.id === this.selectedItem.id))
-            return;
-          this.selectedItem = data.node;
-          this.onSelectNodeChanged.emit(this.selectedItem);
-        })
-        .jstree({
-          plugins: plugins,
-          contextmenu: options.contextmenu,
-          core: {
-            multiple: false,
-            themes: {
-              responsive: !1
-            },
-            data: options.data
+
+    this.treeOuo = $(this.jstree.nativeElement)
+      .on("changed.jstree", (e, data) => {
+        // tslint:disable-next-line:curly
+        if (!data.node || (this.selectedItem && data.node.id === this.selectedItem.id))
+          return;
+        this.selectedItem = data.node;
+        this.onSelectNodeChanged.emit(this.selectedItem);
+      })
+      .jstree({
+        plugins: plugins,
+        contextmenu: options.contextmenu,
+        core: {
+          multiple: !!options.checkbox,
+          themes: {
+            responsive: !1
           },
-          types: {
-            default: {
-              icon: "fa fa-folder m--font-warning"
-            },
-            file: {
-              icon: "fa fa-file  m--font-warning"
-            }
+          data: options.data
+        },
+        types: {
+          default: {
+            icon: "fa fa-folder m--font-warning"
+          },
+          file: {
+            icon: "fa fa-file  m--font-warning"
           }
-        });
+        }
+      });
   }
 
   refresh(data: Array<JsTreeItem>): void {
@@ -88,5 +88,9 @@ export class MJsTreeComponent implements AfterViewInit {
     jstree.settings.core.data = data;
     jstree.refresh();
     this.emptyTree = data.length === 0;
+  }
+
+  getCheckedNodes(): string[] {
+    return this.treeOuo.jstree(true).get_checked();
   }
 }
