@@ -1,5 +1,26 @@
 import { Component, AfterViewInit, ElementRef, EventEmitter, Output, Input, ViewChild } from '@angular/core';
-import { JsTreeItem } from '@shared/AppClass';
+
+export class JsTreeItem {
+  id: string | number;
+  parent: string | number;
+  text: string;
+  icon: string;
+  state: {
+    opened: boolean,
+    disabled: boolean,
+    selected: boolean
+  };
+  li_attr: any;
+  a_attr: any;
+
+  constructor(id: string | number, parent: string | number, text: string, icon = "", state: { opened: boolean, disabled: boolean, selected: boolean } = { opened: true, disabled: false, selected: false }) {
+    this.id = id.toString();
+    this.parent = parent === null ? "#" : parent.toString();
+    this.text = text;
+    this.icon = icon;
+    this.state = state;
+  }
+}
 
 @Component({
   selector: 'm-jstree',
@@ -9,6 +30,7 @@ export class MJsTreeComponent implements AfterViewInit {
 
   private treeOuo: any
   private emptyTree = false
+  private defaultTreePlugins = ["types", "wholerow"]
 
   selectedItem: JsTreeItem;
   @Input() config: any
@@ -23,6 +45,10 @@ export class MJsTreeComponent implements AfterViewInit {
   }
 
   init(options: any): void {
+    let plugins = [...this.defaultTreePlugins];
+    if (options.contextmenu) { plugins.push("contextmenu"); }
+    if (options.checkbox) { plugins.push("checkbox"); }
+
     this.treeOuo = $(this.jstree.nativeElement)
       .on("changed.jstree", (e, data) => {
         // tslint:disable-next-line:curly
@@ -32,10 +58,10 @@ export class MJsTreeComponent implements AfterViewInit {
         this.onSelectNodeChanged.emit(this.selectedItem);
       })
       .jstree({
-        plugins: ["types", "contextmenu", "wholerow"],
+        plugins: plugins,
         contextmenu: options.contextmenu,
         core: {
-          multiple: false,
+          multiple: !!options.checkbox,
           themes: {
             responsive: !1
           },
@@ -62,5 +88,9 @@ export class MJsTreeComponent implements AfterViewInit {
     jstree.settings.core.data = data;
     jstree.refresh();
     this.emptyTree = data.length === 0;
+  }
+
+  getCheckedNodes(): string[] {
+    return this.treeOuo.jstree(true).get_checked();
   }
 }

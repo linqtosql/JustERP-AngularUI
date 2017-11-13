@@ -15,6 +15,7 @@ export abstract class UpdateComponentBase<EntityDto extends BaseEntityDto> exten
             super.show();
         }).subscribe((result: EntityDto) => {
             this.model = result;
+            this.beforeShow(this.model);
         });
     }
 

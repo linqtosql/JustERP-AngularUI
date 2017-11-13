@@ -1821,10 +1821,10 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getUsersInOUnit(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserOUnitDto> {
+    getUsersInOUnit(search: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserOUnitDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetUsersInOUnit?";
-        if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
+        if (search !== undefined)
+            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
         if (organizationUnitId !== undefined)
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
         if (page !== undefined)
@@ -1997,10 +1997,10 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getMetronicTable(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserDto> {
+    getMetronicTable(search: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfUserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetMetronicTable?";
-        if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
+        if (search !== undefined)
+            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
         if (organizationUnitId !== undefined)
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
         if (page !== undefined)
@@ -2123,10 +2123,10 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    getAll(keyword: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfUserDto> {
+    getAll(search: string, organizationUnitId: number, page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfUserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/GetAll?";
-        if (keyword !== undefined)
-            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&"; 
+        if (search !== undefined)
+            url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
         if (organizationUnitId !== undefined)
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
         if (page !== undefined)
@@ -2973,6 +2973,7 @@ export class PermissionDto implements IPermissionDto {
     name: string;
     displayName: string;
     description: string;
+    parentName: string;
     id: number;
 
     constructor(data?: IPermissionDto) {
@@ -2989,6 +2990,7 @@ export class PermissionDto implements IPermissionDto {
             this.name = data["name"];
             this.displayName = data["displayName"];
             this.description = data["description"];
+            this.parentName = data["parentName"];
             this.id = data["id"];
         }
     }
@@ -3004,6 +3006,7 @@ export class PermissionDto implements IPermissionDto {
         data["name"] = this.name;
         data["displayName"] = this.displayName;
         data["description"] = this.description;
+        data["parentName"] = this.parentName;
         data["id"] = this.id;
         return data; 
     }
@@ -3020,6 +3023,7 @@ export interface IPermissionDto {
     name: string;
     displayName: string;
     description: string;
+    parentName: string;
     id: number;
 }
 

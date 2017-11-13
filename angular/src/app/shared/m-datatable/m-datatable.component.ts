@@ -117,7 +117,7 @@ export class MDatatableComponent implements AfterViewInit {
               ';
             }
           });
-          
+
           return function (row) {
             let dropup = (row.getDatatable().getPageSize() - row.getIndex()) <= 4 ? 'dropup' : '';
             return html.join('');
@@ -154,7 +154,7 @@ export class MDatatableComponent implements AfterViewInit {
       layout: {
         theme: 'default', // datatable theme
         class: '', // custom wrapper class
-        scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+        scroll: true, // enable/disable datatable scroll both horizontal and vertical when needed.
         footer: false // display/hide footer
       },
 
@@ -165,6 +165,10 @@ export class MDatatableComponent implements AfterViewInit {
       filterable: false,
 
       pagination: true,
+
+      search: {
+        input: $('#search')
+      },
 
       columns: columns
     });

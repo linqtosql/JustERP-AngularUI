@@ -10,6 +10,10 @@ export abstract class EditComponentBase extends ModalComponentBase {
         super(injector);
     }
 
+    protected beforeShow(entityDto: any): void {
+        //do nothing
+    }
+
     save(service: Observable<any>): void {
         this.saving = true;
         service.finally(() => {

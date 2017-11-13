@@ -1,10 +1,9 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, UserOUnitDto, UserDto } from '@shared/service-proxies/service-proxies';
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
-import { JsTreeItem } from '@shared/AppClass';
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
 import { DeleteActionButton } from '../shared/m-datatable/m-datatable.component';
-import { MJsTreeComponent } from '../shared/m-jstree/m-jstree.component';
+import { MJsTreeComponent, JsTreeItem } from '../shared/m-jstree/m-jstree.component';
 import { SelectUserComponent } from '../users/select-user/select-user.component';
 
 @Component({
@@ -14,7 +13,7 @@ import { SelectUserComponent } from '../users/select-user/select-user.component'
 export class OrganizationunitsComponent extends MDatatableListingComponent implements OnInit {
 
   @ViewChild(CreateOunitComponent) createOUnitModal: CreateOunitComponent;
-  @ViewChild(MJsTreeComponent) jsTree?: MJsTreeComponent;
+  @ViewChild(MJsTreeComponent) jsTree: MJsTreeComponent;
   @ViewChild(SelectUserComponent) selectUserModal: SelectUserComponent;
 
   tableConfig: any = {

@@ -13,6 +13,7 @@ export abstract class CreateComponentBase<CreateEntityDto extends BaseEntityDto>
 
     show(): void {
         this.model = this.instanceCreateEntityDto();
+        this.beforeShow(this.model);
         super.show();
     }
 
