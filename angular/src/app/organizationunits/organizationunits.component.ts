@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, UserOUnitDto, UserDto } from '@shared/service-proxies/service-proxies';
+import { OrganizationUnitServiceProxy, UserServiceProxy, OrganizationUnitDto, UserOUnitDto, UserDto, CreateUserOUnitDto } from '@shared/service-proxies/service-proxies';
 import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { MDatatableListingComponent } from '../shared/m-datatable/m-datatable-listing-component';
 import { DeleteActionButton } from '../shared/m-datatable/m-datatable.component';
@@ -101,7 +101,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
       "Delete User '" + data.fullName + "' From OrganizationUnit '" + this.jsTree.selectedItem.text + "'?",
       (result: boolean) => {
         if (result) {
-          this._userService.removeFromOUnit([data])
+          this._userService.removeFromOUnit([new CreateUserOUnitDto({ userId: data.id, organizationUnitId: <number>this.jsTree.selectedItem.id })])
             .subscribe(() => {
               abp.notify.info("Deleted Success!");
               super.refresh();
@@ -112,7 +112,9 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
   }
 
   selectOuoChanged(treeItem: JsTreeItem) {
-    if (!treeItem) return;
+    if (!treeItem) {
+      return;
+    }
     let query = { organizationUnitId: treeItem.id };
     if (this.mDataTableInited()) {
       this.query(query);
@@ -135,8 +137,8 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
   userSelectComplete(users: UserDto[]) {
     let ouoId = this.jsTree.selectedItem.id;
     let input = $.map(users, user => {
-      let dto = new UserOUnitDto();
-      dto.id = user.id;
+      let dto = new CreateUserOUnitDto();
+      dto.userId = user.id;
       dto.organizationUnitId = <number>ouoId;
       return dto;
     });

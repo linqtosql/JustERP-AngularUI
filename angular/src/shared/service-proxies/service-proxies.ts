@@ -1893,7 +1893,7 @@ export class UserServiceProxy {
     /**
      * @return Success
      */
-    addToOUnit(input: UserOUnitDto[]): Observable<void> {
+    addToOUnit(input: CreateUserOUnitDto[]): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/User/AddToOUnit";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1975,6 +1975,57 @@ export class UserServiceProxy {
     }
 
     protected processRemoveFromOUnit(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status === 401) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status === 403) {
+            const _responseText = response.text();
+            return throwException("A server error occurred.", status, _responseText, _headers);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    changeLanguage(input: ChangeUserLanguageDto): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/User/ChangeLanguage";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processChangeLanguage(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processChangeLanguage(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processChangeLanguage(response: Response): Observable<void> {
         const status = response.status; 
 
         let _headers: any = response.headers ? response.headers.toJSON() : {};
@@ -4096,7 +4147,6 @@ export interface IMetronicPagedResultDtoOfUserOUnitDto {
 export class UserOUnitDto implements IUserOUnitDto {
     userName: string;
     fullName: string;
-    organizationUnitId: number;
     id: number;
 
     constructor(data?: IUserOUnitDto) {
@@ -4112,7 +4162,6 @@ export class UserOUnitDto implements IUserOUnitDto {
         if (data) {
             this.userName = data["userName"];
             this.fullName = data["fullName"];
-            this.organizationUnitId = data["organizationUnitId"];
             this.id = data["id"];
         }
     }
@@ -4127,7 +4176,6 @@ export class UserOUnitDto implements IUserOUnitDto {
         data = typeof data === 'object' ? data : {};
         data["userName"] = this.userName;
         data["fullName"] = this.fullName;
-        data["organizationUnitId"] = this.organizationUnitId;
         data["id"] = this.id;
         return data; 
     }
@@ -4143,8 +4191,95 @@ export class UserOUnitDto implements IUserOUnitDto {
 export interface IUserOUnitDto {
     userName: string;
     fullName: string;
-    organizationUnitId: number;
     id: number;
+}
+
+export class CreateUserOUnitDto implements ICreateUserOUnitDto {
+    userId: number;
+    organizationUnitId: number;
+
+    constructor(data?: ICreateUserOUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userId = data["userId"];
+            this.organizationUnitId = data["organizationUnitId"];
+        }
+    }
+
+    static fromJS(data: any): CreateUserOUnitDto {
+        let result = new CreateUserOUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["organizationUnitId"] = this.organizationUnitId;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new CreateUserOUnitDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateUserOUnitDto {
+    userId: number;
+    organizationUnitId: number;
+}
+
+export class ChangeUserLanguageDto implements IChangeUserLanguageDto {
+    languageName: string;
+
+    constructor(data?: IChangeUserLanguageDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.languageName = data["languageName"];
+        }
+    }
+
+    static fromJS(data: any): ChangeUserLanguageDto {
+        let result = new ChangeUserLanguageDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["languageName"] = this.languageName;
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new ChangeUserLanguageDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IChangeUserLanguageDto {
+    languageName: string;
 }
 
 export class MetronicPagedResultDtoOfUserDto implements IMetronicPagedResultDtoOfUserDto {
