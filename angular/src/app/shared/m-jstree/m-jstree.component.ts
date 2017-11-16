@@ -29,9 +29,9 @@ export class JsTreeItem {
 export class MJsTreeComponent implements AfterViewInit {
 
   private treeOuo: any
-  private emptyTree = false
   private defaultTreePlugins = ["types", "wholerow"]
 
+  emptyTree = false
   selectedItem: JsTreeItem;
   @Input() config: any
   @Input() emptyText: string
