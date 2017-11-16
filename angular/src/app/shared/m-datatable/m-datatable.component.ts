@@ -133,7 +133,7 @@ export class MDatatableComponent implements AfterViewInit {
           read: {
             method: "GET",
             url: config.url,
-            mapCallback: function (r) { return r.result; },
+            map: function (r) { return r.result; },
             paramsDataMap: function (data) { return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query); },
             params: {
               query: config.query || null
