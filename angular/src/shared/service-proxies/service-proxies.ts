@@ -148,21 +148,33 @@ export class AuditLogServiceProxy {
      */
     getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfAuditLogDto> {
         let url_ = this.baseUrl + "/api/services/app/AuditLog/GetMetronicTable?";
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -203,6 +215,274 @@ export class AuditLogServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
         return Observable.of<MetronicPagedResultDtoOfAuditLogDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    get(id: number): Observable<AuditLogDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/Get?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGet(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGet(response_);
+                } catch (e) {
+                    return <Observable<AuditLogDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<AuditLogDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGet(response: Response): Observable<AuditLogDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AuditLogDto.fromJS(resultData200) : new AuditLogDto();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<AuditLogDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAll(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfAuditLogDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/GetAll?";
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
+            url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
+            url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
+            url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
+            url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
+        if (sort !== undefined)
+            url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
+        if (field !== undefined)
+            url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "get",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processGetAll(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processGetAll(response_);
+                } catch (e) {
+                    return <Observable<PagedResultDtoOfAuditLogDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<PagedResultDtoOfAuditLogDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processGetAll(response: Response): Observable<PagedResultDtoOfAuditLogDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PagedResultDtoOfAuditLogDto.fromJS(resultData200) : new PagedResultDtoOfAuditLogDto();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<PagedResultDtoOfAuditLogDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    create(input: AuditLogDto): Observable<AuditLogDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "post",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processCreate(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processCreate(response_);
+                } catch (e) {
+                    return <Observable<AuditLogDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<AuditLogDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processCreate(response: Response): Observable<AuditLogDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AuditLogDto.fromJS(resultData200) : new AuditLogDto();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<AuditLogDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    update(input: AuditLogDto): Observable<AuditLogDto> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+        
+        let options_ = {
+            body: content_,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processUpdate(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processUpdate(response_);
+                } catch (e) {
+                    return <Observable<AuditLogDto>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<AuditLogDto>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processUpdate(response: Response): Observable<AuditLogDto> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AuditLogDto.fromJS(resultData200) : new AuditLogDto();
+            return Observable.of(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<AuditLogDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    delete(id: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/AuditLog/Delete?";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = {
+            method: "delete",
+            headers: new Headers({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request(url_, options_).flatMap((response_) => {
+            return this.processDelete(response_);
+        }).catch((response_: any) => {
+            if (response_ instanceof Response) {
+                try {
+                    return this.processDelete(response_);
+                } catch (e) {
+                    return <Observable<void>><any>Observable.throw(e);
+                }
+            } else
+                return <Observable<void>><any>Observable.throw(response_);
+        });
+    }
+
+    protected processDelete(response: Response): Observable<void> {
+        const status = response.status; 
+
+        let _headers: any = response.headers ? response.headers.toJSON() : {};
+        if (status === 200) {
+            const _responseText = response.text();
+            return Observable.of<void>(<any>null);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.text();
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Observable.of<void>(<any>null);
     }
 }
 
@@ -390,7 +670,9 @@ export class OrganizationUnitServiceProxy {
      */
     get(id: number): Observable<OrganizationUnitDto> {
         let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Get?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -444,9 +726,13 @@ export class OrganizationUnitServiceProxy {
      */
     getAll(skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfOrganizationUnitDto> {
         let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/GetAll?";
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -555,7 +841,9 @@ export class OrganizationUnitServiceProxy {
      */
     delete(id: number): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/OrganizationUnit/Delete?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -727,7 +1015,9 @@ export class RoleServiceProxy {
      */
     delete(id: number): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Role/Delete?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -829,21 +1119,33 @@ export class RoleServiceProxy {
      */
     getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfRoleDto> {
         let url_ = this.baseUrl + "/api/services/app/Role/GetMetronicTable?";
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -897,7 +1199,9 @@ export class RoleServiceProxy {
      */
     get(id: number): Observable<RoleDto> {
         let url_ = this.baseUrl + "/api/services/app/Role/Get?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -951,21 +1255,33 @@ export class RoleServiceProxy {
      */
     getAll(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfRoleDto> {
         let url_ = this.baseUrl + "/api/services/app/Role/GetAll?";
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1144,7 +1460,9 @@ export class TenantServiceProxy {
      */
     delete(id: number): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/Delete?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1194,21 +1512,33 @@ export class TenantServiceProxy {
      */
     getMetronicTable(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<MetronicPagedResultDtoOfTenantDto> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/GetMetronicTable?";
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1262,7 +1592,9 @@ export class TenantServiceProxy {
      */
     get(id: number): Observable<TenantDto> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/Get?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1316,21 +1648,33 @@ export class TenantServiceProxy {
      */
     getAll(page: number, pages: number, perpage: number, total: number, sort: string, field: string, skipCount: number, maxResultCount: number): Observable<PagedResultDtoOfTenantDto> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/GetAll?";
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1721,7 +2065,9 @@ export class UserServiceProxy {
      */
     delete(id: number): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/User/Delete?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1825,23 +2171,37 @@ export class UserServiceProxy {
         let url_ = this.baseUrl + "/api/services/app/User/GetUsersInOUnit?";
         if (search !== undefined)
             url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
-        if (organizationUnitId !== undefined)
+        if (organizationUnitId === undefined || organizationUnitId === null)
+            throw new Error("The parameter 'organizationUnitId' must be defined and cannot be null.");
+        else
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2052,23 +2412,37 @@ export class UserServiceProxy {
         let url_ = this.baseUrl + "/api/services/app/User/GetMetronicTable?";
         if (search !== undefined)
             url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
-        if (organizationUnitId !== undefined)
+        if (organizationUnitId === undefined || organizationUnitId === null)
+            throw new Error("The parameter 'organizationUnitId' must be defined and cannot be null.");
+        else
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2122,7 +2496,9 @@ export class UserServiceProxy {
      */
     get(id: number): Observable<UserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/Get?";
-        if (id !== undefined)
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined and cannot be null.");
+        else
             url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2178,23 +2554,37 @@ export class UserServiceProxy {
         let url_ = this.baseUrl + "/api/services/app/User/GetAll?";
         if (search !== undefined)
             url_ += "Search=" + encodeURIComponent("" + search) + "&"; 
-        if (organizationUnitId !== undefined)
+        if (organizationUnitId === undefined || organizationUnitId === null)
+            throw new Error("The parameter 'organizationUnitId' must be defined and cannot be null.");
+        else
             url_ += "OrganizationUnitId=" + encodeURIComponent("" + organizationUnitId) + "&"; 
-        if (page !== undefined)
+        if (page === undefined || page === null)
+            throw new Error("The parameter 'page' must be defined and cannot be null.");
+        else
             url_ += "Page=" + encodeURIComponent("" + page) + "&"; 
-        if (pages !== undefined)
+        if (pages === undefined || pages === null)
+            throw new Error("The parameter 'pages' must be defined and cannot be null.");
+        else
             url_ += "Pages=" + encodeURIComponent("" + pages) + "&"; 
-        if (perpage !== undefined)
+        if (perpage === undefined || perpage === null)
+            throw new Error("The parameter 'perpage' must be defined and cannot be null.");
+        else
             url_ += "Perpage=" + encodeURIComponent("" + perpage) + "&"; 
-        if (total !== undefined)
+        if (total === undefined || total === null)
+            throw new Error("The parameter 'total' must be defined and cannot be null.");
+        else
             url_ += "Total=" + encodeURIComponent("" + total) + "&"; 
         if (sort !== undefined)
             url_ += "Sort=" + encodeURIComponent("" + sort) + "&"; 
         if (field !== undefined)
             url_ += "Field=" + encodeURIComponent("" + field) + "&"; 
-        if (skipCount !== undefined)
+        if (skipCount === undefined || skipCount === null)
+            throw new Error("The parameter 'skipCount' must be defined and cannot be null.");
+        else
             url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
-        if (maxResultCount !== undefined)
+        if (maxResultCount === undefined || maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' must be defined and cannot be null.");
+        else
             url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2624,6 +3014,60 @@ export interface IMetronicPagedResultRequestDto {
     field: string;
     skipCount: number;
     maxResultCount: number;
+}
+
+export class PagedResultDtoOfAuditLogDto implements IPagedResultDtoOfAuditLogDto {
+    totalCount: number;
+    items: AuditLogDto[];
+
+    constructor(data?: IPagedResultDtoOfAuditLogDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.totalCount = data["totalCount"];
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(AuditLogDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfAuditLogDto {
+        let result = new PagedResultDtoOfAuditLogDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone() {
+        const json = this.toJSON();
+        let result = new PagedResultDtoOfAuditLogDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPagedResultDtoOfAuditLogDto {
+    totalCount: number;
+    items: AuditLogDto[];
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {

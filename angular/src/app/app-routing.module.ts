@@ -8,6 +8,7 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from "app/roles/roles.component";
 import { OrganizationunitsComponent } from "./organizationunits/organizationunits.component";
+import { AuditlogsComponent } from './auditlogs/auditlogs.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
                             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' } },
                             { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' } },
                             { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' } },
+                            { path: 'auditlogs', component: AuditlogsComponent, data: { permission: 'Pages.AuditLogs' } },
                             { path: '404', component: NotFoundComponent }
                         ]
                     }

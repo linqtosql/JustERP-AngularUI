@@ -16,6 +16,7 @@ export class AsideNavComponent extends AppComponentBase implements AfterViewInit
         new MenuItem(this.l("Tenants"), "Pages.Tenants", "business", "/app/tenants"),
         new MenuItem(this.l("Users"), "Pages.Users", "people", "/app/users"),
         new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/app/roles"),
+        new MenuItem(this.l("AuditLog"), "Pages.AuditLogs", "local_offer", "/app/auditlogs"),
         new MenuItem(this.l("订单中心"), "", "menu", "#", [
             new MenuItem("销售订单", "", "", "/app/order", [
                 new MenuItem("待接单", "", "", "/app/order/wait"),

@@ -30,6 +30,7 @@ import { CreateOunitComponent } from './organizationunits/create-ounit/create-ou
 import { MDatatableComponent } from './shared/m-datatable/m-datatable.component';
 import { MJsTreeComponent } from './shared/m-jstree/m-jstree.component';
 import { SelectUserComponent } from './users/select-user/select-user.component';
+import { AuditlogsComponent } from './auditlogs/auditlogs.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { SelectUserComponent } from './users/select-user/select-user.component';
         CreateOunitComponent,
         MDatatableComponent,
         MJsTreeComponent,
-        SelectUserComponent
+        SelectUserComponent,
+        AuditlogsComponent
     ],
     imports: [
         CommonModule,
