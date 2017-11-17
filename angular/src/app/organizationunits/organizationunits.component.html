@@ -60,7 +60,7 @@
                 </div>
                 <div class="m-portlet__body">
                     <p *ngIf="!jsTree?.selectedItem">{{l("请选择一个组织机构")}}</p>
-                    <m-datatable #mDatatable [config]="tableConfig" *ngIf="jsTree?.selectedItem"></m-datatable>
+                    <m-datatable #mDatatable id="userInUnitTable" [config]="tableConfig" *ngIf="jsTree?.selectedItem"></m-datatable>
                 </div>
             </div>
             <!--end::Portlet-->

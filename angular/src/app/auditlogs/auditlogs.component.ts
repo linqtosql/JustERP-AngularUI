@@ -12,34 +12,43 @@ export class AuditlogsComponent extends MDatatableListingComponent {
     url: '/api/services/app/AuditLog/GetMetronicTable',
     columns: [
       {
-        field: "userName",
-        title: "用户名",
-        width: 80
-      },
-      {
-        field: "executionTime",
-        title: "执行时间",
-        width: 100
-      },
-      {
         field: "serviceName",
         title: "服务名称",
-        width: 150
+        width: 200
       },
       {
         field: "methodName",
         title: "方法名称",
-        width: 150
+        width: 200
+      },
+      {
+        field: "parameters",
+        title: "执行参数",
+        width: 200,
+        responsive: {visible: 'lg'}
       },
       {
         field: "clientIpAddress",
         title: "IP地址",
-        width: 120
+        width: 150,
+        responsive: {visible: 'lg'}
       },
       {
         field: "clientName",
         title: "客户名称",
-        width: 100
+        width: 100,
+        responsive: {visible: 'lg'}
+      },
+      {
+        field: "browserInfo",
+        title: "浏览器信息",
+        width: 200,
+        responsive: {visible: 'lg'}
+      },
+      {
+        field: "executionTime",
+        title: "执行时间",
+        width: 160
       }
     ]
   }
