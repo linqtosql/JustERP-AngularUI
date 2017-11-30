@@ -14,7 +14,7 @@ if (environment.production) {
 }
 
 const bootstrap = () => {
-    return platformBrowserDynamic().bootstrapModule(RootModule, { ngZone: 'noop' }).then(ref => { });
+    return platformBrowserDynamic().bootstrapModule(RootModule, { ngZone: 'noop' }).then(ref => ref);
 };
 
 /* "Hot Module Replacement" is enabled as described on

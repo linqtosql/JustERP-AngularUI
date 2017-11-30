@@ -2,7 +2,7 @@
 
 @Component({
     selector: 'body',
-    templateUrl: `./root.component.html`,
+    templateUrl: './root.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class RootComponent {
