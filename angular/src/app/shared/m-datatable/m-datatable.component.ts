@@ -64,7 +64,7 @@ export class MDatatableComponent implements AfterViewInit {
       //events
       $(this.ele.nativeElement).on("click", ".dropdown-item,.m-portlet__nav-link.btn.m-btn.m-btn--icon.m-btn--icon.m-btn--pill", function () {
         let command = $(this).attr("name");
-        let button = btns.find<ActionButton>((btn, i) => { return btn.command === command }, null);
+        let button = btns.find((btn, i, btns) => { return btn.command === command });
         // tslint:disable-next-line:no-unused-expression
         button && typeof (button.handler) === "function" && button.handler($(this).parentsUntil(self.ele.nativeElement, ".m-datatable__row").data("obj"));
       })
