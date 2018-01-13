@@ -1,6 +1,3 @@
-// "Production" enabled environment
-
 export const environment = {
-    production: true,
-    hmr: false
+  production: true
 };
