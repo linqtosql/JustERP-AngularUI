@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import * as ApiProxiesComponent from './api-proxies.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import * as ApiProxies from "./api-proxies";
 
 @NgModule({
   providers: [
-    ApiProxiesComponent.RoleServiceProxy,
-    ApiProxiesComponent.SessionServiceProxy,
-    ApiProxiesComponent.TenantServiceProxy,
-    ApiProxiesComponent.UserServiceProxy,
-    ApiProxiesComponent.TokenAuthServiceProxy,
-    ApiProxiesComponent.AccountServiceProxy,
-    ApiProxiesComponent.ConfigurationServiceProxy,
-    ApiProxiesComponent.OrganizationUnitServiceProxy,
-    ApiProxiesComponent.AuditLogServiceProxy
+    ApiProxies.RoleServiceProxy,
+    ApiProxies.SessionServiceProxy,
+    ApiProxies.TenantServiceProxy,
+    ApiProxies.UserServiceProxy,
+    ApiProxies.TokenAuthServiceProxy,
+    ApiProxies.AccountServiceProxy,
+    ApiProxies.ConfigurationServiceProxy,
+    ApiProxies.OrganizationUnitServiceProxy,
+    ApiProxies.AuditLogServiceProxy
   ]
 })
 export class ApiProxiesModule { }

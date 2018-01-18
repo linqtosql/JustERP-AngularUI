@@ -5,7 +5,7 @@ const routes: Routes = [
     { path: '', redirectTo: '/app/dashboard', pathMatch: 'full' },
     {
         path: 'account',
-        loadChildren: 'account/account.module#AccountModule', // Lazy load account module
+        loadChildren: './account/account.module#AccountModule', // Lazy load account module
         data: { preload: true }
     },
     {

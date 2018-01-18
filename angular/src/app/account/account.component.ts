@@ -2,7 +2,7 @@
 
 @Component({
     selector: 'app-account',
-    template: '<router-outlet></router-outlet>',
+    template: '<div></div>',
     encapsulation: ViewEncapsulation.None
 })
 export class AccountComponent implements OnInit {
