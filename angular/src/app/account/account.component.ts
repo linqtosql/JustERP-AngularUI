@@ -1,8 +1,9 @@
 ﻿import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
+import { Helpers } from "../shared/services/helpers/Helpers";
 
 @Component({
-    selector: 'app-account',
-    template: '<div></div>',
+    selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
+    template: '<router-outlet></router-outlet>',
     encapsulation: ViewEncapsulation.None
 })
 export class AccountComponent implements OnInit {
@@ -13,6 +14,6 @@ export class AccountComponent implements OnInit {
     currentYear: number;
 
     ngOnInit(): void {
-
+        Helpers.setLoading(false);
     }
 }

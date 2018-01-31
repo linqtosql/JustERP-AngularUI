@@ -1,5 +1,5 @@
 /*!
- * FullCalendar v3.8.0
+ * FullCalendar v3.7.0 Stylesheet
  * Docs & License: https://fullcalendar.io/
  * (c) 2017 Adam Shaw
  */
@@ -242,7 +242,7 @@ a[data-goto]:hover {
 
 .fc-row table {
   /* don't put left/right border on anything within a fake row.
-     the outer tbody will worry about this */
+	   the outer tbody will worry about this */
   border-left: 0 hidden transparent;
   border-right: 0 hidden transparent;
   /* no bottom borders on rows */
@@ -639,8 +639,8 @@ TODO: more distinction between this file and common.css
 
 /*
 Acceptable font-family overrides for individual icons:
-  "Arial", sans-serif
-  "Times New Roman", serif
+	"Arial", sans-serif
+	"Times New Roman", serif
 
 NOTE: use percentage font sizes or else old IE chokes
 */
@@ -648,24 +648,24 @@ NOTE: use percentage font sizes or else old IE chokes
   position: relative; }
 
 .fc-icon-left-single-arrow:after {
-  content: "\2039";
+  content: "\02039";
   font-weight: bold;
   font-size: 200%;
   top: -7%; }
 
 .fc-icon-right-single-arrow:after {
-  content: "\203A";
+  content: "\0203A";
   font-weight: bold;
   font-size: 200%;
   top: -7%; }
 
 .fc-icon-left-double-arrow:after {
-  content: "\AB";
+  content: "\000AB";
   font-size: 160%;
   top: -7%; }
 
 .fc-icon-right-double-arrow:after {
-  content: "\BB";
+  content: "\000BB";
   font-size: 160%;
   top: -7%; }
 
@@ -685,7 +685,7 @@ NOTE: use percentage font sizes or else old IE chokes
   top: 2%; }
 
 .fc-icon-x:after {
-  content: "\D7";
+  content: "\000D7";
   font-size: 200%;
   top: 6%; }
 
@@ -1100,7 +1100,7 @@ be a descendant of the grid when it is being dragged.
   /* ...instead, display only the start time */ }
 
 .fc-time-grid-event.fc-short .fc-time:after {
-  content: "\A0-\A0";
+  content: "\000A0-\000A0";
   /* seperate with a dash, wrapped in nbsp's */ }
 
 .fc-time-grid-event.fc-short .fc-title {

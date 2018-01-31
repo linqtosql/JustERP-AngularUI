@@ -62,7 +62,7 @@ export class AppSessionService {
         if (this.isCurrentTenant(tenantId)) {
             return false;
         }
-
+        
         abp.multiTenancy.setTenantIdCookie(tenantId);
         location.reload();
         return true;

@@ -3,39 +3,47 @@
   "project": {
     "name": "justerp"
   },
-  "apps": [
-    {
-      "root": "src",
-      "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico"
-      ],
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
-      "styles": [
-        "styles.css"
-      ],
-      "scripts": [],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
-      }
+  "apps": [{
+    "root": "src",
+    "outDir": "dist",
+    "assets": [
+      "assets",
+      "favicon.ico"
+    ],
+    "index": "index.html",
+    "main": "main.ts",
+    "polyfills": "polyfills.ts",
+    "test": "test.ts",
+    "tsconfig": "tsconfig.app.json",
+    "testTsconfig": "tsconfig.spec.json",
+    "prefix": "app",
+    "styles": [
+      "styles.css",
+      "./assets/vendors/base/vendors.bundle.css",
+      "./assets/demo/default/base/style.bundle.css"
+    ],
+    "scripts": [
+      "./assets/vendors/base/vendors.bundle.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/abp.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js"
+    ],
+    "environmentSource": "environments/environment.ts",
+    "environments": {
+      "dev": "environments/environment.ts",
+      "prod": "environments/environment.prod.ts"
     }
-  ],
+  }],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
     }
   },
-  "lint": [
-    {
+  "lint": [{
       "project": "src/tsconfig.app.json",
       "exclude": "**/node_modules/**"
     },

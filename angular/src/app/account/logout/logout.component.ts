@@ -1,14 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Router } from "@angular/router";
+import { AppAuthService } from '../../shared/services/auth/app-auth.service';
+import { Helpers } from "../../shared/services/helpers/Helpers";
 
 @Component({
-  selector: 'app-logout',
-  templateUrl: './logout.component.html'
+    selector: 'app-logout',
+    templateUrl: './logout.component.html',
+    encapsulation: ViewEncapsulation.None,
 })
 export class LogoutComponent implements OnInit {
 
-  constructor() { }
+    constructor(private _router: Router,
+        private _authService: AppAuthService) {
+    }
 
-  ngOnInit() {
-  }
-
+    ngOnInit(): void {
+        Helpers.setLoading(true);
+        // reset login status
+        this._authService.logout();
+    }
 }

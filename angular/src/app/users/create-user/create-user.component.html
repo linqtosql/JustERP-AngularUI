@@ -1,0 +1,103 @@
+﻿<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true"
+  [config]="{backdrop: 'static'}">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <form *ngIf="active" #createUserForm="ngForm" id="frm_create_user" novalidate (ngSubmit)="save()">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span>{{l("CreateNewUser")}}</span>
+          </h5>
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs  m-tabs-line m-tabs-line--primary" role="tablist">
+            <li class="nav-item m-tabs__item">
+              <a class="nav-link m-tabs__link active" data-toggle="tab" href="#user-details" role="tab" aria-expanded="true">
+                User Details
+              </a>
+            </li>
+            <li class="nav-item m-tabs__item">
+              <a class="nav-link m-tabs__link" data-toggle="tab" href="#user-roles" role="tab" aria-expanded="false">
+                User Roles
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active animated fadeIn" id="user-details" role="tabpanel">
+              <div class="form-group">
+                <label for="username" class="form-label">{{l("UserName")}}</label>
+                <input id="username" type="text" name="UserName" [(ngModel)]="model.userName" required maxlength="32" minlength="2" class="validate form-control">
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="name" class="form-label">{{l("Name")}}</label>
+                    <input id="name" type="text" name="Name" [(ngModel)]="model.name" required maxlength="32" class="validate form-control">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="surname" class="form-label">{{l("Surname")}}</label>
+                    <input id="surname" type="text" name="Surname" [(ngModel)]="model.surname" required maxlength="32" class="validate form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">{{l("EmailAddress")}}</label>
+                <input id="email" type="email" name="EmailAddress" [(ngModel)]="model.emailAddress" maxlength="256" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
+                  class="validate form-control">
+              </div>
+              <div class="form-group">
+                <label for="password" class="form-label">{{l("Password")}}</label>
+                <input id="password" type="password" name="Password" [(ngModel)]="model.password" required maxlength="32" class="validate form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="confirmpassword" class="form-label">Confirm Password</label>
+                <input id="confirmpassword" type="password" name="ConfirmPassword" class="validate form-control" [(ngModel)]="model.confirmPassword"
+                  equalTo="#password" data-msg-equalto="Please enter the same password again." required maxlength="32">
+
+              </div>
+              <div class="form-group">
+                <div class="m-checkbox-list">
+                  <label for="isactive" class="m-checkbox">
+                    <input id="isactive" type="checkbox" name="IsActive" [(ngModel)]="model.isActive" checked> {{l("IsActive")}}
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane animated fadeIn" id="user-roles" role="tabpanel">
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <div class="m-checkbox-inline">
+                    <ng-template ngFor let-role [ngForOf]="roles" let-roleIndex="index">
+                      <label for="role-{{roleIndex}}" title="{{role.data.displayName}}" class="m-checkbox">
+                        <input type="checkbox" name="role" value="{{role.data.normalizedName}}" title="{{role.data.description}}" class="filled-in"
+                          id="role-{{roleIndex}}" [(ngModel)]="role.checked">{{role.data.name}}
+                        <span></span>
+                      </label>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-default waves-effect" (click)="close()">
+            {{l("Cancel")}}
+          </button>
+          <button [disabled]="!createUserForm.form.valid || saving" type="submit" class="btn btn-primary waves-effect">
+            {{l("Save")}}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

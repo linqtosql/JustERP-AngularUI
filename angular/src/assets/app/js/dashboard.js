@@ -95,6 +95,12 @@ var Dashboard = function() {
     //== Daily Sales chart.
     //** Based on Chartjs plugin - http://www.chartjs.org/
     var dailySales = function() {
+        var chartContainer = $('#m_chart_daily_sales');
+
+        if (chartContainer.length == 0) {
+            return;
+        }
+
         var chartData = {
             labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7", "Label 8", "Label 9", "Label 10", "Label 11", "Label 12", "Label 13", "Label 14", "Label 15", "Label 16"],
             datasets: [{
@@ -111,12 +117,6 @@ var Dashboard = function() {
                 ]
             }]
         };
-
-        var chartContainer = $('#m_chart_daily_sales');
-
-        if (chartContainer.length == 0) {
-            return;
-        }
 
         var chart = new Chart(chartContainer, {
             type: 'bar',
@@ -1341,12 +1341,12 @@ var Dashboard = function() {
                 type: 'remote',
                 source: {
                     read: {
-                        url: 'inc/api/datatables/demos/default.php'
+                        url: 'https://keenthemes.com/metronic/preview/inc/api/datatables/demos/default.php'
                     }
                 },
-                pageSize: 20,
+                pageSize: 10,
                 saveState: {
-                    cookie: true,
+                    cookie: false,
                     webstorage: true
                 },
                 serverPaging: true,
