@@ -2,6 +2,7 @@
 import { AppConsts } from '../app/shared/AppConsts';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Type, CompilerOptions, NgModuleRef } from '@angular/core';
+import { environment } from '../environments/environment';
 
 export class AppPreBootstrap {
 
@@ -16,18 +17,9 @@ export class AppPreBootstrap {
     }
 
     private static getApplicationConfig(callback: () => void) {
-        return abp.ajax({
-            url: '/assets/appconfig.json',
-            method: 'GET',
-            headers: {
-                'Abp.TenantId': abp.multiTenancy.getTenantIdCookie()
-            }
-        }).done(result => {
-            AppConsts.appBaseUrl = result.appBaseUrl;
-            AppConsts.remoteServiceBaseUrl = result.remoteServiceBaseUrl;
-            
-            callback();
-        });
+        AppConsts.appBaseUrl = environment.appBaseUrl;
+        AppConsts.remoteServiceBaseUrl = environment.remoteServiceBaseUrl;
+        callback();
     }
 
     private static getCurrentClockProvider(currentProviderName: string): abp.timing.IClockProvider {

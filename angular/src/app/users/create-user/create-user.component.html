@@ -51,16 +51,14 @@
                 <input id="email" type="email" name="EmailAddress" [(ngModel)]="model.emailAddress" maxlength="256" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
                   class="validate form-control">
               </div>
-              <div class="form-group">
+              <div *ngIf="!model.id" class="form-group">
                 <label for="password" class="form-label">{{l("Password")}}</label>
                 <input id="password" type="password" name="Password" [(ngModel)]="model.password" required maxlength="32" class="validate form-control">
               </div>
-
-              <div class="form-group">
+              <div *ngIf="!model.id" class="form-group">
                 <label for="confirmpassword" class="form-label">Confirm Password</label>
                 <input id="confirmpassword" type="password" name="ConfirmPassword" class="validate form-control" [(ngModel)]="model.confirmPassword"
                   equalTo="#password" data-msg-equalto="Please enter the same password again." required maxlength="32">
-
               </div>
               <div class="form-group">
                 <div class="m-checkbox-list">
