@@ -165,6 +165,17 @@ export class MDatatableComponent implements AfterViewInit {
 
       pagination: true,
 
+      toolbar: {
+        // toolbar items
+        items: {
+          // pagination
+          pagination: {
+            // page size select
+            pageSizeSelect: [10, 20, 30, 50, 100],
+          },
+        },
+      },
+
       search: {
         input: $('#search')
       },
