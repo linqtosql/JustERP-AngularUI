@@ -9,7 +9,18 @@ import { AppUrlService } from './services/nav/app-url.service';
 import { AppAuthService } from './services/auth/app-auth.service';
 import { AppRouteGuard } from './services/auth/auth-route-guard';
 
+import { MDatatableComponent } from './components/plugins/m-datatable/m-datatable.component';
+import { MJsTreeComponent } from './components/plugins/m-jstree/m-jstree.component';
+
 @NgModule({
+    declarations: [
+        MDatatableComponent,
+        MJsTreeComponent
+    ],
+    exports: [
+        MDatatableComponent,
+        MJsTreeComponent
+    ],
     imports: [
         CommonModule,
         AbpModule,

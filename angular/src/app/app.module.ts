@@ -15,10 +15,9 @@ import { ResourceLoaderService } from './shared/services/resources-loader/resour
 
 import { ApiProxiesModule } from './shared/services/api-proxies/api-proxies.module';
 import { SharedModule } from './shared/shared.module';
+import { UsersModule } from "./users/users.module";
 
 import { HomeComponent } from './home/home.component';
-import { UsersComponent } from './users/users.component';
-import { CreateUserComponent } from './users/create-user/create-user.component';
 import { RolesComponent } from './roles/roles.component';
 import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { TenantsComponent } from './tenants/tenants.component';
@@ -26,9 +25,6 @@ import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.com
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizationunitsComponent } from './organizationunits/organizationunits.component';
 import { CreateOunitComponent } from './organizationunits/create-ounit/create-ounit.component';
-import { MDatatableComponent } from './shared/components/plugins/m-datatable/m-datatable.component';
-import { MJsTreeComponent } from './shared/components/plugins/m-jstree/m-jstree.component';
-import { SelectUserComponent } from './users/select-user/select-user.component';
 import { AuditlogsComponent } from './auditlogs/auditlogs.component';
 
 @NgModule({
@@ -38,16 +34,11 @@ import { AuditlogsComponent } from './auditlogs/auditlogs.component';
         HomeComponent,
         TenantsComponent,
         CreateTenantComponent,
-        UsersComponent,
-        CreateUserComponent,
         RolesComponent,
         CreateRoleComponent,
         NotFoundComponent,
         OrganizationunitsComponent,
         CreateOunitComponent,
-        MDatatableComponent,
-        MJsTreeComponent,
-        SelectUserComponent,
         AuditlogsComponent
     ],
     imports: [
@@ -60,7 +51,8 @@ import { AuditlogsComponent } from './auditlogs/auditlogs.component';
         AbpModule,
         AppRoutingModule,
         ApiProxiesModule,
-        SharedModule
+        SharedModule,
+        UsersModule
     ],
     providers: [
         ResourceLoaderService
