@@ -6,12 +6,23 @@ import { environment } from '../environments/environment';
 
 export class AppPreBootstrap {
 
+    //App Startup function
     static run(callback: () => void): void {
+        // for ajax request authorization
+        $(document).ajaxSend((event, request, settings) => {
+            if (!settings.url.startsWith('http://')) {
+                settings.url = AppConsts.remoteServiceBaseUrl + settings.url;
+            }
+            request.setRequestHeader("Authorization", "Bearer " + abp.auth.getToken());
+        });
+        // Init Application Config
         AppPreBootstrap.getApplicationConfig(() => {
+            // Init User Configration
             AppPreBootstrap.getUserConfiguration(callback);
         });
     }
 
+    // Bootstrap App
     static bootstrap<TM>(moduleType: Type<TM>, compilerOptions?: CompilerOptions | CompilerOptions[]): Promise<NgModuleRef<TM>> {
         return platformBrowserDynamic().bootstrapModule(moduleType, compilerOptions);
     }
@@ -39,7 +50,6 @@ export class AppPreBootstrap {
             url: AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll',
             method: 'GET',
             headers: {
-                Authorization: 'Bearer ' + abp.auth.getToken(),
                 '.AspNetCore.Culture': abp.utils.getCookieValue("Abp.Localization.CultureName"),
                 'Abp.TenantId': abp.multiTenancy.getTenantIdCookie()
             }

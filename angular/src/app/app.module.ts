@@ -16,30 +16,20 @@ import { ResourceLoaderService } from './shared/services/resources-loader/resour
 import { ApiProxiesModule } from './shared/services/api-proxies/api-proxies.module';
 import { SharedModule } from './shared/shared.module';
 import { UsersModule } from "./users/users.module";
+import { TenantsModule } from "./tenants/tenants.module";
+import { RolesModule } from "./roles/roles.module";
+import { OrganizationUnitsModule } from "./organizationunits/organizationunits.module";
+import { AuditLogsModule } from "./auditlogs/auditlogs.module";
 
 import { HomeComponent } from './home/home.component';
-import { RolesComponent } from './roles/roles.component';
-import { CreateRoleComponent } from './roles/create-role/create-role.component';
-import { TenantsComponent } from './tenants/tenants.component';
-import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { OrganizationunitsComponent } from './organizationunits/organizationunits.component';
-import { CreateOunitComponent } from './organizationunits/create-ounit/create-ounit.component';
-import { AuditlogsComponent } from './auditlogs/auditlogs.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         AppBodyComponent,
         HomeComponent,
-        TenantsComponent,
-        CreateTenantComponent,
-        RolesComponent,
-        CreateRoleComponent,
-        NotFoundComponent,
-        OrganizationunitsComponent,
-        CreateOunitComponent,
-        AuditlogsComponent
+        NotFoundComponent
     ],
     imports: [
         CommonModule,
@@ -52,7 +42,11 @@ import { AuditlogsComponent } from './auditlogs/auditlogs.component';
         AppRoutingModule,
         ApiProxiesModule,
         SharedModule,
-        UsersModule
+        UsersModule,
+        TenantsModule,
+        RolesModule,
+        OrganizationUnitsModule,
+        AuditLogsModule
     ],
     providers: [
         ResourceLoaderService

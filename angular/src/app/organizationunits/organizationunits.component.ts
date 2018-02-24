@@ -4,7 +4,7 @@ import { CreateOunitComponent } from './create-ounit/create-ounit.component';
 import { MDatatableListingComponent } from '../shared/components/plugins/m-datatable/m-datatable-listing-component';
 import { DeleteActionButton } from '../shared/components/plugins/m-datatable/m-datatable.component';
 import { MJsTreeComponent, JsTreeItem } from '../shared/components/plugins/m-jstree/m-jstree.component';
-import { SelectUserComponent } from '../users/select-user/select-user.component';
+import { SelectUserComponent } from '../shared/components/widgets/select-user/select-user.component';
 
 @Component({
   selector: '.m-grid__item.m-grid__item--fluid.m-wrapper',

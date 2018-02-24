@@ -23,11 +23,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
                         component: AppBodyComponent,
                         children: [
                             { path: 'home', component: HomeComponent },
-                            { path: 'organizationunits', component: OrganizationunitsComponent, data: { permission: 'Pages.OrganizationUnits' } },
+                            { path: 'organizationunits', loadChildren: "./organizationunits/organizationunits.module#OrganizationUnitsModule", data: { permission: 'Pages.OrganizationUnits' } },
                             { path: 'users', loadChildren: "./users/users.module#UsersModule", data: { permission: 'Pages.Users' } },
-                            { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' } },
-                            { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' } },
-                            { path: 'auditlogs', component: AuditlogsComponent, data: { permission: 'Pages.AuditLogs' } },
+                            { path: 'roles', loadChildren: "./roles/roles.module#RolesModule", data: { permission: 'Pages.Roles' } },
+                            { path: 'tenants', loadChildren: "./tenants/tenants.module#TenantsModule", data: { permission: 'Pages.Tenants' } },
+                            { path: 'auditlogs', loadChildren: "./auditlogs/auditlogs.module#AuditLogsModule", data: { permission: 'Pages.AuditLogs' } },
                             { path: '404', component: NotFoundComponent }
                         ]
                     }

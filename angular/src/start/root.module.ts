@@ -60,11 +60,11 @@ export function getCurrentLanguage(): string {
     RootComponent
   ],
   providers: [
-    ABP_HTTP_PROVIDER,
-    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
+    ABP_HTTP_PROVIDER,//ABP Http Provider
+    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },//API Base Url Provider
     {
       provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
+      useFactory: appInitializerFactory,//App Initializer Factory
       deps: [Injector],
       multi: true
     },

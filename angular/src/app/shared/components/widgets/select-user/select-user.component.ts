@@ -1,7 +1,7 @@
 import { Component, Injector, ViewChild, Output, EventEmitter } from '@angular/core';
-import { UserDto } from '../../shared/services/api-proxies/api-proxies';
-import { MDatatableComponent } from '../../shared/components/plugins/m-datatable/m-datatable.component';
-import { ModalComponentBase } from '../../shared/components/page/modal-component-base';
+import { UserDto } from '../../../services/api-proxies/api-proxies';
+import { MDatatableComponent } from '../../../components/plugins/m-datatable/m-datatable.component';
+import { ModalComponentBase } from '../../../components/page/modal-component-base';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

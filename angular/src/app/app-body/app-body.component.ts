@@ -21,14 +21,6 @@ export class AppBodyComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // for mDatatable remote data authorization
-        $(document).ajaxSend((event, request, settings) => {
-            if (!settings.url.startsWith('http://')) {
-                settings.url = AppConsts.remoteServiceBaseUrl + settings.url;
-                request.setRequestHeader("Authorization", "Bearer " + abp.auth.getToken());
-            }
-        });
-
         this._script.load("body", "./assets/demo/default/base/scripts.bundle.js").then(() => {
             Helpers.setLoading(false);
             this._script.load('head',
