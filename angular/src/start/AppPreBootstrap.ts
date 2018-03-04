@@ -10,7 +10,7 @@ export class AppPreBootstrap {
     static run(callback: () => void): void {
         // for ajax request authorization
         $(document).ajaxSend((event, request, settings) => {
-            if (!settings.url.startsWith('http://')) {
+            if (!settings.url.startsWith('http://') && !settings.url.startsWith('https://')) {
                 settings.url = AppConsts.remoteServiceBaseUrl + settings.url;
             }
             request.setRequestHeader("Authorization", "Bearer " + abp.auth.getToken());
