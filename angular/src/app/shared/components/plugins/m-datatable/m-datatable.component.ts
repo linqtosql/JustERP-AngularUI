@@ -201,8 +201,9 @@ export class MDatatableComponent implements AfterViewInit {
     });
   }
 
-  reload(): void {
-    this.setDataSourceQuery(this.getDataSourceQuery());
+  reload(query: any = {}): void {
+    let q = { ...this.getDataSourceQuery(), ...query };
+    this.setDataSourceQuery(q);
     this.datatable.load();
   }
 

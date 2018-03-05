@@ -19,7 +19,7 @@ export abstract class MDatatableListingComponent extends AppComponentBase {
     }
 
     query(query: any): void {
-        this.mDatatable.setDataSourceQuery(query).reload();
+        this.mDatatable.reload(query);
     }
 
     refresh(): void {
