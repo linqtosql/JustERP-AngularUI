@@ -12,11 +12,12 @@ export class JsTreeItem {
   };
   li_attr: any;
   a_attr: any;
+  memberCount: number = 0;
 
-  constructor(id: string | number, parent: string | number, text: string, icon = "", state: { opened: boolean, disabled: boolean, selected: boolean } = { opened: true, disabled: false, selected: false }) {
+  constructor(id: string | number, parent: string | number, text: string, memberCount: number = 0, icon = "", state: { opened: boolean, disabled: boolean, selected: boolean } = { opened: true, disabled: false, selected: false }) {
     this.id = id.toString();
     this.parent = parent === null ? "#" : parent.toString();
-    this.text = text;
+    this.text = `${text}（${memberCount}）`;
     this.icon = icon;
     this.state = state;
   }

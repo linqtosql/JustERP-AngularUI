@@ -104,6 +104,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
           this._userService.removeFromOUnit([new CreateUserOUnitDto({ userId: data.id, organizationUnitId: <number>this.jsTree.selectedItem.id })])
             .subscribe(() => {
               abp.notify.info("Deleted Success!");
+              this.refresh();
               super.refresh();
             });
         }
@@ -125,7 +126,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
 
   refresh(): void {
     this._ouoService.getOrganizationUnits().subscribe(result => {
-      let units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName));
+      let units = result.map(r => new JsTreeItem(r.id, r.parentId, r.displayName, r.memberCount));
       this.jsTree.refresh(units);
     });
   }
@@ -144,6 +145,7 @@ export class OrganizationunitsComponent extends MDatatableListingComponent imple
     });
     this._userService.addToOUnit(input).subscribe(r => {
       super.refresh();
+      this.refresh();
     });
   }
 
