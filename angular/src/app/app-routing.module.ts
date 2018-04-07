@@ -4,10 +4,6 @@ import { AppComponent } from './app.component';
 import { AppBodyComponent } from "./app-body/app-body.component";
 import { AppRouteGuard } from './shared/services/auth/auth-route-guard';
 import { HomeComponent } from './home/home.component';
-import { TenantsComponent } from './tenants/tenants.component';
-import { RolesComponent } from "./roles/roles.component";
-import { OrganizationunitsComponent } from "./organizationunits/organizationunits.component";
-import { AuditlogsComponent } from './auditlogs/auditlogs.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -28,6 +24,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
                             { path: 'roles', loadChildren: "./roles/roles.module#RolesModule", data: { permission: 'Pages.Roles' } },
                             { path: 'tenants', loadChildren: "./tenants/tenants.module#TenantsModule", data: { permission: 'Pages.Tenants' } },
                             { path: 'auditlogs', loadChildren: "./auditlogs/auditlogs.module#AuditLogsModule", data: { permission: 'Pages.AuditLogs' } },
+                            { path: 'languages', loadChildren: "./languages/languages.module#LanguagesModule", data: { permission: 'Pages.Languages' } },
                             { path: '404', component: NotFoundComponent }
                         ]
                     }

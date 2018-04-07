@@ -75,8 +75,8 @@
                   <div class="m-checkbox-inline">
                     <ng-template ngFor let-role [ngForOf]="roles" let-roleIndex="index">
                       <label for="role-{{roleIndex}}" title="{{role.data.displayName}}" class="m-checkbox">
-                        <input type="checkbox" name="role" value="{{role.data.normalizedName}}" title="{{role.data.description}}" class="filled-in"
-                          id="role-{{roleIndex}}" [(ngModel)]="role.checked">{{role.data.name}}
+                        <input type="checkbox" name="userrole" value="{{role.data.normalizedName}}" title="{{role.data.description}}" class="filled-in"
+                          id="role-{{roleIndex}}" checked="{{role.checked}}">{{role.data.name}}
                         <span></span>
                       </label>
                     </ng-template>

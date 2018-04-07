@@ -14,8 +14,15 @@ export class CreateUserComponent extends CreateUpdateComponentBase<UserDto, Crea
 
     protected instanceCreateEntityDto(): CreateUserDto {
         let createUserDto = new CreateUserDto();
-        createUserDto.init({ isActive: true });
+        createUserDto.init({ isActive: true, roleNames: [] });
         return createUserDto;
+    }
+
+    protected beforeShow(entityDto: any): void {
+        let dto = <UserDto>entityDto;
+        this.roles.forEach(role => {
+            role.checked = dto.roleNames.some(r => r == role.data.normalizedName);
+        });
     }
 
     protected get(id: number): Observable<UserDto> {

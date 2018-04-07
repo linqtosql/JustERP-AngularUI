@@ -20,6 +20,7 @@ import { TenantsModule } from "./tenants/tenants.module";
 import { RolesModule } from "./roles/roles.module";
 import { OrganizationUnitsModule } from "./organizationunits/organizationunits.module";
 import { AuditLogsModule } from "./auditlogs/auditlogs.module";
+import { LanguagesModule } from "./languages/languages.module";
 
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -46,7 +47,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
         TenantsModule,
         RolesModule,
         OrganizationUnitsModule,
-        AuditLogsModule
+        AuditLogsModule,
+        LanguagesModule
     ],
     providers: [
         ResourceLoaderService
