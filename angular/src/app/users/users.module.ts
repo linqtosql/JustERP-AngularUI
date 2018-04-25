@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LayoutModule } from "../shared/components/layout/layout.module";
 import { SharedModule } from '../shared/shared.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { UsersComponent } from "./users.component";
@@ -14,6 +15,7 @@ import { UsersRoutingModule } from "./users-routing.module";
         FormsModule,
         SharedModule,
         ModalModule,
+        LayoutModule,
         UsersRoutingModule
     ],
     declarations: [

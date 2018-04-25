@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LayoutModule } from "../shared/components/layout/layout.module";
 import { SharedModule } from '../shared/shared.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { OrganizationunitsComponent } from "./organizationunits.component";
@@ -13,6 +14,7 @@ import { OrganizationUnitsRoutingModule } from "./organizationunits-routing.modu
     FormsModule,
     ModalModule,
     SharedModule,
+    LayoutModule,
     OrganizationUnitsRoutingModule
   ],
   declarations: [OrganizationunitsComponent, CreateOunitComponent]

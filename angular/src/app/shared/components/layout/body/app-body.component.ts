@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { Helpers } from '../shared/services/helpers/Helpers';
-import { AppConsts } from '../shared/AppConsts';
-import { ResourceLoaderService } from '../shared/services/resources-loader/resources-loader.service';
+import { Helpers } from '@shared/services/helpers/Helpers';
+import { AppConsts } from '@shared/AppConsts';
+import { ResourceLoaderService } from '@shared/services/resources-loader/resources-loader.service';
 
 declare let mApp: any;
 declare let mUtil: any;
@@ -21,11 +21,11 @@ export class AppBodyComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._script.load("body", "./assets/demo/default/base/scripts.bundle.js").then(() => {
+        this._script.load("body", ["./assets/demo/default/base/scripts.bundle.js"]).then(() => {
             Helpers.setLoading(false);
             this._script.load('head',
-                'assets/vendors/custom/fullcalendar/fullcalendar.bundle.css',
-                'assets/vendors/custom/fullcalendar/fullcalendar.bundle.js');
+                ['assets/vendors/custom/fullcalendar/fullcalendar.bundle.css',
+                'assets/vendors/custom/fullcalendar/fullcalendar.bundle.js']);
         })
 
         this._router.events.subscribe((route) => {

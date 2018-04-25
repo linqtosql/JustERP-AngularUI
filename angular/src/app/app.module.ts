@@ -8,7 +8,6 @@ import { ModalModule } from 'ngx-bootstrap';
 import { LayoutModule } from './shared/components/layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppBodyComponent } from './app-body/app-body.component';
 
 import { AbpModule } from '@abp/abp.module';
 import { ResourceLoaderService } from './shared/services/resources-loader/resources-loader.service';
@@ -21,16 +20,12 @@ import { RolesModule } from "./roles/roles.module";
 import { OrganizationUnitsModule } from "./organizationunits/organizationunits.module";
 import { AuditLogsModule } from "./auditlogs/auditlogs.module";
 import { LanguagesModule } from "./languages/languages.module";
-
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { HomeModule } from "./home/home.module";
+import { NotFoundModule } from "./not-found/not-found.module";
 
 @NgModule({
     declarations: [
-        AppComponent,
-        AppBodyComponent,
-        HomeComponent,
-        NotFoundComponent
+        AppComponent
     ],
     imports: [
         CommonModule,
@@ -43,6 +38,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
         AppRoutingModule,
         ApiProxiesModule,
         SharedModule,
+        HomeModule,
+        NotFoundModule,
         UsersModule,
         TenantsModule,
         RolesModule,

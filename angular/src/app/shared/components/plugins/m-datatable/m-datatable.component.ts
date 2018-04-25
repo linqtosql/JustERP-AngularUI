@@ -133,9 +133,8 @@ export class MDatatableComponent implements AfterViewInit {
           read: {
             method: "GET",
             url: config.url,
-            paramsDataMap: function (data) { return $.extend({}, data.datatable.pagination, data.datatable.sort, data.datatable.query); },
             params: {
-              query: config.query || null
+              query: config.query || {}
             }
           }
         },
@@ -204,6 +203,8 @@ export class MDatatableComponent implements AfterViewInit {
   reload(query: any = {}): void {
     let q = { ...this.getDataSourceQuery(), ...query };
     this.setDataSourceQuery(q);
+    //reset init query params
+    this.datatable.setOption("data.source.read.params.query", {});
     this.datatable.load();
   }
 

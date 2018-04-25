@@ -3,7 +3,7 @@ import { AppComponentBase } from '../shared/components/app-component-base';
 import { ResourceLoaderService } from '../shared/services/resources-loader/resources-loader.service';
 
 @Component({
-    selector: ".m-grid__item.m-grid__item--fluid.m-wrapper",
+    selector: "app-home",
     templateUrl: './home.component.html'
 })
 export class HomeComponent extends AppComponentBase implements AfterViewInit {
@@ -16,7 +16,7 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this._script.load('.m-grid__item.m-grid__item--fluid.m-wrapper',
-            'assets/app/js/dashboard.js');
+        this._script.load('app-home',
+            ['assets/app/js/dashboard.js'], false);
     }
 }

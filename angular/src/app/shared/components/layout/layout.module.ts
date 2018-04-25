@@ -11,9 +11,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HrefPreventDefaultDirective } from '../../directives/href-prevent-default.directive';
 import { UnwrapTagDirective } from '../../directives/unwrap-tag.directive';
+import { AppBodyComponent } from "./body/app-body.component";
 
 @NgModule({
     declarations: [
+        AppBodyComponent,
         LayoutComponent,
         HeaderNavComponent,
         AsideNavComponent,
@@ -26,6 +28,7 @@ import { UnwrapTagDirective } from '../../directives/unwrap-tag.directive';
         UnwrapTagDirective
     ],
     exports: [
+        AppBodyComponent,
         LayoutComponent,
         HeaderNavComponent,
         AsideNavComponent,
