@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Injector, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 
-import { AbpModule, ABP_HTTP_PROVIDER } from '@abp/abp.module';
+import { AbpModule } from '@abp/abp.module';
+import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SharedModule } from '../app/shared/shared.module';
 import { ApiProxiesModule } from '../app/shared/services/api-proxies/api-proxies.module';
@@ -17,12 +19,15 @@ import { RootComponent } from './root.component';
 import { AppPreBootstrap } from './AppPreBootstrap';
 import { ModalModule } from 'ngx-bootstrap';
 
+import { HttpClientModule, HttpResponse } from '@angular/common/http';
+
 
 export function appInitializerFactory(injector: Injector) {
   return () => {
 
     return new Promise<boolean>((resolve, reject) => {
       AppPreBootstrap.run(() => {
+        abp.event.trigger('abp.dynamicScriptsInitialized');
         var appSessionService: AppSessionService = injector.get(AppSessionService);
         appSessionService.init().then(
           (result) => {
@@ -54,13 +59,14 @@ export function getCurrentLanguage(): string {
     AbpModule,
     LayoutModule,
     ApiProxiesModule,
-    RootRoutingModule
+    RootRoutingModule,
+    HttpClientModule
   ],
   declarations: [
     RootComponent
   ],
   providers: [
-    ABP_HTTP_PROVIDER,//ABP Http Provider
+    { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true  },
     { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },//API Base Url Provider
     {
       provide: APP_INITIALIZER,

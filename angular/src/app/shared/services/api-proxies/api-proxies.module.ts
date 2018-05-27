@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
 import * as ApiProxies from "./api-proxies";
 
 @NgModule({
@@ -12,7 +13,8 @@ import * as ApiProxies from "./api-proxies";
     ApiProxies.AccountServiceProxy,
     ApiProxies.ConfigurationServiceProxy,
     ApiProxies.OrganizationUnitServiceProxy,
-    ApiProxies.AuditLogServiceProxy
+    ApiProxies.AuditLogServiceProxy,
+    { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
   ]
 })
 export class ApiProxiesModule { }

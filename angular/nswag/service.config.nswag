@@ -11,11 +11,12 @@
       "className": "{controller}ServiceProxy",
       "moduleName": "",
       "namespace": "",
-      "typeScriptVersion": 1.8,
+      "typeScriptVersion": 2.0,
       "template": "Angular",
       "promiseType": "Promise",
       "dateTimeType": "MomentJS",
       "nullValue": "Undefined",
+      "httpClass": "HttpClient",
       "generateClientClasses": true,
       "generateClientInterfaces": false,
       "generateOptionalParameters": false,
@@ -39,7 +40,7 @@
       "useGetBaseUrlMethod": false,
       "baseUrlTokenName": "API_BASE_URL",
       "injectionTokenType": "InjectionToken",
-      "output": "../src/app/shared/services/api-proxies/api-proxies.component.ts"
+      "output": "../src/app/shared/services/api-proxies/api-proxies.ts"
     },
     "swaggerToCSharpClient": {
       "generateClientClasses": true,
