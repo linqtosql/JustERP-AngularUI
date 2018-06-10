@@ -56,4 +56,8 @@ export class CreateUserComponent extends CreateUpdateComponentBase<UserDto, Crea
     getRoleNames(): string[] {
         return this.roles.filter(r => r.checked).map(r => r.data.normalizedName);
     }
+
+    roleCheckedChange(role): void {
+        role.checked = !role.checked;
+    }
 }
